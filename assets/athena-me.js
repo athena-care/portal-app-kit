@@ -86,6 +86,9 @@
   }
 
   function fetchMe() {
+    if (global.__ATHENA_VIEWER__) {
+      return Promise.resolve(global.__ATHENA_VIEWER__);
+    }
     if (inflight) return inflight;
     var config = getConfig();
 

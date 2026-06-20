@@ -1,12 +1,12 @@
 /**
- * Dev-only back office preview frame — loaded by frozen index.html only.
- * Uses real sidebar nav from GET /api/shell/nav/dev and iframes main.html.
+ * Single-file Back Office preview — Claude artifact / preview.html only.
+ * Renders wa-page + drawer around an existing <main class="portal-app">.
+ * No iframe, no sibling files, no portal API calls.
  */
 (function () {
   "use strict";
 
   var DEFAULT_KIT = "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1";
-  var DEFAULT_PORTAL = "https://backoffice.athenacare.health";
   var ROLES = [
     "staff",
     "providers",
@@ -15,13 +15,16 @@
     "board",
     "admin",
   ];
-  var activeKit = DEFAULT_KIT;
+  var ROLE_RANK = {
+    admin: 5,
+    board: 4,
+    executive: 3,
+    managers: 2,
+    providers: 1,
+    staff: 0,
+  };
 
-  function faKitSolidIconSrc(icon, kitBase) {
-    var name = (icon || "link").trim() || "link";
-    var kit = (kitBase || DEFAULT_KIT).replace(/\/$/, "");
-    return kit + "/assets/fontawesome/svgs/sharp-solid/" + encodeURIComponent(name) + ".svg";
-  }
+  var activeKit = DEFAULT_KIT;
 
   function el(tag, className) {
     var node = document.createElement(tag);
@@ -36,6 +39,16 @@
     document.head.appendChild(link);
   }
 
+  function faKitSolidIconSrc(icon) {
+    var name = (icon || "link").trim() || "link";
+    return (
+      activeKit +
+      "/assets/fontawesome/svgs/sharp-solid/" +
+      encodeURIComponent(name) +
+      ".svg"
+    );
+  }
+
   function defaultRole(config) {
     return (
       (config.dev && config.dev.role) ||
@@ -44,43 +57,25 @@
     );
   }
 
-  function mainFrameSrc(role) {
-    return "./main.html?devRole=" + encodeURIComponent(role);
-  }
-
-  function sortLinks(links) {
-    return links.slice().sort(function (a, b) {
-      return String(a.label).localeCompare(String(b.label));
-    });
-  }
-
-  function parseNavSections(payload) {
-    var empty = { applications: [], dashboards: [], administration: [] };
-    if (!payload || typeof payload !== "object") return empty;
-    function parseList(raw) {
-      if (!Array.isArray(raw)) return [];
-      var out = [];
-      raw.forEach(function (item) {
-        if (!item || typeof item !== "object") return;
-        var key = typeof item.key === "string" ? item.key : "";
-        var href = typeof item.href === "string" ? item.href : "";
-        var label = typeof item.label === "string" ? item.label : "";
-        if (!key || !href || !label) return;
-        out.push({
-          key: key,
-          href: href,
-          label: label,
-          icon: typeof item.icon === "string" ? item.icon : "link",
-          openInNewTab: item.openInNewTab === true,
-        });
-      });
-      return sortLinks(out);
-    }
+  function buildViewer(role) {
+    if (ROLE_RANK[role] === undefined) role = "staff";
     return {
-      applications: parseList(payload.applications),
-      dashboards: parseList(payload.dashboards),
-      administration: parseList(payload.administration),
+      userId: "00000000-0000-0000-0000-000000000001",
+      email: "preview@local.test",
+      firstName: "Preview",
+      lastName: "User",
+      role: role,
+      status: "active",
+      roleRank: ROLE_RANK[role] ?? 0,
+      fixture: true,
     };
+  }
+
+  function setPreviewViewer(role) {
+    globalThis.__ATHENA_VIEWER__ = buildViewer(role);
+    if (globalThis.AthenaMe && typeof globalThis.AthenaMe.refresh === "function") {
+      globalThis.AthenaMe.refresh();
+    }
   }
 
   function syntheticNav(config) {
@@ -108,42 +103,15 @@
     return sections;
   }
 
-  function ensureAppInNav(sections, config) {
-    if (!config.appKey) return sections;
-    var href = "/apps/" + config.appKey;
-    var category = config.navCategory || "applications";
-    if (
-      category !== "applications" &&
-      category !== "dashboards" &&
-      category !== "administration"
-    ) {
-      category = "applications";
-    }
-    var lists = [
-      sections.applications,
-      sections.dashboards,
-      sections.administration,
-    ];
-    var found = lists.some(function (list) {
-      return list.some(function (link) {
-        return link.key === config.appKey || link.href === href;
-      });
+  function sortLinks(links) {
+    return links.slice().sort(function (a, b) {
+      return String(a.label).localeCompare(String(b.label));
     });
-    if (!found) {
-      sections[category].push({
-        key: config.appKey,
-        href: href,
-        label: config.label || config.appKey,
-        icon: config.icon || "link",
-      });
-      sections[category] = sortLinks(sections[category]);
-    }
-    return sections;
   }
 
   function navIcon(entry) {
     var wa = document.createElement("wa-icon");
-    wa.setAttribute("src", faKitSolidIconSrc(entry.icon || "link", activeKit));
+    wa.setAttribute("src", faKitSolidIconSrc(entry.icon || "link"));
     wa.setAttribute("label", "");
     return wa;
   }
@@ -152,13 +120,12 @@
     var a = el("a", "shell-sidebar-link");
     a.href = entry.href;
     a.setAttribute("data-shell-link", entry.key);
-    if (entry.openInNewTab) {
-      a.target = "_blank";
-      a.rel = "noopener noreferrer";
-    }
     if (activeHref && entry.href === activeHref) {
       a.setAttribute("aria-current", "page");
     }
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+    });
     a.appendChild(navIcon(entry));
     a.appendChild(document.createTextNode(entry.label));
     return a;
@@ -172,18 +139,7 @@
     });
   }
 
-  function fetchNav(portalOrigin, role) {
-    var base = (portalOrigin || DEFAULT_PORTAL).replace(/\/$/, "");
-    return fetch(
-      base + "/api/shell/nav/dev?role=" + encodeURIComponent(role),
-      { cache: "no-store" },
-    ).then(function (res) {
-      if (!res.ok) throw new Error("nav dev fetch failed");
-      return res.json();
-    });
-  }
-
-  function buildPreviewShell(config, role, sections) {
+  function buildEmbedShell(config, role, sections) {
     var activeHref = config.appKey ? "/apps/" + config.appKey : "";
     var waPage = document.createElement("wa-page");
     waPage.className = "shell athena-preview-shell";
@@ -218,9 +174,15 @@
     drawer.setAttribute("light-dismiss", "");
 
     var wordmarkOuter = el("div", "shell-drawer-wordmark");
-    var wordmarkLink = el("a", "shell-drawer-wordmark-link shell-drawer-wordmark-brand");
+    var wordmarkLink = el(
+      "a",
+      "shell-drawer-wordmark-link shell-drawer-wordmark-brand",
+    );
     wordmarkLink.href = "#";
     wordmarkLink.setAttribute("aria-label", "Athena Care home");
+    wordmarkLink.addEventListener("click", function (e) {
+      e.preventDefault();
+    });
     var wmMark = document.createElement("i");
     wmMark.className = "fa-kit fa-athenacare-mark";
     wmMark.setAttribute("aria-hidden", "true");
@@ -289,41 +251,18 @@
     drawer.appendChild(nav);
 
     var main = el("main", "shell-main");
-    var appWrap = el("div", "athena-preview-app");
-    var iframe = document.createElement("iframe");
-    iframe.className = "athena-preview-frame";
-    iframe.title = config.label || "App preview";
-    iframe.src = mainFrameSrc(role);
-    appWrap.appendChild(iframe);
+    var appWrap = el("div", "athena-preview-embed-app");
     main.appendChild(appWrap);
 
-    function reloadForRole(nextRole) {
-      var portal = (config.portalOrigin || DEFAULT_PORTAL).replace(/\/$/, "");
-      fetchNav(portal, nextRole)
-        .then(function (payload) {
-          var nextSections = ensureAppInNav(parseNavSections(payload), config);
-          fillNavGroup(appsEl, nextSections.applications, activeHref);
-          fillNavGroup(dashEl, nextSections.dashboards, activeHref);
-          fillNavGroup(adminEl, nextSections.administration, activeHref);
-          dashRegion.hidden = nextSections.dashboards.length === 0;
-          adminRegion.hidden = nextSections.administration.length === 0;
-          iframe.src = mainFrameSrc(nextRole);
-        })
-        .catch(function (err) {
-          console.error("[preview-shell]", err);
-          iframe.src = mainFrameSrc(nextRole);
-        });
-    }
-
     roleSelect.addEventListener("change", function () {
-      reloadForRole(roleSelect.value);
+      setPreviewViewer(roleSelect.value);
     });
 
     waPage.appendChild(headerSlot);
     waPage.appendChild(drawer);
     waPage.appendChild(main);
 
-    return waPage;
+    return { shell: waPage, appSlot: appWrap };
   }
 
   function showError(message) {
@@ -333,45 +272,42 @@
     document.body.appendChild(p);
   }
 
-  function bootstrap() {
-    fetch("./athena-app.config.json")
-      .then(function (res) {
-        if (!res.ok) throw new Error("Missing athena-app.config.json");
-        return res.json();
-      })
-      .then(function (config) {
-        var kit = (config.kitOrigin || DEFAULT_KIT).replace(/\/$/, "");
-        activeKit = kit;
-        var portal = (config.portalOrigin || DEFAULT_PORTAL).replace(/\/$/, "");
-        injectStylesheet(kit + "/assets/athena-app.css");
-        injectStylesheet(kit + "/assets/shell-base.css");
-        document.title = (config.label || "App") + " — preview";
+  function mount() {
+    var config = globalThis.__ATHENA_APP_CONFIG__;
+    if (!config || typeof config !== "object") {
+      showError("Missing preview config.");
+      return;
+    }
 
-        var role = defaultRole(config);
-        return fetchNav(portal, role)
-          .then(function (payload) {
-            return ensureAppInNav(parseNavSections(payload), config);
-          })
-          .catch(function () {
-            return ensureAppInNav(syntheticNav(config), config);
-          })
-          .then(function (sections) {
-            document.body.replaceChildren(
-              buildPreviewShell(config, role, sections),
-            );
-          });
-      })
-      .catch(function (err) {
-        console.error("[preview-shell]", err);
-        showError(
-          "Could not load preview. Ensure athena-app.config.json exists.",
-        );
-      });
+    var appMain = document.querySelector("main.portal-app");
+    if (!appMain) {
+      showError("Missing <main class=\"portal-app\"> for preview.");
+      return;
+    }
+
+    var kit = (config.kitOrigin || DEFAULT_KIT).replace(/\/$/, "");
+    activeKit = kit;
+    globalThis.__ATHENA_KIT_ORIGIN__ = kit;
+
+    injectStylesheet(kit + "/assets/athena-app.css");
+    injectStylesheet(kit + "/assets/shell-base.css");
+    injectStylesheet(kit + "/assets/preview-shell.css");
+
+    document.documentElement.classList.add("embedded");
+    document.title = (config.label || "App") + " — preview";
+
+    var role = defaultRole(config);
+    setPreviewViewer(role);
+
+    var sections = syntheticNav(config);
+    var built = buildEmbedShell(config, role, sections);
+    built.appSlot.appendChild(appMain);
+    document.body.replaceChildren(built.shell);
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", bootstrap);
+    document.addEventListener("DOMContentLoaded", mount);
   } else {
-    bootstrap();
+    mount();
   }
 })();

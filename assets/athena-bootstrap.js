@@ -6,7 +6,7 @@
   "use strict";
 
   var CONFIG_PATH = "./athena-app.config.json";
-  var DEFAULT_KIT = "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0";
+  var DEFAULT_KIT = "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1";
   var DEFAULT_PORTAL = "https://backoffice.athenacare.health";
 
   function loadScript(src) {
@@ -76,6 +76,10 @@
       .then(function (config) {
         if (!config.portalOrigin) config.portalOrigin = DEFAULT_PORTAL;
         if (!config.kitOrigin) config.kitOrigin = DEFAULT_KIT;
+        globalThis.__ATHENA_KIT_ORIGIN__ = (config.kitOrigin || DEFAULT_KIT).replace(
+          /\/$/,
+          "",
+        );
         global.__ATHENA_APP_CONFIG__ = config;
 
         var urls = deriveAssetUrls(config);

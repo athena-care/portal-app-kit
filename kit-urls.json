@@ -1,11 +1,13 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "packageName": "athena-portal-app-kit",
-  "cdnBase": "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.1",
+  "cdnBase": "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1",
   "paths": {
     "athenaAppCss": "/assets/athena-app.css",
     "athenaBootstrap": "/assets/athena-bootstrap.js",
     "athenaMe": "/assets/athena-me.js",
+    "athenaIcons": "/assets/athena-icons.js",
+    "previewEmbed": "/assets/preview-embed.js",
     "previewShell": "/assets/preview-shell.js",
     "previewShellCss": "/assets/preview-shell.css",
     "shellBaseCss": "/assets/shell-base.css",

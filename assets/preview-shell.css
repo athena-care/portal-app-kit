@@ -19,6 +19,19 @@ wa-page.shell.athena-preview-shell > main.shell-main > .athena-preview-app {
   min-height: 24rem;
 }
 
+.athena-preview-embed-app {
+  display: block;
+  min-height: 0;
+  overflow: auto;
+  height: calc(100dvh - var(--athena-preview-chrome-offset, 5rem));
+  min-height: 24rem;
+}
+
+wa-page.shell.athena-preview-shell > main.shell-main > .athena-preview-embed-app {
+  display: block;
+  min-height: 0;
+}
+
 .athena-preview-role-field {
   padding: 0 0.25rem;
 }

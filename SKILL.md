@@ -111,18 +111,23 @@ While building (browser chat)
   "navCategory": "applications",
   "environment": "development",
   "portalOrigin": "https://backoffice.athenacare.health",
-  "kitOrigin": "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0",
+  "kitOrigin": "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1",
   "dev": { "role": "managers" }
 }
 ```
 
 | Field | Notes |
 |-------|--------|
-| `icon` | Font Awesome **solid** kebab-case; must exist in Athena kit (e.g. `excavator`, `wand-magic-sparkles`) |
-| `environment` | Always `development` until platform deploy |
-| `dev.role` | Role for local preview |
+| `icon` | Font Awesome **sharp solid** kebab-case (menu + `wa-icon name`); must exist in kit (e.g. `list-check`, `excavator`) |
+| `environment` | Always `development` while building; platform sets `production` at deploy (see below) |
+| `dev.role` | Role for preview identity |
+| `kitOrigin` | Always `https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1` — **major-floating** `@1` tracks latest kit on jsDelivr |
 
 Do **not** put bootstrap or CSS URLs in config — `athena-bootstrap.js` loads assets from `environment` + origins.
+
+### What changes at platform deploy (agent-only)
+
+Authors keep `environment: "development"` until handoff. **Platform integration** is the only change: set `environment` to `"production"` in `athena-app.config.json`. Then bootstrap loads `/design/athena-app.css` and `/static/athena-me.js` from the live Back Office (same files as the kit). **`main.html` head and bootstrap URL never change.** Tell staff: *“Submit your folder — we flip one setting when it goes live.”*
 
 ---
 
@@ -188,19 +193,19 @@ Use the JSON template above with intake answers.
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100..700;1,100..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/styles/themes/default.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/styles/native.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/styles/utilities.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/preview-shell.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/shell-base.css" />
-  <script type="module" src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/webawesome.loader.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/css/custom-icons.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/js/fontawesome.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/js/sharp-solid.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/js/custom-icons.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/webawesome/dist-cdn/styles/themes/default.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/webawesome/dist-cdn/styles/native.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/webawesome/dist-cdn/styles/utilities.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/preview-shell.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/shell-base.css" />
+  <script type="module" src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/webawesome/dist-cdn/webawesome.loader.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/fontawesome/css/custom-icons.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/fontawesome/js/fontawesome.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/fontawesome/js/sharp-solid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/fontawesome/js/custom-icons.min.js"></script>
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/preview-shell.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/preview-shell.js"></script>
 </body>
 </html>
 ```
@@ -255,15 +260,17 @@ Use the JSON template above with intake answers.
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100..700;1,100..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/styles/themes/default.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/styles/native.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/styles/utilities.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/webawesome/dist-cdn/styles/themes/default.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/webawesome/dist-cdn/styles/native.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/webawesome/dist-cdn/styles/utilities.css" />
   <link rel="stylesheet" href="app.css" />
-  <script type="module" src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/webawesome.loader.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/css/custom-icons.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/js/fontawesome.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/js/sharp-solid.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/js/custom-icons.min.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/webawesome/dist-cdn/webawesome.loader.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/fontawesome/css/custom-icons.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/fontawesome/js/fontawesome.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/fontawesome/js/sharp-solid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/fontawesome/js/custom-icons.min.js"></script>
+  <script>globalThis.__ATHENA_KIT_ORIGIN__ = "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1";</script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/athena-icons.js"></script>
 </head>
 <body>
   <main class="ac-section portal-app">
@@ -275,7 +282,7 @@ Use the JSON template above with intake answers.
       <p id="viewer-greeting" class="shell-subtle" hidden></p>
     </div>
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/athena-bootstrap.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/athena-bootstrap.js"></script>
 </body>
 </html>
 ```
@@ -311,16 +318,18 @@ AthenaMe.ready().then(function (me) {
 
 ## Preview while building (`preview.html`)
 
-**No terminal or local server.** One HTML file loads Athena design system + AthenaMe from **HTTPS CDNs** only. Config, `app.css`, and `app.js` are **inlined** so it works in a Claude artifact / browser sandbox.
+**No terminal or local server.** One HTML file shows the app **inside the Back Office frame** (header, drawer, synthetic nav) via **`preview-embed.js`** — no iframe, no portal API, works in Claude artifacts.
 
 After every meaningful change to `main.html`, `app.js`, or `app.css`:
 
-1. Update `preview.html` (template below) — inline current config, `<style>` from `app.css`, `<main>` from `main.html`, `window.__ATHENA_APP_RUN__` with `app.js` body.
+1. **Regenerate** `preview.html` from the template below — inline current config, `<style>` from `app.css`, full `<main class="portal-app">` from `main.html`, and `window.__ATHENA_APP_RUN__` with the `app.js` body (not the file wrapper).
 2. Show it as a **Claude HTML artifact** or tell the user **“open the preview I just updated.”**
+
+Preview identity is synchronous (`__ATHENA_VIEWER__` via `preview-embed.js` + `athena-me.js`) — no `/api/me` calls in the sandbox.
 
 Do not mention filenames like `preview.html` to non-technical users unless they need to download the folder.
 
-### `preview.html` (agent maintains — copy and patch)
+### `preview.html` (agent maintains — regenerate from sources)
 
 ```html
 <!DOCTYPE html>
@@ -356,55 +365,59 @@ window.__ATHENA_APP_CONFIG__ = {
   "navCategory": "applications",
   "environment": "development",
   "portalOrigin": "https://backoffice.athenacare.health",
-  "kitOrigin": "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0",
+  "kitOrigin": "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1",
   "dev": { "role": "managers" }
 };
+globalThis.__ATHENA_KIT_ORIGIN__ = "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1";
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Preview — Manager Checklist</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100..700;1,100..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/styles/themes/default.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/styles/native.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/styles/utilities.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/webawesome/dist-cdn/styles/themes/default.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/webawesome/dist-cdn/styles/native.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/webawesome/dist-cdn/styles/utilities.css" />
   <style>
 /* Paste app.css here */
 html.embedded .portal-app__hero { display: none; }
 .portal-app { max-width: 48rem; margin: 0 auto; padding: 0 1rem 2rem; }
   </style>
-  <script type="module" src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/webawesome.loader.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/css/custom-icons.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/js/fontawesome.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/js/sharp-solid.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/js/custom-icons.min.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/webawesome/dist-cdn/webawesome.loader.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/fontawesome/css/custom-icons.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/fontawesome/js/fontawesome.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/fontawesome/js/sharp-solid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/fontawesome/js/custom-icons.min.js"></script>
+  <script>globalThis.__ATHENA_KIT_ORIGIN__ = "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1";</script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/athena-icons.js"></script>
 </head>
 <body>
   <main class="ac-section portal-app">
-    <!-- Paste <main> inner HTML from main.html -->
+    <!-- Paste full <main> from main.html (including class portal-app) -->
   </main>
   <script>
 window.__ATHENA_APP_RUN__ = function () {
   /* Paste app.js body here (not the file wrapper) */
 };
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/athena-bootstrap.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/preview-embed.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/athena-bootstrap.js"></script>
 </body>
 </html>
 ```
 
-`athena-app.css` styles app content; preview sidebar chrome (`.shell-sidebar-link`, wordmark, etc.) comes from **`shell-base.css`** — loaded by `preview-shell.js` and frozen `index.html`.
+`preview-embed.js` loads shell chrome (`shell-base.css`, `preview-shell.css`, `athena-app.css`) and wraps the inlined `<main>`. **`index.html`** (local only) still uses `preview-shell.js` + iframe when the author runs a static server.
 
-Optional: `index.html` + `npx serve .` only if the author uses Cursor with a terminal and wants the full sidebar preview frame.
+Optional: `index.html` + `npx serve .` only if the author uses Cursor with a terminal and wants iframe-based local preview.
 
 ---
 
 ## Design system
 
 - Utilities: `ac-section`, `ac-row`, `wa-stack`, `wa-gap-m`, `wa-cluster`, `shell-subtle`, `shell-page-hero`
-- Web Awesome: **closing tags always** — `<wa-input></wa-input>`, never self-closing
-- Icons in app UI: `<wa-icon name="kebab-name" label="Description"></wa-icon>`
-- Hide hero when embedded: `html.embedded` class (from embed detection in `main.html`)
+- Web Awesome: **closing tags always** — `<wa-input></wa-input>`, never self-closing; button sizes `s` / `m` / `l` (not `small` / `medium` / `large`)
+- Icons: `<wa-icon name="kebab-name" label="Description"></wa-icon>` — **`athena-icons.js`** registers sharp-solid SVGs as the default library (included in head templates)
+- Hide hero when embedded: `html.embedded` class (`main.html` embed detection; `preview-embed.js` adds it in artifact preview)
 
 ---
 
@@ -424,7 +437,7 @@ Roles (descending): `admin` > `board` > `executive` > `managers` > `providers` >
 ## Anti-patterns
 
 - Editing `index.html` after scaffold
-- Letting `preview.html` drift out of sync with `main.html` / `app.js` / `app.css`
+- Letting `preview.html` drift — **regenerate** it from `main.html` / `app.js` / `app.css` after each change
 - Duplicating Portal sidebar or login in `main.html`
 - Swapping bootstrap or design-system URLs in `main.html` per environment
 - Vendoring `athena-app.css` into the app folder
@@ -434,4 +447,4 @@ Roles (descending): `admin` > `board` > `executive` > `managers` > `providers` >
 
 ## Skill version
 
-`2026-06` — preview.html single-file sandbox preview; bootstrap inline config + `__ATHENA_APP_RUN__`.
+`2026-06-20` — `preview-embed.js` Back Office frame in single-file preview; `athena-icons.js` for `wa-icon name`; kit CDN `@1` (major-floating).
