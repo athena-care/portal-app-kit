@@ -103,6 +103,7 @@ write_if_safe "$TARGET/index.html" <<HTML
   <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/native.css" />
   <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/utilities.css" />
   <link rel="stylesheet" href="${KIT_BASE}/assets/preview-shell.css" />
+  <link rel="stylesheet" href="${KIT_BASE}/assets/shell-base.css" />
 
   <script type="module" src="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/webawesome.loader.js"></script>
   <script src="https://kit.fontawesome.com/da6fb3d90e.js" crossorigin="anonymous"></script>

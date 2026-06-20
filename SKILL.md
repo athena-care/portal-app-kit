@@ -192,6 +192,7 @@ Use the JSON template above with intake answers.
   <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/native.css" />
   <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/utilities.css" />
   <link rel="stylesheet" href="https://athena-care.github.io/portal-app-kit/assets/preview-shell.css" />
+  <link rel="stylesheet" href="https://athena-care.github.io/portal-app-kit/assets/shell-base.css" />
   <script type="module" src="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/webawesome.loader.js"></script>
   <script src="https://kit.fontawesome.com/da6fb3d90e.js" crossorigin="anonymous"></script>
 </head>
@@ -383,7 +384,7 @@ window.__ATHENA_APP_RUN__ = function () {
 </html>
 ```
 
-`athena-bootstrap.js` uses inlined config when present and runs `__ATHENA_APP_RUN__` instead of fetching `app.js`.
+`athena-app.css` styles app content; preview sidebar chrome (`.shell-sidebar-link`, wordmark, etc.) comes from **`shell-base.css`** — loaded by `preview-shell.js` and frozen `index.html`.
 
 Optional: `index.html` + `npx serve .` only if the author uses Cursor with a terminal and wants the full sidebar preview frame.
 

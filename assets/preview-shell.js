@@ -325,6 +325,7 @@
         var kit = (config.kitOrigin || DEFAULT_KIT).replace(/\/$/, "");
         var portal = (config.portalOrigin || DEFAULT_PORTAL).replace(/\/$/, "");
         injectStylesheet(kit + "/assets/athena-app.css");
+        injectStylesheet(kit + "/assets/shell-base.css");
         document.title = (config.label || "App") + " — preview";
 
         var role = defaultRole(config);
