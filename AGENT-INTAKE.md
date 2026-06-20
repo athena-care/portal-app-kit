@@ -84,7 +84,6 @@ I’ll create the project files and start building — you won’t need to chang
   "icon": "list-check",
   "minRole": "managers",
   "navCategory": "applications",
-  "sortOrder": 25,
   "environment": "development",
   "portalOrigin": "https://backoffice.athenacare.health",
   "kitOrigin": "https://athena-care.github.io/portal-app-kit",

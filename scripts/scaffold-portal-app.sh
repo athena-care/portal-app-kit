@@ -47,7 +47,6 @@ write_if_safe "$TARGET/athena-app.config.json" <<JSON
   "icon": "link",
   "minRole": "staff",
   "navCategory": "applications",
-  "sortOrder": 25,
   "environment": "development",
   "portalOrigin": "${PORTAL_ORIGIN}",
   "kitOrigin": "${KIT_BASE}",

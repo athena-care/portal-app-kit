@@ -74,7 +74,6 @@ Agents write this file after intake. Platform may set `environment` to `producti
   "icon": "list-check",
   "minRole": "managers",
   "navCategory": "applications",
-  "sortOrder": 25,
   "environment": "development",
   "portalOrigin": "https://backoffice.athenacare.health",
   "kitOrigin": "https://athena-care.github.io/portal-app-kit",
@@ -84,7 +83,7 @@ Agents write this file after intake. Platform may set `environment` to `producti
 
 | Field | Purpose |
 |-------|---------|
-| `appKey`, `label`, `icon`, `minRole`, `navCategory`, `sortOrder` | Sidebar nav (platform handoff) |
+| `appKey`, `label`, `icon`, `minRole`, `navCategory` | Sidebar nav (platform handoff; alphabetical within category) |
 | `environment` | `development` while building; `production` when live in Portal |
 | `dev.role` | Role to simulate locally (via `GET /api/me/dev`) |
 
