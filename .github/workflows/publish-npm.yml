@@ -1,5 +1,11 @@
 name: Publish npm (jsDelivr)
 
+# Trusted Publishing (OIDC) — no NPM_TOKEN. Configure on npmjs.com first:
+# Package → Settings → Trusted Publishers → GitHub Actions
+#   org/user: athena-care
+#   repo: portal-app-kit
+#   workflow: publish-npm.yml
+
 on:
   push:
     branches: [main]
@@ -24,7 +30,8 @@ jobs:
           node-version: "22"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Publish to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --provenance --access public
+      - name: Use npm with Trusted Publishing support
+        run: npm install -g npm@latest
+
+      - name: Publish to npm (OIDC)
+        run: npm publish --access public
