@@ -22,6 +22,29 @@
     return global.__ATHENA_APP_CONFIG__ || null;
   }
 
+  function devRoleFromQuery() {
+    try {
+      if (typeof global.location === "undefined") return null;
+      var q = new URLSearchParams(global.location.search);
+      var role = q.get("devRole");
+      if (role && ROLE_RANK[role] !== undefined) return role;
+    } catch (e) {}
+    return null;
+  }
+
+  function resolveDevRole(config) {
+    if (!config) return "staff";
+    if (config.environment === "development") {
+      var fromQuery = devRoleFromQuery();
+      if (fromQuery) return fromQuery;
+    }
+    return (
+      (config.dev && config.dev.role) ||
+      config.minRole ||
+      "staff"
+    );
+  }
+
   function mockViewer(role) {
     role = role || "staff";
     if (ROLE_RANK[role] === undefined) role = "staff";
@@ -49,10 +72,7 @@
 
   function fetchDevFixture(config) {
     var portal = (config.portalOrigin || "").replace(/\/$/, "");
-    var role =
-      (config.dev && config.dev.role) ||
-      config.minRole ||
-      "staff";
+    var role = resolveDevRole(config);
     if (!portal) return Promise.resolve(null);
     var url =
       portal + "/api/me/dev?role=" + encodeURIComponent(role);
@@ -76,22 +96,14 @@
         if (config.environment === "development") {
           return fetchDevFixture(config).then(function (fixture) {
             if (fixture) return fixture;
-            var role =
-              (config.dev && config.dev.role) ||
-              config.minRole ||
-              "staff";
-            return mockViewer(role);
+            return mockViewer(resolveDevRole(config));
           });
         }
         return null;
       })
       .catch(function () {
         if (config && config.environment === "development") {
-          var role =
-            (config.dev && config.dev.role) ||
-            config.minRole ||
-            "staff";
-          return mockViewer(role);
+          return mockViewer(resolveDevRole(config));
         }
         return null;
       })

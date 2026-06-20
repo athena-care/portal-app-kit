@@ -1,7 +1,7 @@
 {
-  "appKey": "example-app",
-  "label": "Example App",
-  "icon": "puzzle-piece",
+  "appKey": "my-app",
+  "label": "My App",
+  "icon": "link",
   "minRole": "staff",
   "navCategory": "applications",
   "sortOrder": 25,

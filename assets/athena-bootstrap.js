@@ -1,6 +1,6 @@
 /**
  * Athena Portal static app bootstrap — loads config, design-system CSS, AthenaMe, app.js.
- * index.html references only this script (+ app.css). Do not edit asset URLs per environment.
+ * main.html references only this script (+ app.css). Do not edit asset URLs per environment.
  */
 (function (global) {
   "use strict";

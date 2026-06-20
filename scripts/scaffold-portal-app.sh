@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# scaffold-portal-app.sh — content-only starter for Portal iframe apps.
-# Asset URLs come from athena-app.config.json via athena-bootstrap.js.
+# scaffold-portal-app.sh — Portal static app starter (main.html + frozen preview index.html).
 #
 # Usage: bash scaffold-portal-app.sh <target-dir> [--force]
 
@@ -13,8 +12,11 @@ if [ "${1:-}" = "" ] || [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
   cat <<USAGE
 Usage: scaffold-portal-app.sh <target-dir> [--force]
 
-Creates index.html, athena-app.config.json, app.css, app.js, README.md.
-Agents should run intake first and patch athena-app.config.json before building.
+Creates main.html (app), index.html (dev preview — do not edit), athena-app.config.json,
+app.css, app.js, README.md.
+
+Agents: run intake first, patch athena-app.config.json, build in main.html / app.js / app.css only.
+Never edit index.html after scaffold.
 
 Pass --force to overwrite existing files.
 USAGE
@@ -57,6 +59,63 @@ JSON
 
 # shellcheck disable=SC2094
 write_if_safe "$TARGET/index.html" <<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script>
+(function () {
+  try {
+    var el = document.documentElement;
+    var v = localStorage.getItem('athena-care-theme') || 'system';
+    el.classList.remove('wa-dark');
+    if (v === 'light') {
+      el.setAttribute('data-theme', 'light');
+    } else if (v === 'dark') {
+      el.setAttribute('data-theme', 'dark');
+      el.classList.add('wa-dark');
+    } else {
+      el.removeAttribute('data-theme');
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        el.classList.add('wa-dark');
+      }
+    }
+    var b = localStorage.getItem('athena-care-brand') || 'royal';
+    if (b === 'royal' || b === 'adobe' || b === 'cumberland') {
+      el.setAttribute('data-ac-brand', b);
+    }
+    var s = localStorage.getItem('athena-care-ui-size') || 'medium';
+    if (s === 'small' || s === 'large') {
+      el.setAttribute('data-ui-size', s);
+    } else {
+      el.removeAttribute('data-ui-size');
+    }
+  } catch (e) {}
+})();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preview</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100..700;1,100..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/themes/default.css" />
+  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/native.css" />
+  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/utilities.css" />
+  <link rel="stylesheet" href="${KIT_BASE}/assets/preview-shell.css" />
+
+  <script type="module" src="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/webawesome.loader.js"></script>
+  <script src="https://kit.fontawesome.com/da6fb3d90e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <script src="${KIT_BASE}/assets/preview-shell.js"></script>
+</body>
+</html>
+HTML
+
+# shellcheck disable=SC2094
+write_if_safe "$TARGET/main.html" <<HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -160,26 +219,26 @@ JS
 write_if_safe "$TARGET/README.md" <<MD
 # Portal static app
 
-Content-only HTML for the Athena back office. The Portal shell wraps this app in an iframe at \`/apps/<app-key>\`.
+Content for the Athena back office. The Portal shell wraps \`main.html\` in an iframe at \`/apps/<app-key>\`.
 
 ## Playbook
 
 https://athena-care.github.io/portal-app-kit/PLAYBOOK.md
 
-## Configuration
+## Build
 
-\`athena-app.config.json\` controls menu metadata and dev vs production assets. Your coding agent writes this file — you do not need to edit URLs in \`index.html\`.
+Edit \`main.html\` (inside \`<main>\`), \`app.js\`, and \`app.css\`. **Do not edit \`index.html\`** — it is the dev preview frame only.
 
 ## Local preview
 
-\`npx serve .\` in this folder (or any static server).
+\`npx serve .\` then open the preview in your browser (use the default page the server opens, or the folder root).
 
 ## Platform integration
 
-Hand off this folder to the platform team when ready. They set \`environment\` to \`production\` and integrate per Portal \`docs/STATIC-APP-PORTAL-CODA.md\`.
+Hand off this folder when ready. The platform team integrates per Portal \`STATIC-APP-PORTAL-CODA.md\`.
 MD
 
 SCRIPT_SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
 chmod +x "$SCRIPT_SELF" 2>/dev/null || true
 
-echo "Done. Run intake, patch athena-app.config.json, then build. See ${KIT_BASE}/PLAYBOOK.md"
+echo "Done. Run intake, patch athena-app.config.json, then build in main.html / app.js / app.css. See ${KIT_BASE}/PLAYBOOK.md"

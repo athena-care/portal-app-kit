@@ -19,7 +19,7 @@ Staff guide (sample prompts): `https://backoffice.athenacare.health/apps/build-a
 1. Ask intake Q1–Q4 (menu setup), then **“What are we building today?”**
 2. Write `athena-app.config.json` from answers (user never edits JSON)
 3. Run `bash scripts/scaffold-portal-app.sh <folder>`
-4. Build only in `app.js` and `app.css` — **never change asset URLs in `index.html`**
+4. Build in **`main.html`** (inside `<main>`), **`app.js`**, and **`app.css`** — **never edit `index.html`** (dev preview frame only)
 
 ---
 
@@ -27,16 +27,19 @@ Staff guide (sample prompts): `https://backoffice.athenacare.health/apps/build-a
 
 ```text
 Staff (signed in)
-  /apps/<app-key>     → Portal shell (sidebar) → iframe → /<app-key>/index.html?embed=1
+  /apps/<app-key>     → Portal shell (sidebar) → iframe → /<app-key>/main.html?embed=1
+
+Local preview (dev only)
+  index.html          → mock Portal chrome → iframe → main.html
 
 Coda (public embed, no session)
-  /<app-key>/embed/<secret-key>?embed=1  → same index.html, anonymous
+  /<app-key>/embed/<secret-key>?embed=1  → main.html, anonymous
 ```
 
 | Layer | Your responsibility |
 |-------|----------------------|
-| **Your folder** | `index.html`, `athena-app.config.json`, `app.css`, `app.js` |
-| **Portal platform** | iframe route, nginx, nav row, deploy (hand off when ready) |
+| **Your folder** | `main.html`, `athena-app.config.json`, `app.css`, `app.js` (+ assets). `index.html` is scaffolded for local preview — **never edit**; stripped on platform submit. |
+| **Portal platform** | iframe route → `main.html`, nginx, nav row, deploy (hand off when ready) |
 
 Auth is on the **parent** Portal page only. Never put login or `auth_request` on the static HTML file the iframe loads.
 
@@ -46,14 +49,15 @@ Production host: `https://backoffice.athenacare.health`
 
 ## Critical: do not duplicate the shell
 
-**Wrong:** full `wa-page.shell` with drawer, wordmark, sign-out.
+**Wrong:** full `wa-page.shell` with drawer, wordmark, sign-out in **`main.html`**.
 
 **Right:** content in `<main>` only; optional app-local header inside the iframe.
 
 | Do | Don't |
 |----|-------|
-| Content in `<main>`; app-local header OK | Full Portal sidebar or login in your HTML |
-| One `athena-app.config.json` for menu + environment | Swap CSS/JS URLs in `index.html` at deploy |
+| Build in `main.html` `<main>`, `app.js`, `app.css` | Edit **`index.html`** after scaffold (preview plumbing only) |
+| Content in `<main>`; app-local header OK | Full Portal sidebar or login in `main.html` |
+| One `athena-app.config.json` for menu + environment | Swap CSS/JS URLs in `main.html` at deploy |
 | `AthenaMe.ready()` for role UX | Trust client role for security |
 | Hide chrome when `?embed=1` | Copy `athena-app.css` into your app folder |
 
@@ -93,11 +97,22 @@ Agents write this file after intake. Platform may set `environment` to `producti
 | Design system CSS | `{kitOrigin}/assets/athena-app.css` | `/design/athena-app.css` |
 | AthenaMe JS | `{kitOrigin}/assets/athena-me.js` | `/static/athena-me.js` |
 
-`index.html` references only **`athena-bootstrap.js`** (fixed kit URL) plus your `app.css`. Same file in dev and prod.
+`main.html` references only **`athena-bootstrap.js`** (fixed kit URL) plus your `app.css`. Same file in dev and prod.
 
 ---
 
-## HTML head (load order)
+## Files agents edit
+
+| File | Edit? |
+|------|-------|
+| `main.html` | **Yes** — app surface inside `<main>`. Do not change `<head>` platform boilerplate or the bootstrap script tag. |
+| `app.js` / `app.css` | **Yes** |
+| `index.html` | **Never** — frozen preview frame (mock shell + iframe). Not deployed. |
+| `athena-app.config.json` | Agent writes once at intake only |
+
+---
+
+## HTML head (`main.html` load order)
 
 1. **FOUC script** (inline, first in `<head>`) — theme/brand/ui-size from `localStorage`
 2. **Embed detection** (inline) — `?embed=1` or `/embed/` → `html.embedded`
@@ -166,7 +181,11 @@ Body end: **only** `<script src="https://athena-care.github.io/portal-app-kit/as
 npx serve .
 ```
 
-In `development`, unsigned pages call `GET https://backoffice.athenacare.health/api/me/dev?role=…` for a synthetic viewer (`fixture: true`). Inside the Portal iframe, real `GET /api/me` (cookie) wins automatically.
+Open the **preview in your browser** (the folder’s default page). You’ll see mock back office chrome with a **Preview as** role menu in the sidebar; your app loads inside the frame.
+
+Tell non-technical users *“open the preview in your browser”* — **do not name `index.html`.**
+
+In `development`, unsigned pages call `GET https://backoffice.athenacare.health/api/me/dev?role=…` for a synthetic viewer (`fixture: true`). The preview role menu reloads `main.html` with `?devRole=`. Inside the Portal iframe, real `GET /api/me` (cookie) wins automatically.
 
 ---
 
@@ -202,7 +221,7 @@ Client-side role checks are **UX only**.
 Hand off the app folder to the platform team:
 
 - `athena-app.config.json` (they set `environment: production`)
-- `index.html`, `app.css`, `app.js`, assets
+- `main.html`, `app.css`, `app.js`, assets (`index.html` is not deployed)
 
 Platform integrates per Portal `STATIC-APP-PORTAL-CODA` (iframe route, nginx, nav row). SQL helper:
 
@@ -214,10 +233,11 @@ node portal/scripts/static-app-config-to-sql.mjs path/to/athena-app.config.json
 
 ## Anti-patterns
 
-- Editing CSS/JS URLs in `index.html` per environment
+- Editing **`index.html`** after scaffold
+- Editing CSS/JS URLs in `main.html` per environment
 - Vendoring `athena-app.css` in the app repo
-- `auth_request` on static `index.html` → login inside iframe
-- Duplicate Portal sidebar or sign-out
+- `auth_request` on static `main.html` → login inside iframe
+- Duplicate Portal sidebar or sign-out in `main.html`
 - Secret Coda embed URL in sidebar nav
 
 ---
@@ -232,4 +252,4 @@ bash scripts/scaffold-portal-app.sh ./my-app
 curl -fsSL https://raw.githubusercontent.com/athena-care/portal-app-kit/main/scripts/scaffold-portal-app.sh | bash -s ./my-app
 ```
 
-Patch `athena-app.config.json` after intake, then build.
+Patch `athena-app.config.json` after intake, then build in `main.html` / `app.js` / `app.css`.

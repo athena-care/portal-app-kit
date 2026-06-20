@@ -11,8 +11,9 @@ Full playbook: [PLAYBOOK.md](./PLAYBOOK.md)
 1. **Do not scaffold** until intake is complete (unless the user says “use defaults”).
 2. **Do not show raw JSON** unless asked; summarize in plain language.
 3. **Never ask** about `environment`, URLs, `appKey`, or `kitOrigin` — you handle those.
-4. After Q5: write `athena-app.config.json`, scaffold, then build.
-5. At handoff: “Send this folder to the platform team.” Do not tell them to change files for deploy.
+4. After Q5: write `athena-app.config.json`, scaffold, then build in **`main.html`**, **`app.js`**, **`app.css`** only.
+5. **Never edit `index.html`** after scaffold — preview frame only; not deployed.
+6. At handoff: “Submit your app folder below” / “Send this folder to the platform team.” Do not mention `index.html` or filenames to the user.
 
 ---
 
@@ -103,4 +104,4 @@ I’ll create the project files and start building — you won’t need to chang
 bash scripts/scaffold-portal-app.sh <folder> --force
 ```
 
-Patch `athena-app.config.json` with intake answers, then implement Q5 in `app.js` / `app.css` only. **Never edit shared URLs in `index.html`.**
+Patch `athena-app.config.json` with intake answers, then implement Q5 in **`main.html`** (inside `<main>`), **`app.js`**, and **`app.css`**. **Never edit `index.html`.** Do not change shared URLs in `main.html` `<head>` or the bootstrap script tag.

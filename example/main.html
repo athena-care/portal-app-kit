@@ -32,8 +32,16 @@
   } catch (e) {}
 })();
   </script>
+  <script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  if (q.get('embed') === '1' || /\/embed\//.test(location.pathname)) {
+    document.documentElement.classList.add('embedded');
+  }
+})();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Preview</title>
+  <title>Athena Care app</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,12 +50,23 @@
   <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/themes/default.css" />
   <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/native.css" />
   <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/utilities.css" />
-  <link rel="stylesheet" href="https://athena-care.github.io/portal-app-kit/assets/preview-shell.css" />
+  <link rel="stylesheet" href="app.css" />
 
   <script type="module" src="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/webawesome.loader.js"></script>
   <script src="https://kit.fontawesome.com/da6fb3d90e.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <script src="https://athena-care.github.io/portal-app-kit/assets/preview-shell.js"></script>
+  <main class="ac-section portal-app">
+    <div class="shell-page-hero portal-app__hero">
+      <h1>Athena Care app</h1>
+      <p class="shell-subtle shell-hero-tagline">Replace this with your app.</p>
+    </div>
+
+    <div class="portal-app__body wa-stack wa-gap-m">
+      <p id="viewer-greeting" class="shell-subtle" hidden></p>
+    </div>
+  </main>
+
+  <script src="https://athena-care.github.io/portal-app-kit/assets/athena-bootstrap.js"></script>
 </body>
 </html>
