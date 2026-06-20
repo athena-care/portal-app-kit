@@ -15,8 +15,20 @@
     "board",
     "admin",
   ];
-  var LOCUS_ICON_SRC =
-    "https://ka-p.fontawesome.com/releases/v7.2.0/svgs/solid/clipboard-medical.svg?token=da6fb3d90e";
+  var FA_KIT_TOKEN = "da6fb3d90e";
+  var FA_RELEASE = "7.2.0";
+
+  function faKitSolidIconSrc(icon) {
+    var name = (icon || "link").trim() || "link";
+    return (
+      "https://ka-p.fontawesome.com/releases/v" +
+      FA_RELEASE +
+      "/svgs/solid/" +
+      name +
+      ".svg?token=" +
+      encodeURIComponent(FA_KIT_TOKEN)
+    );
+  }
 
   function el(tag, className) {
     var node = document.createElement(tag);
@@ -112,16 +124,10 @@
   }
 
   function navIcon(entry) {
-    if (entry.key === "locus" || entry.icon === "clipboard-medical") {
-      var wa = document.createElement("wa-icon");
-      wa.setAttribute("src", LOCUS_ICON_SRC);
-      wa.setAttribute("label", "");
-      return wa;
-    }
-    var icon = document.createElement("wa-icon");
-    icon.setAttribute("name", entry.icon || "link");
-    icon.setAttribute("label", "");
-    return icon;
+    var wa = document.createElement("wa-icon");
+    wa.setAttribute("src", faKitSolidIconSrc(entry.icon || "link"));
+    wa.setAttribute("label", "");
+    return wa;
   }
 
   function sidebarLink(entry, activeHref) {
