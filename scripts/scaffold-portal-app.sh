@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 # scaffold-portal-app.sh — content-only starter for Portal iframe apps.
-# Uses public kit URLs for local development.
+# Asset URLs come from athena-app.config.json via athena-bootstrap.js.
 #
 # Usage: bash scaffold-portal-app.sh <target-dir> [--force]
 
 set -euo pipefail
 
 KIT_BASE="${ATHENA_PORTAL_APP_KIT_BASE:-https://athena-care.github.io/portal-app-kit}"
+PORTAL_ORIGIN="${ATHENA_PORTAL_ORIGIN:-https://backoffice.athenacare.health}"
 
 if [ "${1:-}" = "" ] || [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
   cat <<USAGE
 Usage: scaffold-portal-app.sh <target-dir> [--force]
 
-Creates <target-dir> with index.html, app.css, app.js, README.md.
-Uses public kit asset URLs for local dev (see PLAYBOOK.md).
+Creates index.html, athena-app.config.json, app.css, app.js, README.md.
+Agents should run intake first and patch athena-app.config.json before building.
 
 Pass --force to overwrite existing files.
 USAGE
@@ -35,6 +36,24 @@ write_if_safe() {
   cat > "$path"
   echo "wrote: $path"
 }
+
+# shellcheck disable=SC2094
+write_if_safe "$TARGET/athena-app.config.json" <<JSON
+{
+  "appKey": "my-app",
+  "label": "My App",
+  "icon": "link",
+  "minRole": "staff",
+  "navCategory": "applications",
+  "sortOrder": 25,
+  "environment": "development",
+  "portalOrigin": "${PORTAL_ORIGIN}",
+  "kitOrigin": "${KIT_BASE}",
+  "dev": {
+    "role": "staff"
+  }
+}
+JSON
 
 # shellcheck disable=SC2094
 write_if_safe "$TARGET/index.html" <<HTML
@@ -90,7 +109,6 @@ write_if_safe "$TARGET/index.html" <<HTML
   <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/themes/default.css" />
   <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/native.css" />
   <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/utilities.css" />
-  <link rel="stylesheet" href="${KIT_BASE}/assets/athena-app.css" />
   <link rel="stylesheet" href="app.css" />
 
   <script type="module" src="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/webawesome.loader.js"></script>
@@ -108,8 +126,7 @@ write_if_safe "$TARGET/index.html" <<HTML
     </div>
   </main>
 
-  <script src="${KIT_BASE}/assets/athena-me-dev.js"></script>
-  <script src="app.js"></script>
+  <script src="${KIT_BASE}/assets/athena-bootstrap.js"></script>
 </body>
 </html>
 HTML
@@ -149,18 +166,20 @@ Content-only HTML for the Athena back office. The Portal shell wraps this app in
 
 https://athena-care.github.io/portal-app-kit/PLAYBOOK.md
 
+## Configuration
+
+\`athena-app.config.json\` controls menu metadata and dev vs production assets. Your coding agent writes this file — you do not need to edit URLs in \`index.html\`.
+
 ## Local preview
 
-Use a static server (\`npx serve .\`) or open \`index.html\` in a browser. Dev assets load from the public Portal App Kit.
-
-Before deploy: swap to \`/design/athena-app.css\` and \`/static/athena-me.js\` (see playbook).
+\`npx serve .\` in this folder (or any static server).
 
 ## Platform integration
 
-Hand off to the platform team when ready. Portal \`docs/STATIC-APP-PORTAL-CODA.md\`: iframe route, nginx alias, nav row, deploy.
+Hand off this folder to the platform team when ready. They set \`environment\` to \`production\` and integrate per Portal \`docs/STATIC-APP-PORTAL-CODA.md\`.
 MD
 
 SCRIPT_SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
 chmod +x "$SCRIPT_SELF" 2>/dev/null || true
 
-echo "Done. See ${KIT_BASE}/PLAYBOOK.md and edit index.html / app.js."
+echo "Done. Run intake, patch athena-app.config.json, then build. See ${KIT_BASE}/PLAYBOOK.md"

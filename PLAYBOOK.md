@@ -12,6 +12,17 @@ Staff guide (sample prompts): `https://backoffice.athenacare.health/apps/build-a
 
 ---
 
+## For coding agents — read first
+
+**[AGENT-INTAKE.md](./AGENT-INTAKE.md)** — mandatory plain-language interview before scaffolding.
+
+1. Ask intake Q1–Q4 (menu setup), then **“What are we building today?”**
+2. Write `athena-app.config.json` from answers (user never edits JSON)
+3. Run `bash scripts/scaffold-portal-app.sh <folder>`
+4. Build only in `app.js` and `app.css` — **never change asset URLs in `index.html`**
+
+---
+
 ## Architecture
 
 ```text
@@ -24,7 +35,7 @@ Coda (public embed, no session)
 
 | Layer | Your responsibility |
 |-------|----------------------|
-| **Your folder** | `index.html` + CSS/JS/assets |
+| **Your folder** | `index.html`, `athena-app.config.json`, `app.css`, `app.js` |
 | **Portal platform** | iframe route, nginx, nav row, deploy (hand off when ready) |
 
 Auth is on the **parent** Portal page only. Never put login or `auth_request` on the static HTML file the iframe loads.
@@ -35,32 +46,54 @@ Production host: `https://backoffice.athenacare.health`
 
 ## Critical: do not duplicate the shell
 
-**Wrong:** full `wa-page.shell` with drawer, wordmark, sign-out (design-system standalone scaffold).
+**Wrong:** full `wa-page.shell` with drawer, wordmark, sign-out.
 
 **Right:** content in `<main>` only; optional app-local header inside the iframe.
 
 | Do | Don't |
 |----|-------|
 | Content in `<main>`; app-local header OK | Full Portal sidebar or login in your HTML |
-| FOUC script (theme keys below) | Separate theme system |
+| One `athena-app.config.json` for menu + environment | Swap CSS/JS URLs in `index.html` at deploy |
 | `AthenaMe.ready()` for role UX | Trust client role for security |
-| Hide chrome when `?embed=1` | `?embed=true` as security |
+| Hide chrome when `?embed=1` | Copy `athena-app.css` into your app folder |
 
 ---
 
-## Asset URLs: local dev vs production
+## `athena-app.config.json` — single source of truth
 
-Use **public kit URLs** while building on your computer. Swap to **backoffice paths** before shipping inside the Portal iframe.
+Agents write this file after intake. Platform may set `environment` to `production` at deploy.
 
-| Asset | Local development | Production (backoffice iframe) |
-|-------|-------------------|--------------------------------|
-| Brand CSS | `https://athena-care.github.io/portal-app-kit/assets/athena-app.css` | `/design/athena-app.css` |
-| Identity JS | `https://athena-care.github.io/portal-app-kit/assets/athena-me-dev.js` | `/static/athena-me.js` |
-| Viewer API | Mock via dev helper (or real if testing on backoffice) | `GET /api/me` (cookie) |
+```json
+{
+  "appKey": "manager-checklist",
+  "label": "Manager Checklist",
+  "icon": "list-check",
+  "minRole": "managers",
+  "navCategory": "applications",
+  "sortOrder": 25,
+  "environment": "development",
+  "portalOrigin": "https://backoffice.athenacare.health",
+  "kitOrigin": "https://athena-care.github.io/portal-app-kit",
+  "dev": { "role": "managers" }
+}
+```
 
-Test locally with any static server (`npx serve .`, VS Code Live Server, etc.) or open `index.html` in the browser.
+| Field | Purpose |
+|-------|---------|
+| `appKey`, `label`, `icon`, `minRole`, `navCategory`, `sortOrder` | Sidebar nav (platform handoff) |
+| `environment` | `development` while building; `production` when live in Portal |
+| `dev.role` | Role to simulate locally (via `GET /api/me/dev`) |
 
-Override mock role during local dev: `localStorage.setItem('athena-me-dev-role', 'managers')` then reload.
+### Assets — automatic (do not duplicate)
+
+`athena-bootstrap.js` loads shared CSS and `athena-me.js` from URLs derived from `environment`:
+
+| Asset | `development` | `production` |
+|-------|---------------|--------------|
+| Design system CSS | `{kitOrigin}/assets/athena-app.css` | `/design/athena-app.css` |
+| AthenaMe JS | `{kitOrigin}/assets/athena-me.js` | `/static/athena-me.js` |
+
+`index.html` references only **`athena-bootstrap.js`** (fixed kit URL) plus your `app.css`. Same file in dev and prod.
 
 ---
 
@@ -70,11 +103,12 @@ Override mock role during local dev: `localStorage.setItem('athena-me-dev-role',
 2. **Embed detection** (inline) — `?embed=1` or `/embed/` → `html.embedded`
 3. Google Fonts: IBM Plex Serif / Sans / Mono + Playfair Display
 4. Web Awesome 3.5.0 kit `f3ba44a03c114514`: `themes/default.css`, `native.css`, `utilities.css`
-5. **Brand CSS** (kit URL for dev, `/design/...` for prod)
-6. Your `app.css`
-7. `webawesome.loader.js` (`type="module"`)
-8. Font Awesome kit `da6fb3d90e.js`
-9. Alpine 3.x (`defer`) — only if needed; after WA loader
+5. Your `app.css` only — **not** `athena-app.css` (bootstrap injects it)
+6. `webawesome.loader.js` (`type="module"`)
+7. Font Awesome kit `da6fb3d90e.js`
+8. Alpine 3.x (`defer`) — only if needed; after WA loader
+
+Body end: **only** `<script src="https://athena-care.github.io/portal-app-kit/assets/athena-bootstrap.js"></script>` — bootstrap loads AthenaMe + `app.js`.
 
 ### FOUC script (copy verbatim)
 
@@ -126,68 +160,13 @@ Override mock role during local dev: `localStorage.setItem('athena-me-dev-role',
 
 ---
 
-## Minimal index.html (local dev URLs)
+## Local development
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <!-- FOUC + embed scripts here -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My app — Athena Care</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100..700;1,100..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/themes/default.css" />
-  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/native.css" />
-  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/utilities.css" />
-  <link rel="stylesheet" href="https://athena-care.github.io/portal-app-kit/assets/athena-app.css" />
-  <link rel="stylesheet" href="app.css" />
-
-  <script type="module" src="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/webawesome.loader.js"></script>
-  <script src="https://kit.fontawesome.com/da6fb3d90e.js" crossorigin="anonymous"></script>
-</head>
-<body>
-  <main class="ac-section portal-app">
-    <div class="shell-page-hero portal-app__hero">
-      <h1>My app</h1>
-      <p class="shell-subtle shell-hero-tagline">Short description.</p>
-    </div>
-    <div class="portal-app__body wa-stack wa-gap-m">
-      <p id="viewer-greeting" class="shell-subtle" hidden></p>
-    </div>
-  </main>
-
-  <script src="https://athena-care.github.io/portal-app-kit/assets/athena-me-dev.js"></script>
-  <script src="app.js"></script>
-</body>
-</html>
+```bash
+npx serve .
 ```
 
-**app.css:**
-
-```css
-html.embedded .portal-app__hero { display: none; }
-.portal-app { max-width: 48rem; margin: 0 auto; padding: 0 1rem 2rem; }
-```
-
-**app.js:**
-
-```javascript
-AthenaMe.ready().then(function (me) {
-  if (!me) return;
-  var el = document.getElementById("viewer-greeting");
-  if (!el) return;
-  var name = (me.firstName + " " + me.lastName).trim() || me.email;
-  el.textContent = "Signed in as " + name + " (" + me.role + ").";
-  el.hidden = false;
-});
-```
-
-Before deploy, change CSS to `/design/athena-app.css` and script to `/static/athena-me.js`.
+In `development`, unsigned pages call `GET https://backoffice.athenacare.health/api/me/dev?role=…` for a synthetic viewer (`fixture: true`). Inside the Portal iframe, real `GET /api/me` (cookie) wins automatically.
 
 ---
 
@@ -195,9 +174,9 @@ Before deploy, change CSS to `/design/athena-app.css` and script to `/static/ath
 
 - **Utilities:** `ac-section`, `ac-row`, `wa-stack`, `wa-gap-m`, `wa-cluster`, `shell-subtle`, `shell-page-hero`
 - **Web Awesome:** closing tags always — `<wa-input></wa-input>`, never self-closing
-- **Icons:** `<wa-icon name="kebab-name" label="Description"></wa-icon>`; empty `label=""` when adjacent text describes the control
-- **Typography:** `h1` display headline · `h2` Work Sans heading · use `shell-subtle` for secondary text
-- **Theme keys:** `athena-care-theme`, `athena-care-brand`, `athena-care-ui-size` in `localStorage` (synced with Portal shell)
+- **Icons:** `<wa-icon name="kebab-name" label="Description"></wa-icon>`
+- **Typography:** `h1` display headline · `h2` Work Sans heading · `shell-subtle` for secondary text
+- **Theme keys:** `athena-care-theme`, `athena-care-brand`, `athena-care-ui-size` in `localStorage`
 
 ---
 
@@ -205,37 +184,41 @@ Before deploy, change CSS to `/design/athena-app.css` and script to `/static/ath
 
 ```javascript
 AthenaMe.ready().then(function (me) {
-  if (!me) return; // unsigned or Coda embed
-  if (AthenaMe.hasMinRole(me, "managers")) { /* show admin UI */ }
+  if (!me) return;
+  if (AthenaMe.hasMinRole(me, "managers")) { /* show manager UI */ }
 });
 ```
 
-`GET /api/me` returns: `userId`, `email`, `firstName`, `lastName`, `role`, `status`, `roleRank`.
+Production: `GET /api/me` (cookie). Local dev: `GET /api/me/dev?role=…` (synthetic, `fixture: true`).
 
 **Roles** (descending): `admin` > `board` > `executive` > `managers` > `providers` > `staff`.
 
-Client-side role checks are **UX only**. Enforce sensitive actions on a server if needed.
+Client-side role checks are **UX only**.
 
 ---
 
 ## Platform handoff
 
-When your app works locally, hand off to the platform team:
+Hand off the app folder to the platform team:
 
-- App key: `my-app`
-- Folder with `index.html` + assets
-- Request integration per Portal `STATIC-APP-PORTAL-CODA` (iframe route, nginx alias, nav row, optional Coda embed)
+- `athena-app.config.json` (they set `environment: production`)
+- `index.html`, `app.css`, `app.js`, assets
 
-You deliver HTML; platform wires deploy.
+Platform integrates per Portal `STATIC-APP-PORTAL-CODA` (iframe route, nginx, nav row). SQL helper:
+
+```bash
+node portal/scripts/static-app-config-to-sql.mjs path/to/athena-app.config.json
+```
 
 ---
 
 ## Anti-patterns
 
+- Editing CSS/JS URLs in `index.html` per environment
+- Vendoring `athena-app.css` in the app repo
 - `auth_request` on static `index.html` → login inside iframe
-- Duplicate Portal sidebar or sign-out in your HTML
+- Duplicate Portal sidebar or sign-out
 - Secret Coda embed URL in sidebar nav
-- Org Chart's legacy inline CSS as a template — use design-system tokens
 
 ---
 
@@ -245,8 +228,8 @@ You deliver HTML; platform wires deploy.
 bash scripts/scaffold-portal-app.sh ./my-app
 ```
 
-Or from this repo on GitHub:
-
 ```bash
 curl -fsSL https://raw.githubusercontent.com/athena-care/portal-app-kit/main/scripts/scaffold-portal-app.sh | bash -s ./my-app
 ```
+
+Patch `athena-app.config.json` after intake, then build.

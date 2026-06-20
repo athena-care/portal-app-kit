@@ -6,12 +6,14 @@ Content-only HTML for the Athena back office. The Portal shell wraps this app in
 
 https://athena-care.github.io/portal-app-kit/PLAYBOOK.md
 
+## Configuration
+
+`athena-app.config.json` controls menu metadata and dev vs production assets. Your coding agent writes this file — you do not need to edit URLs in `index.html`.
+
 ## Local preview
 
-Use a static server (`npx serve .`) or open `index.html` in a browser. Dev assets load from the public Portal App Kit.
-
-Before deploy: swap to `/design/athena-app.css` and `/static/athena-me.js` (see playbook).
+`npx serve .` in this folder (or any static server).
 
 ## Platform integration
 
-Hand off to the platform team when ready. Portal `docs/STATIC-APP-PORTAL-CODA.md`: iframe route, nginx alias, nav row, deploy.
+Hand off this folder to the platform team when ready. They set `environment` to `production` and integrate per Portal `docs/STATIC-APP-PORTAL-CODA.md`.

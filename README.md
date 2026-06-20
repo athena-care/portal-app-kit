@@ -1,28 +1,28 @@
-# Athena Care Portal App Kit
+# Portal App Kit
 
-Public playbook and static assets for building **simple HTML/CSS/JS apps** that run inside the Athena back office Portal.
+Public playbook and dev assets for **Athena Care Portal static HTML apps** (iframe content only).
 
-**Staff:** start at [backoffice.athenacare.health/apps/build-a-static-app](https://backoffice.athenacare.health/apps/build-a-static-app) for sample prompts.
+**Give your LLM this URL:**
 
-## Quick links
+https://athena-care.github.io/portal-app-kit/PLAYBOOK.md
+
+**Agents:** run the intake interview first — [AGENT-INTAKE.md](./AGENT-INTAKE.md)
 
 | Resource | URL |
 |----------|-----|
-| **Playbook** (give this to your LLM) | [PLAYBOOK.md](https://athena-care.github.io/portal-app-kit/PLAYBOOK.md) |
-| Brand CSS | [assets/athena-app.css](https://athena-care.github.io/portal-app-kit/assets/athena-app.css) |
-| Identity helper (local dev) | [assets/athena-me-dev.js](https://athena-care.github.io/portal-app-kit/assets/athena-me-dev.js) |
-| Example app | [example/](https://athena-care.github.io/portal-app-kit/example/) |
+| Playbook | [PLAYBOOK.md](./PLAYBOOK.md) |
+| Agent intake | [AGENT-INTAKE.md](./AGENT-INTAKE.md) |
+| Example app | [example/](./example/) |
+| Bootstrap | [assets/athena-bootstrap.js](./assets/athena-bootstrap.js) |
+| Design CSS (dev) | [assets/athena-app.css](./assets/athena-app.css) |
+| AthenaMe | [assets/athena-me.js](./assets/athena-me.js) |
+
+Staff guide: https://backoffice.athenacare.health/apps/build-a-static-app
 
 ## Scaffold
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/athena-care/portal-app-kit/main/scripts/scaffold-portal-app.sh | bash -s ./my-app
+bash scripts/scaffold-portal-app.sh ./my-app
 ```
 
-Or clone this repo and run `bash scripts/scaffold-portal-app.sh ./my-app`.
-
-## Publishing
-
-GitHub Pages deploys from `main` via `.github/workflows/publish.yml`.
-
-Asset sync: `athena-app.css` from [design-system](https://github.com/athena-care/design-system), `athena-me.js` from Portal — run the sync workflow or copy manually when those change.
+Creates `athena-app.config.json`, `index.html` (bootstrap loader), `app.css`, `app.js`. Agents patch config after intake — authors do not edit URLs.

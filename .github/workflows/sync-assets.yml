@@ -24,6 +24,12 @@ jobs:
             "https://raw.githubusercontent.com/athena-care/portal/main/public/static/athena-me.js" \
             -o assets/athena-me.js || echo "Skip: portal raw fetch failed (private repo?)"
 
+      - name: Sync athena-bootstrap.js from portal
+        run: |
+          curl -fsSL \
+            "https://raw.githubusercontent.com/athena-care/portal/main/public/static/athena-bootstrap.js" \
+            -o assets/athena-bootstrap.js || echo "Skip: portal bootstrap fetch failed (private repo?)"
+
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"

@@ -1,0 +1,14 @@
+{
+  "appKey": "example-app",
+  "label": "Example App",
+  "icon": "puzzle-piece",
+  "minRole": "staff",
+  "navCategory": "applications",
+  "sortOrder": 25,
+  "environment": "development",
+  "portalOrigin": "https://backoffice.athenacare.health",
+  "kitOrigin": "https://athena-care.github.io/portal-app-kit",
+  "dev": {
+    "role": "staff"
+  }
+}
