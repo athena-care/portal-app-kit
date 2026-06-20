@@ -1,5 +1,5 @@
 {
-  "version": "1.0.2",
+  "version": "1.0.3",
   "packageName": "athena-portal-app-kit",
   "cdnBase": "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1",
   "paths": {

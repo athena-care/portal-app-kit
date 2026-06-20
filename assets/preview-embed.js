@@ -139,7 +139,7 @@
     });
   }
 
-  function buildEmbedShell(config, role, sections) {
+  function buildEmbedShell(config, role, sections, onRoleChange) {
     var activeHref = config.appKey ? "/apps/" + config.appKey : "";
     var waPage = document.createElement("wa-page");
     waPage.className = "shell athena-preview-shell";
@@ -255,7 +255,7 @@
     main.appendChild(appWrap);
 
     roleSelect.addEventListener("change", function () {
-      setPreviewViewer(roleSelect.value);
+      if (typeof onRoleChange === "function") onRoleChange(roleSelect.value);
     });
 
     waPage.appendChild(headerSlot);
@@ -281,9 +281,12 @@
 
     var appMain = document.querySelector("main.portal-app");
     if (!appMain) {
-      showError("Missing <main class=\"portal-app\"> for preview.");
+      showError('Missing <main class="portal-app"> for preview.');
       return;
     }
+
+    // Clean snapshot of the app markup, taken before the app's first run mutates it.
+    var pristineApp = appMain.cloneNode(true);
 
     var kit = (config.kitOrigin || DEFAULT_KIT).replace(/\/$/, "");
     activeKit = kit;
@@ -299,8 +302,27 @@
     var role = defaultRole(config);
     setPreviewViewer(role);
 
+    var appSlotRef = null;
+
+    function runApp() {
+      if (typeof globalThis.__ATHENA_APP_RUN__ === "function") {
+        globalThis.__ATHENA_APP_RUN__();
+      }
+    }
+
+    // Mirror production's "reload iframe at new devRole": swap in a fresh copy of
+    // the app and re-run it so role-gated UI re-evaluates. The fresh clone drops
+    // the prior run's listeners, so re-running is safe.
+    function onRoleChange(nextRole) {
+      setPreviewViewer(nextRole);
+      if (!appSlotRef) return;
+      appSlotRef.replaceChildren(pristineApp.cloneNode(true));
+      runApp();
+    }
+
     var sections = syntheticNav(config);
-    var built = buildEmbedShell(config, role, sections);
+    var built = buildEmbedShell(config, role, sections, onRoleChange);
+    appSlotRef = built.appSlot;
     built.appSlot.appendChild(appMain);
     document.body.replaceChildren(built.shell);
   }
