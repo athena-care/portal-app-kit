@@ -1,0 +1,9 @@
+html.embedded .portal-app__hero {
+  display: none;
+}
+
+.portal-app {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}

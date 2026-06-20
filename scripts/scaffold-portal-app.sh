@@ -1,0 +1,166 @@
+#!/usr/bin/env bash
+# scaffold-portal-app.sh — content-only starter for Portal iframe apps.
+# Uses public kit URLs for local development.
+#
+# Usage: bash scaffold-portal-app.sh <target-dir> [--force]
+
+set -euo pipefail
+
+KIT_BASE="${ATHENA_PORTAL_APP_KIT_BASE:-https://athena-care.github.io/portal-app-kit}"
+
+if [ "${1:-}" = "" ] || [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+  cat <<USAGE
+Usage: scaffold-portal-app.sh <target-dir> [--force]
+
+Creates <target-dir> with index.html, app.css, app.js, README.md.
+Uses public kit asset URLs for local dev (see PLAYBOOK.md).
+
+Pass --force to overwrite existing files.
+USAGE
+  exit 0
+fi
+
+TARGET="$1"
+FORCE=0
+if [ "${2:-}" = "--force" ]; then FORCE=1; fi
+
+mkdir -p "$TARGET"
+
+write_if_safe() {
+  local path="$1"
+  if [ -e "$path" ] && [ "$FORCE" -ne 1 ]; then
+    echo "skip (exists): $path"
+    return
+  fi
+  cat > "$path"
+  echo "wrote: $path"
+}
+
+# shellcheck disable=SC2094
+write_if_safe "$TARGET/index.html" <<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script>
+(function () {
+  try {
+    var el = document.documentElement;
+    var v = localStorage.getItem('athena-care-theme') || 'system';
+    el.classList.remove('wa-dark');
+    if (v === 'light') {
+      el.setAttribute('data-theme', 'light');
+    } else if (v === 'dark') {
+      el.setAttribute('data-theme', 'dark');
+      el.classList.add('wa-dark');
+    } else {
+      el.removeAttribute('data-theme');
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        el.classList.add('wa-dark');
+      }
+    }
+    var b = localStorage.getItem('athena-care-brand') || 'royal';
+    if (b === 'royal' || b === 'adobe' || b === 'cumberland') {
+      el.setAttribute('data-ac-brand', b);
+    }
+    var s = localStorage.getItem('athena-care-ui-size') || 'medium';
+    if (s === 'small' || s === 'large') {
+      el.setAttribute('data-ui-size', s);
+    } else {
+      el.removeAttribute('data-ui-size');
+    }
+  } catch (e) {}
+})();
+  </script>
+  <script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  if (q.get('embed') === '1' || /\\/embed\\//.test(location.pathname)) {
+    document.documentElement.classList.add('embedded');
+  }
+})();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Athena Care app</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100..700;1,100..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/themes/default.css" />
+  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/native.css" />
+  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/utilities.css" />
+  <link rel="stylesheet" href="${KIT_BASE}/assets/athena-app.css" />
+  <link rel="stylesheet" href="app.css" />
+
+  <script type="module" src="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/webawesome.loader.js"></script>
+  <script src="https://kit.fontawesome.com/da6fb3d90e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <main class="ac-section portal-app">
+    <div class="shell-page-hero portal-app__hero">
+      <h1>Athena Care app</h1>
+      <p class="shell-subtle shell-hero-tagline">Replace this with your app.</p>
+    </div>
+
+    <div class="portal-app__body wa-stack wa-gap-m">
+      <p id="viewer-greeting" class="shell-subtle" hidden></p>
+    </div>
+  </main>
+
+  <script src="${KIT_BASE}/assets/athena-me-dev.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+HTML
+
+# shellcheck disable=SC2094
+write_if_safe "$TARGET/app.css" <<'CSS'
+html.embedded .portal-app__hero {
+  display: none;
+}
+
+.portal-app {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}
+CSS
+
+# shellcheck disable=SC2094
+write_if_safe "$TARGET/app.js" <<'JS'
+AthenaMe.ready().then(function (me) {
+  if (!me) return;
+  var el = document.getElementById("viewer-greeting");
+  if (!el) return;
+  var name = (me.firstName + " " + me.lastName).trim() || me.email;
+  el.textContent = "Signed in as " + name + " (" + me.role + ").";
+  el.hidden = false;
+});
+JS
+
+# shellcheck disable=SC2094
+write_if_safe "$TARGET/README.md" <<MD
+# Portal static app
+
+Content-only HTML for the Athena back office. The Portal shell wraps this app in an iframe at \`/apps/<app-key>\`.
+
+## Playbook
+
+https://athena-care.github.io/portal-app-kit/PLAYBOOK.md
+
+## Local preview
+
+Use a static server (\`npx serve .\`) or open \`index.html\` in a browser. Dev assets load from the public Portal App Kit.
+
+Before deploy: swap to \`/design/athena-app.css\` and \`/static/athena-me.js\` (see playbook).
+
+## Platform integration
+
+Hand off to the platform team when ready. Portal \`docs/STATIC-APP-PORTAL-CODA.md\`: iframe route, nginx alias, nav row, deploy.
+MD
+
+SCRIPT_SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
+chmod +x "$SCRIPT_SELF" 2>/dev/null || true
+
+echo "Done. See ${KIT_BASE}/PLAYBOOK.md and edit index.html / app.js."

@@ -1,0 +1,1433 @@
+/*
+ * Athena Care → Web Awesome bridge
+ * Royal, Adobe, Cumberland, Sage ramps plus warm Ivory/Slate neutrals.
+ * Load after: themes/default.css, native.css, utilities.css
+ *
+ * Includes: semantic tokens, layout aliases, wa-page.shell typography,
+ * reusable doc/layout utilities (ac-doc-*, ac-section, ac-row, ac-demo-*,
+ * shell-*), and data-pattern styles (ac-empty-state, ac-data-grid__bulk,
+ * ac-field-error, ac-form-actions).
+ */
+
+:root {
+  /* Royal (primary)*/
+  --ac-royal-10: #1a0e28;
+  --ac-royal-20: #2c1640;
+  --ac-royal-30: #4f256a;
+  --ac-royal-40: #713495;
+  --ac-royal-50: #9443bf;
+  --ac-royal-60: #a866cb;
+  --ac-royal-70: #bc89d7;
+  --ac-royal-80: #cface3;
+  --ac-royal-90: #e3cfef;
+  --ac-royal-95: #f7f2fb;
+
+  /* Adobe (secondary) */
+  --ac-adobe-10: #180b07;
+  --ac-adobe-20: #352926;
+  --ac-adobe-30: #401e13;
+  --ac-adobe-40: #713922;
+  --ac-adobe-50: #a35432;
+  --ac-adobe-60: #c07852;
+  --ac-adobe-70: #d39874;
+  --ac-adobe-80: #e5ba9c;
+  --ac-adobe-90: #f3dcc8;
+  --ac-adobe-95: #faf1ea;
+
+  /* Cumberland (secondary) — 30 & 50 anchored; 10–20 toward ink; 40 midpoint; 60–80 linear Δ(15,19,9); 80→90→95 use same +Δ as Royal light end (+20,+35,+12 per step, incl. 90→95) */
+  --ac-cumberland-10: #040805;
+  --ac-cumberland-20: #081009;
+  --ac-cumberland-30: #0d1a0e;
+  --ac-cumberland-40: #1c2d17;
+  --ac-cumberland-50: #2b4020;
+  --ac-cumberland-60: #3a5329;
+  --ac-cumberland-70: #496632;
+  --ac-cumberland-80: #58793b;
+  --ac-cumberland-90: #6c9c47;
+  --ac-cumberland-95: #80bf53;
+  
+  /* Sage (secondary accent) */
+  --ac-sage-10: #374b3f;
+  --ac-sage-20: #4e6152;
+  --ac-sage-30: #657765;
+  --ac-sage-40: #7c8d78;
+  --ac-sage-50: #93a38b;
+  --ac-sage-60: #b0bda8;
+  --ac-sage-70: #ccd8c6;
+  --ac-sage-80: #e9f2e3;
+  --ac-sage-90: #f2f7ee;
+  --ac-sage-95: #f8fbf5;
+  --ac-sage-wash: var(--ac-sage-80);
+
+  /* Summit (secondary) */
+  --ac-summit-10: #050a0c;
+  --ac-summit-20: #1b2326;
+  --ac-summit-30: #313c40;
+  --ac-summit-40: #475459;
+  --ac-summit-50: #5d6d73;
+  --ac-summit-60: #76868d;
+  --ac-summit-70: #899fa7;
+  --ac-summit-80: #9fb8c1;
+  --ac-summit-90: #b5d1db;
+  --ac-summit-95: #e3ebef;
+
+  /* Warm neutrals (Ivory / Slate family) */
+    /* Warm Neutrals — carried from snglst, unchanged */
+    --ac-slate-dark:   #191919;
+    --ac-slate:        #262625;
+    --ac-slate-light:  #40403E;
+    --ac-cloud-dark:   #666663;
+    --ac-cloud:        #91918D;
+    --ac-cloud-light:  #BFBFBA;
+  --ac-ivory-dark:   #E5E4DF;
+  --ac-ivory:        #F0F0EB;
+  --ac-ivory-light:  #FAFAF7;
+
+  /*
+   * Web Awesome gray scale → Athena warm neutrals.
+   * --wa-color-neutral-* aliases this ramp (see WA color/variants/neutral.css), so
+   * variant="neutral" buttons, borders, and fills pick up ivory/slate/cloud instead of cool gray.
+   */
+  --wa-color-gray-05: var(--ac-slate-dark);
+  --wa-color-gray-10: var(--ac-slate-dark);
+  --wa-color-gray-20: var(--ac-slate);
+  --wa-color-gray-30: var(--ac-slate-light);
+  --wa-color-gray-40: var(--ac-cloud-dark);
+  --wa-color-gray-50: color-mix(in srgb, var(--ac-cloud-dark) 38%, var(--ac-cloud) 62%);
+  --wa-color-gray-60: var(--ac-cloud);
+  --wa-color-gray-70: var(--ac-cloud-light);
+  --wa-color-gray-80: var(--ac-ivory-dark);
+  --wa-color-gray-90: var(--ac-ivory);
+  --wa-color-gray-95: var(--ac-ivory-light);
+  --wa-color-gray: var(--wa-color-gray-40);
+  --wa-color-gray-key: 40;
+
+  /* Brand.css semantic */
+  --ac-success: #256a2e;
+  --ac-warning: #bd9520;
+  --ac-danger: #9e2424;
+
+  /* App font stacks (shell sets --shell-font-* on wa-page) */
+  --ac-font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --ac-font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --ac-font-condensed: 'IBM Plex Sans Condensed', var(--ac-font-sans);
+
+  /* Success scale anchored to brand guide */
+  --wa-color-success-10: #0f2914;
+  --wa-color-success-20: #1a4520;
+  --wa-color-success-30: #1d5526;
+  --wa-color-success-40: var(--ac-success);
+  --wa-color-success-50: #3d8a49;
+  --wa-color-success-60: #56a562;
+  --wa-color-success-70: #7bc085;
+  --wa-color-success-80: #a8d6ae;
+  --wa-color-success-90: #d8eedb;
+  --wa-color-success-95: #eef7ef;
+
+  --wa-color-warning-40: var(--ac-warning);
+  --wa-color-danger-40: var(--ac-danger);
+}
+
+/*
+ * Active highlight ramp → Web Awesome --wa-color-brand-*.
+ * Switch with html[data-ac-brand="royal"|"adobe"|"cumberland"] (localStorage + app menu).
+ */
+html {
+  --ac-brand-05: #100818;
+  --ac-brand-10: var(--ac-royal-10);
+  --ac-brand-20: var(--ac-royal-20);
+  --ac-brand-30: var(--ac-royal-30);
+  --ac-brand-40: var(--ac-royal-40);
+  --ac-brand-50: var(--ac-royal-50);
+  --ac-brand-60: var(--ac-royal-60);
+  --ac-brand-70: var(--ac-royal-70);
+  --ac-brand-80: var(--ac-royal-80);
+  --ac-brand-90: var(--ac-royal-90);
+  --ac-brand-95: var(--ac-royal-95);
+
+  --wa-color-brand-05: var(--ac-brand-05);
+  --wa-color-brand-10: var(--ac-brand-10);
+  --wa-color-brand-20: var(--ac-brand-20);
+  --wa-color-brand-30: var(--ac-brand-30);
+  --wa-color-brand-40: var(--ac-brand-40);
+  --wa-color-brand-50: var(--ac-brand-50);
+  --wa-color-brand-60: var(--ac-brand-60);
+  --wa-color-brand-70: var(--ac-brand-70);
+  --wa-color-brand-80: var(--ac-brand-80);
+  --wa-color-brand-90: var(--ac-brand-90);
+  --wa-color-brand-95: var(--ac-brand-95);
+
+  /*
+   * Root font-size drives rem everywhere (body via --wa-font-size-m, shell headings, spacing).
+   * Keep scale at 1 so we don’t double-apply vs html font-size (data-ui-size).
+   */
+  font-size: 100%;
+  --wa-font-size-scale: 1;
+}
+
+html[data-ac-brand="adobe"] {
+  --ac-brand-05: #0c0604;
+  --ac-brand-10: var(--ac-adobe-10);
+  --ac-brand-20: var(--ac-adobe-20);
+  --ac-brand-30: var(--ac-adobe-30);
+  --ac-brand-40: var(--ac-adobe-40);
+  --ac-brand-50: var(--ac-adobe-50);
+  --ac-brand-60: var(--ac-adobe-60);
+  --ac-brand-70: var(--ac-adobe-70);
+  --ac-brand-80: var(--ac-adobe-80);
+  --ac-brand-90: var(--ac-adobe-90);
+  --ac-brand-95: var(--ac-adobe-95);
+}
+
+html[data-ac-brand="cumberland"] {
+  --ac-brand-05: #020403;
+  --ac-brand-10: var(--ac-cumberland-10);
+  --ac-brand-20: var(--ac-cumberland-20);
+  --ac-brand-30: var(--ac-cumberland-30);
+  --ac-brand-40: var(--ac-cumberland-40);
+  --ac-brand-50: var(--ac-cumberland-50);
+  --ac-brand-60: var(--ac-cumberland-60);
+  --ac-brand-70: var(--ac-cumberland-70);
+  --ac-brand-80: var(--ac-cumberland-80);
+  --ac-brand-90: var(--ac-cumberland-90);
+  --ac-brand-95: var(--ac-cumberland-95);
+}
+
+html[data-ui-size="small"] {
+  font-size: 87.5%;
+}
+
+html[data-ui-size="large"] {
+  font-size: 112.5%;
+}
+
+/* Light UI (no wa-dark on <html>) */
+html:not(.wa-dark) {
+  --wa-color-surface-default: var(--ac-ivory);
+  --wa-color-surface-lowered: var(--ac-ivory-dark);
+  --wa-color-surface-raised: var(--ac-ivory-light);
+  --wa-color-text-normal: var(--ac-slate-dark);
+  --wa-color-text-quiet: var(--ac-cloud-dark);
+  --wa-color-text-link: var(--ac-brand-30);
+  --wa-color-focus: var(--ac-brand-40);
+  --headline-color: var(--ac-brand-40);
+}
+
+/* Dark UI — surfaces & type only; highlight ramp follows data-ac-brand */
+html.wa-dark {
+  --wa-color-surface-default: var(--ac-slate);
+  --wa-color-surface-lowered: var(--ac-slate-dark);
+  --wa-color-surface-raised: var(--ac-slate-light);
+  --wa-color-text-normal: var(--ac-ivory-light);
+  --wa-color-text-quiet: var(--ac-cloud-dark);
+  --wa-color-text-link: var(--ac-brand-60);
+  --wa-color-focus: var(--ac-brand-50);
+  --headline-color: var(--ac-brand-50);
+}
+
+/* Layout aliases — map to Web Awesome themed tokens */
+html {
+  --bg: var(--wa-color-surface-default);
+  --text: var(--wa-color-text-normal);
+  --text-muted: var(--wa-color-text-quiet);
+  --surface: var(--wa-color-surface-raised);
+  --well: var(--wa-color-surface-lowered);
+  --border: var(--wa-color-neutral-80);
+  --border-mid: var(--wa-color-neutral-70);
+  /* Outlined neutral buttons use border-loud; match form-control outline (border-mid / neutral-70). */
+  --wa-color-neutral-border-loud: var(--border-mid);
+  --accent: var(--wa-color-brand-50);
+  --warn: var(--wa-color-warning-50);
+  --radius: var(--wa-border-radius-m);
+  --font: var(--ac-font-sans);
+  --font-mono: var(--ac-font-mono);
+
+  /* Form fields: same fill as page base (not surface-lowered / “well”) */
+  --wa-form-control-background-color: var(--wa-color-surface-default);
+  --wa-form-control-border-color: var(--border-mid);
+  --wa-form-control-activated-color: var(--accent);
+  --wa-form-control-value-color: var(--text);
+  --wa-form-control-placeholder-color: var(--text-muted);
+}
+
+/* --- wa-page.shell: type scale (h1 headline … h4 label) --- */
+wa-page.shell {
+  --shell-font-sans: var(--ac-font-sans);
+  --shell-font-heading: 'Work Sans', system-ui, sans-serif;
+  --shell-font-serif: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
+  --shell-font-condensed: var(--ac-font-condensed);
+  font-family: var(--shell-font-sans);
+}
+
+wa-page.shell h1 {
+  font-family: "Playfair Display", var(--shell-font-serif), serif;
+  font-size: clamp(2rem, 2rem + 0.75vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin: 0;
+  color: var(--headline-color);
+}
+
+wa-page.shell h2 {
+  font-family: var(--shell-font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+wa-page.shell h3 {
+  font-family: var(--shell-font-heading);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.28;
+  margin: 0;
+  color: var(--text);
+}
+
+wa-page.shell h4 {
+  font-family: var(--shell-font-condensed);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.shell-header-bar {
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.shell-brand-link {
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.shell-header-spacer {
+  flex: 1;
+  min-width: 0.5rem;
+}
+
+.shell-product {
+  font-family: var(--shell-font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ac-sage-40, #728774);
+}
+
+wa-page.shell [slot='navigation'] {
+  padding-top: var(--wa-space-s);
+}
+
+wa-page[view='desktop'] .shell-nav-heading {
+  font-family: var(--shell-font-heading);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.72;
+  margin: 0 0 var(--wa-space-2xs);
+}
+
+.shell-nav-heading--group {
+  margin-top: var(--wa-space-m);
+}
+
+.shell-logo-light,
+.shell-logo-dark {
+  display: block;
+  height: 1.75rem;
+  width: auto;
+}
+
+html:not(.wa-dark) .shell-logo-dark {
+  display: none;
+}
+
+html.wa-dark .shell-logo-light {
+  display: none;
+}
+
+.shell-page-hero {
+  margin-bottom: 1.25rem;
+}
+
+.shell-subtle {
+  font-family: var(--shell-font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ac-brand-20, #2c1640);
+}
+
+html.wa-dark .shell-subtle {
+  color: var(--ac-brand-70, #d6afea);
+}
+
+.shell-hero-tagline {
+  margin: 0.35rem 0 0;
+}
+
+.shell-nav-action {
+  justify-content: flex-start;
+}
+
+.shell-app-menu-panel {
+  padding: var(--wa-space-s);
+  min-width: 11.25rem;
+}
+
+.shell-app-menu wa-select {
+  min-width: 9rem;
+  width: 100%;
+}
+
+.shell-app-menu-events {
+  width: 100%;
+}
+
+/* Primary content — default slot of wa-page.shell (semantic main + inset) */
+wa-page.shell > main.shell-main {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: var(--wa-space-m) var(--wa-space-l);
+  padding-block-end: var(--wa-space-xl);
+}
+
+@media (max-width: 47.99rem) {
+  wa-page.shell > main.shell-main {
+    padding-inline: var(--wa-space-m);
+  }
+}
+
+/*
+ * Reference / template utilities (athena-app-shell & internal tools)
+ * — ac-section, ac-row, ac-grid-2: page structure
+ * — ac-doc-*: documentation prose (notes, captions, type specimens, code sample)
+ * — ac-field-label, ac-icon-*: small patterns
+ * — ac-demo-*: gallery-only sizing/wrappers
+ * — ac-events-*: event log drawer
+ */
+wa-page.shell .catalog-tab-group {
+  width: 100%;
+}
+
+.ac-section {
+  margin-bottom: 2rem;
+}
+
+.ac-section > h2 {
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 0.0625rem solid var(--border-mid);
+}
+
+.catalog .ac-section h3 {
+  margin: 1.25rem 0 0.5rem;
+}
+
+.catalog .ac-section h3:first-of-type {
+  margin-top: 1rem;
+}
+
+.catalog .ac-section h4 {
+  margin: 1rem 0 0.35rem;
+}
+
+.catalog .ac-section:last-child {
+  margin-bottom: 0;
+}
+
+.ac-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.ac-row--align-start {
+  align-items: flex-start;
+}
+
+.ac-row--align-end {
+  align-items: flex-end;
+}
+
+.ac-row--center-gap {
+  align-items: center;
+  gap: 1rem;
+}
+
+.ac-row--baseline-wrap {
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: baseline;
+}
+
+.ac-row--copy-qr {
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.ac-row--icons {
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  color: var(--text-muted);
+}
+
+.ac-icon-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: 0.75rem;
+  max-width: 44rem;
+}
+
+.ac-icon-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.75rem 0.5rem;
+  border: 0.0625rem solid var(--border-mid);
+  border-radius: var(--radius);
+  text-align: center;
+  background: var(--well);
+}
+
+.ac-icon-tile code {
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.ac-icon-tile__hint {
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  color: var(--text-muted);
+}
+
+.ac-icon-semantic {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  color: var(--text);
+}
+
+.ac-icon-scale {
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.ac-icon-scale-label {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+.ac-row--tight {
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.ac-row--breadcrumb-gap {
+  margin-top: 0.75rem;
+}
+
+.ac-doc-note {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+  max-width: 52rem;
+}
+
+.ac-doc-note--tight-top {
+  margin-top: 0;
+}
+
+.ac-doc-note--tight-bottom {
+  margin-bottom: 0.5rem;
+}
+
+.ac-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+  gap: 0.75rem;
+  align-items: start;
+}
+
+wa-tab-panel[active] .ac-tabbed {
+  padding-top: 0.75rem;
+}
+
+.ac-demo-carousel wa-carousel-item.ac-demo-carousel-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--well);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.ac-demo-carousel {
+  max-width: min(20rem, 100%);
+  --aspect-ratio: 4 / 3;
+}
+
+.ac-demo-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.ac-demo-chart {
+  display: block;
+  width: 100%;
+  height: 16.25rem;
+}
+
+.ac-demo-spark-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.ac-demo-spark-row wa-sparkline {
+  flex: 1 1 12.5rem;
+  max-width: 17.5rem;
+}
+
+.ac-demo-sparkline {
+  height: 2rem;
+  color: var(--accent);
+}
+
+.ac-data-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 100%;
+}
+
+.ac-data-grid__toolbar {
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.ac-data-grid__meta {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.ac-data-grid__page-size {
+  min-width: 10rem;
+}
+
+.ac-data-grid__scroll {
+  overflow-x: auto;
+  border: 0.0625rem solid var(--border-mid);
+  border-radius: var(--radius);
+  background: var(--wa-color-surface-raised);
+}
+
+.ac-data-grid__table {
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.ac-data-grid__table tbody {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+.ac-data-grid__table thead {
+  background: var(--well);
+}
+
+.ac-data-grid__th {
+  position: relative;
+}
+
+.ac-data-grid__table th,
+.ac-data-grid__table td {
+  text-align: left;
+  border-bottom: 0.0625rem solid var(--border-mid);
+  color: var(--text);
+  vertical-align: middle;
+}
+
+.ac-data-grid__table td {
+  padding: 0.5rem 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ac-data-grid__table th {
+  padding: 0.3125rem 0.625rem 0.3125rem 0.5rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ac-data-grid__resize {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  box-sizing: content-box;
+  width: 0.5rem;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  border-left: 0.0625rem solid var(--border-mid);
+  background: transparent;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.ac-data-grid__resize:hover {
+  background: color-mix(in srgb, var(--wa-color-brand-50) 28%, transparent);
+}
+
+.ac-data-grid__resize:focus-visible {
+  outline: 0.125rem solid var(--wa-color-brand-50);
+  outline-offset: -0.0625rem;
+}
+
+.ac-data-grid__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.ac-data-grid__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--wa-border-radius-s);
+}
+
+.ac-data-grid__sort:hover {
+  color: var(--wa-color-brand-50);
+}
+
+.ac-data-grid__sort wa-icon {
+  flex-shrink: 0;
+  opacity: 0.65;
+}
+
+.ac-data-grid__sort:hover wa-icon {
+  opacity: 1;
+}
+
+.ac-data-grid__pager {
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ac-data-grid__page-indicator {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  min-width: 4rem;
+  text-align: center;
+}
+
+.ac-demo-anim {
+  display: inline-block;
+  width: 4.5rem;
+  height: 4.5rem;
+  background: var(--wa-color-brand-50);
+  border-radius: var(--wa-border-radius-m);
+  margin: 0.5rem 1rem 0.5rem 0;
+}
+
+#ux-intersection-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 13.75rem;
+  border: solid 0.125rem var(--wa-color-surface-border);
+  padding: 0.75rem;
+  overflow-y: auto;
+  border-radius: var(--radius);
+}
+
+#ux-intersection-demo::before,
+#ux-intersection-demo::after {
+  content: '';
+  height: 7.5rem;
+  flex-shrink: 0;
+}
+
+.ac-demo-intersection-target {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  background: var(--well);
+  border-radius: var(--radius);
+}
+
+.ac-demo-intersection-target.visible {
+  outline: 0.125rem solid var(--accent);
+}
+
+.ac-demo-resize-target {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border: solid 0.125rem var(--wa-color-surface-border);
+  border-radius: var(--radius);
+  resize: both;
+  overflow: auto;
+  min-width: 7.5rem;
+  min-height: 5rem;
+  max-width: 100%;
+}
+
+.ac-demo-page-frame {
+  height: 26.25rem;
+  border: 0.0625rem solid var(--border-mid);
+  border-radius: var(--radius);
+  overflow: auto;
+}
+
+.ac-demo-page-frame wa-page {
+  min-height: 23.75rem;
+}
+
+.ac-demo-nested-header {
+  align-items: center;
+}
+
+.ac-demo-nested-title {
+  font-size: 0.9rem;
+}
+
+.ac-demo-nested-main {
+  margin: 0;
+}
+
+/* Event drawer */
+.ac-events-drawer {
+  --size: min(100vw - 2rem, 22rem);
+}
+
+.ac-events-drawer .ac-event-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 0;
+  height: 100%;
+  font-size: 0.875rem;
+}
+
+.ac-events-drawer .ac-event-meta {
+  margin: 0;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+.ac-events-drawer .ac-event-panel ol {
+  flex: 1 1 auto;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-mid) transparent;
+}
+
+.ac-events-drawer .ac-event-panel ol::-webkit-scrollbar {
+  width: 0.375rem;
+  height: 0.375rem;
+}
+
+.ac-events-drawer .ac-event-panel ol::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ac-events-drawer .ac-event-panel ol::-webkit-scrollbar-thumb {
+  background-color: var(--border-mid);
+  border-radius: 0.1875rem;
+}
+
+.ac-events-drawer .ac-event-panel ol::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-muted);
+}
+
+.ac-events-drawer .ac-event-panel li {
+  padding: 0.25rem 0;
+  border-bottom: 0.0625rem solid var(--border);
+  word-break: break-word;
+}
+
+.ac-events-drawer .ac-event-panel .ev-type {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.ac-events-drawer .ac-event-panel .ev-tag {
+  color: var(--text-muted);
+}
+
+.ac-events-drawer .ac-events-footer.wa-cluster {
+  width: 100%;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+/* Documentation typography — reuse on any internal doc page */
+.ac-doc-kicker {
+  font-family: var(--shell-font-heading);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 0.35rem;
+}
+
+.ac-doc-kicker:not(:first-child) {
+  margin-top: 1.25rem;
+}
+
+.ac-doc-p {
+  font-family: var(--shell-font-sans);
+  font-size: 1rem;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 40rem;
+  color: var(--text);
+}
+
+.ac-doc-aside {
+  font-size: 0.8125rem;
+  max-width: 52rem;
+  color: var(--text-muted);
+  margin: 0 0 0.35rem;
+}
+
+.ac-doc-aside--lead {
+  margin-bottom: 0;
+}
+
+.ac-doc-aside--follow {
+  margin: 0.35rem 0 0.35rem;
+}
+
+.ac-doc-display {
+  font-family: var(--shell-font-serif);
+  font-size: 1.125rem;
+  font-style: italic;
+  font-weight: 400;
+  margin: 0;
+  color: var(--ac-brand-20, #2c1640);
+}
+
+html.wa-dark .ac-doc-display {
+  color: var(--ac-brand-70, #d6afea);
+}
+
+.ac-doc-sample {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  margin: 0;
+  padding: 0.5rem 0.65rem;
+  background: var(--well);
+  border-radius: var(--radius);
+  border: 0.0625rem solid var(--border-mid);
+  color: var(--text);
+}
+
+.ac-token-name {
+  color: var(--accent);
+}
+
+/* Captions (demo subheads) & form helpers */
+.ac-doc-caption {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.ac-doc-caption--after {
+  margin: 0.75rem 0 0.35rem;
+}
+
+.ac-doc-caption--section {
+  margin: 1rem 0 0.35rem;
+}
+
+.ac-doc-caption--tight-top {
+  margin-top: 0;
+}
+
+.ac-doc-caption--file {
+  margin: 0.85rem 0 0.35rem;
+}
+
+.ac-field-label {
+  display: block;
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+  color: var(--text-muted);
+}
+
+.ac-doc-block {
+  margin: 0 0 1rem;
+}
+
+.ac-demo-popover-body {
+  margin: 0;
+  padding: 0.25rem;
+}
+
+.ac-details-spaced {
+  margin-top: 0.75rem;
+}
+
+.ac-demo-progress {
+  width: min(15rem, 100%);
+}
+
+.ac-demo-slider {
+  max-width: 17.5rem;
+}
+
+.ac-demo-narrow-stack {
+  max-width: 17.5rem;
+}
+
+.ac-demo-skel-line {
+  width: 100%;
+  height: 0.75rem;
+  display: block;
+}
+
+.ac-demo-skel-line--92 {
+  width: 92%;
+  height: 0.75rem;
+  display: block;
+}
+
+.ac-demo-skel-line--64 {
+  width: 64%;
+  height: 0.75rem;
+  display: block;
+}
+
+.ac-demo-skel-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: block;
+}
+
+.ac-demo-skel-block {
+  width: 5rem;
+  height: 2.5rem;
+  display: block;
+}
+
+.ac-demo-scroller {
+  height: 5.5rem;
+  max-width: 17.5rem;
+  border: 0.0625rem solid var(--border-mid);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+}
+
+.ac-demo-scroller p {
+  margin: 0 0 0.5rem;
+}
+
+.ac-demo-scroller p:last-child {
+  margin-bottom: 0;
+}
+
+.ac-icon-accent {
+  color: var(--accent);
+}
+
+.ac-icon-warn {
+  color: var(--warn);
+}
+
+.ac-icon-danger {
+  color: var(--ac-danger);
+}
+
+.ac-demo-tree {
+  --indent-guide-width: 0.0625rem;
+  max-width: 20rem;
+}
+
+.ac-demo-animated-image {
+  width: 7.5rem;
+  height: auto;
+}
+
+.ac-demo-comparison {
+  max-width: min(22.5rem, 100%);
+}
+
+.ac-demo-compare-before,
+.ac-demo-compare-after {
+  height: 8.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.ac-demo-compare-before {
+  background: var(--wa-color-neutral-80);
+}
+
+.ac-demo-compare-after {
+  background: var(--wa-color-brand-80);
+}
+
+.ac-demo-split {
+  max-width: 26.25rem;
+}
+
+.ac-demo-split-pane {
+  min-height: 7.5rem;
+  background: var(--well);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ac-demo-zoom-frame {
+  max-width: 22.5rem;
+  aspect-ratio: 16 / 9;
+}
+
+/*
+ * Web Awesome — compact control sizing & menus (adapted from examples/respite/styles.css).
+ * Only geometry / typography / non-palette behavior; Royal & surfaces stay on Athena tokens above.
+ */
+
+/* Buttons — tighter heights & inline padding than WA kit defaults */
+wa-button[size='small'] {
+  --height: 1.625rem;
+  --padding-inline: 0.35rem;
+}
+wa-button[size='medium'] {
+  --height: 2.125rem;
+  --padding-inline: 0.625rem;
+}
+wa-button[size='large'] {
+  --height: 2.75rem;
+  --padding-inline: 0.75rem;
+}
+
+wa-button[size='small']::part(base) {
+  height: 1.625rem;
+  min-height: 0;
+  padding-inline: 0.35rem;
+}
+wa-button[size='medium']::part(base) {
+  height: 2.125rem;
+  min-height: 0;
+  padding-inline: 0.625rem;
+}
+wa-button[size='large']::part(base) {
+  height: 2.75rem;
+  min-height: 0;
+  padding-inline: 0.75rem;
+}
+
+/* Inputs — small chrome */
+wa-input[size='small'] {
+  --height: 1.625rem;
+  --padding-inline: 0.5rem;
+}
+wa-input[size='small']::part(base) {
+  min-height: 0;
+  padding-inline: 0.5rem;
+}
+
+/* Select — taller combobox than wa-input small so label/value/caret keep vertical padding */
+wa-select[size='small'] {
+  --height: 2.125rem;
+  --padding-inline: 0.5rem;
+  --wa-form-control-height: 2.125rem;
+  --wa-form-control-padding-inline: 0.5rem;
+}
+wa-select[size='small']::part(combobox) {
+  padding-inline: 0.5rem;
+}
+
+/* Combobox — match small select */
+wa-combobox[size='small'] {
+  --height: 2.125rem;
+  --padding-inline: 0.5rem;
+  --wa-form-control-height: 2.125rem;
+  --wa-form-control-padding-inline: 0.5rem;
+}
+wa-combobox[size='small']::part(combobox) {
+  padding-inline: 0.5rem;
+}
+
+/* Textarea */
+wa-textarea[size='small'] {
+  --height: auto;
+  --padding-inline: 0.5rem;
+}
+wa-textarea[size='small']::part(base) {
+  min-height: 0;
+  padding-inline: 0.5rem;
+}
+
+/* Rating — active star follows accent */
+wa-rating {
+  --symbol-color-active: var(--accent);
+  --symbol-color: var(--text-muted);
+}
+
+/* Radio (incl. appearance="button") */
+wa-radio[size='small'],
+wa-radio-group[size='small'] wa-radio {
+  --height: 1.625rem;
+  --wa-form-control-height: 1.625rem;
+  --padding-inline: 0.25rem;
+  --wa-form-control-padding-inline: 0.25rem;
+}
+wa-radio[size='medium'],
+wa-radio-group[size='medium'] wa-radio {
+  --height: 2.125rem;
+  --wa-form-control-height: 2.125rem;
+  --padding-inline: 0.35rem;
+  --wa-form-control-padding-inline: 0.35rem;
+}
+wa-radio[size='large'],
+wa-radio-group[size='large'] wa-radio {
+  --height: 2.75rem;
+  --wa-form-control-height: 2.75rem;
+  --padding-inline: 0.5rem;
+  --wa-form-control-padding-inline: 0.5rem;
+}
+
+wa-radio[appearance='button'][size='small'],
+wa-radio-group[size='small'] wa-radio[appearance='button'],
+wa-radio[appearance='button'][size='medium'],
+wa-radio-group[size='medium'] wa-radio[appearance='button'],
+wa-radio[appearance='button'][size='large'],
+wa-radio-group[size='large'] wa-radio[appearance='button'] {
+  min-height: 0 !important;
+  height: var(--wa-form-control-height) !important;
+  padding-inline: var(--wa-form-control-padding-inline) !important;
+}
+
+wa-radio-group[size='small']::part(form-control-input),
+wa-radio-group[size='medium']::part(form-control-input),
+wa-radio-group[size='large']::part(form-control-input) {
+  min-height: 0;
+}
+
+/* Plex Sans Condensed — structural / nav-style controls */
+wa-radio-group,
+wa-tab-group,
+wa-details,
+wa-breadcrumb,
+wa-tree {
+  font-family: var(--ac-font-condensed);
+}
+
+/* Dropdowns, selects, comboboxes — listbox/menu follow app surface tokens */
+wa-dropdown,
+wa-dropdown::part(menu),
+wa-select,
+wa-combobox {
+  --wa-color-brand-fill-quiet: color-mix(in srgb, var(--accent) 22%, var(--bg));
+  --wa-color-neutral-fill-normal: color-mix(in srgb, var(--accent) 22%, var(--bg));
+}
+
+wa-select,
+wa-combobox {
+  --wa-color-surface-raised: var(--bg) !important;
+  --wa-color-surface-default: var(--bg) !important;
+  --wa-color-surface-lowered: var(--bg) !important;
+  --wa-color-surface-border: var(--border) !important;
+}
+
+wa-dropdown::part(menu) {
+  background: var(--bg);
+  background-color: var(--bg);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+wa-select::part(listbox),
+wa-combobox::part(listbox) {
+  background: var(--bg) !important;
+  background-color: var(--bg) !important;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+html.wa-dark wa-dropdown,
+html.wa-dark wa-dropdown-item,
+html.wa-dark wa-select,
+html.wa-dark wa-combobox,
+html.wa-dark wa-option {
+  --wa-color-brand-fill-quiet: color-mix(in srgb, var(--accent) 22%, var(--bg));
+  --wa-color-neutral-fill-normal: color-mix(in srgb, var(--accent) 22%, var(--bg));
+  --wa-color-neutral-fill-quiet: color-mix(in srgb, var(--accent) 22%, var(--bg));
+}
+
+/* --- Data patterns ---------------------------------------------------
+ * Live demos in athena-app-shell.html sec-table-patterns / sec-form-patterns /
+ * sec-empty-states. Full conventions: skills/data-patterns/references/
+ */
+
+.ac-empty-state {
+  display: grid;
+  gap: var(--wa-space-m);
+  justify-items: center;
+  text-align: center;
+  padding: var(--wa-space-2xl) var(--wa-space-l);
+  color: var(--wa-color-text-quiet);
+}
+.ac-empty-state__icon {
+  font-size: 2.5rem;
+  color: var(--wa-color-text-quiet);
+}
+.ac-empty-state h3 { margin: 0; }
+.ac-empty-state p  { margin: 0; max-width: 44ch; }
+
+.ac-state-grid {
+  display: grid;
+  gap: var(--wa-space-m);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.ac-empty-state--card {
+  background: var(--wa-color-surface-raised, var(--wa-color-surface-default));
+  border: 1px solid var(--wa-color-surface-border, var(--wa-color-neutral-80));
+  border-radius: var(--wa-border-radius-m, 6px);
+  padding: var(--wa-space-l);
+}
+.ac-state-error { margin-bottom: var(--wa-space-m); }
+
+/* Bulk-action strip */
+.ac-data-grid__bulk {
+  display: flex;
+  align-items: center;
+  gap: var(--wa-space-s);
+  padding: var(--wa-space-s) var(--wa-space-m);
+  margin-bottom: var(--wa-space-s);
+  background: var(--wa-color-brand-fill-quiet);
+  border: 1px solid var(--wa-color-brand-border-quiet, var(--wa-color-brand-fill-normal));
+  border-radius: var(--wa-border-radius-s, 4px);
+}
+.ac-data-grid__bulk-count { font-weight: 600; margin-right: auto; }
+
+/* Selected row + select cells */
+.ac-data-grid tr.is-selected > td {
+  background: var(--wa-color-brand-fill-quiet);
+}
+.ac-data-grid__th--select,
+.ac-data-grid__td--select {
+  width: 2.25rem;
+  padding-inline: var(--wa-space-s);
+  text-align: center;
+}
+
+/* Column picker panel inside wa-dropdown */
+.ac-data-grid__columns-panel {
+  padding: var(--wa-space-s) var(--wa-space-m);
+  min-width: 12rem;
+}
+
+/* Inline-edit cell */
+.ac-data-grid__edit-cell { display: block; }
+.ac-data-grid__edit-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--wa-space-2xs);
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.ac-data-grid__edit-trigger:hover .ac-data-grid__edit-icon,
+.ac-data-grid__edit-trigger:focus-visible .ac-data-grid__edit-icon {
+  opacity: 1;
+}
+.ac-data-grid__edit-icon {
+  opacity: 0;
+  font-size: 0.75em;
+  color: var(--wa-color-text-quiet);
+  transition: opacity 120ms ease;
+}
+.ac-data-grid__edit-trigger:focus-visible {
+  outline: 2px solid var(--wa-color-brand-border-loud, var(--wa-color-brand-fill-loud));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Search input in toolbar grows to fill */
+.ac-data-grid__search { flex: 1 1 16rem; min-width: 10rem; }
+
+/* Form pattern demo */
+.ac-pattern-form {
+  max-width: 44rem;
+}
+.ac-form-header {
+  align-items: baseline;
+}
+.ac-form-header h3 { margin: 0; }
+.ac-field-error {
+  margin: calc(var(--wa-space-2xs) * -1) 0 0;
+  color: var(--wa-color-danger-text-loud, var(--wa-color-danger-fill-loud));
+  font-size: var(--wa-font-size-s);
+}
+.ac-form-error-summary {
+  margin: var(--wa-space-2xs) 0 0;
+  padding-left: var(--wa-space-m);
+}
+.ac-form-error-summary a { color: inherit; }
+.ac-form-actions {
+  align-items: center;
+  padding-top: var(--wa-space-s);
+  border-top: 1px solid var(--wa-color-surface-border, var(--wa-color-neutral-80));
+}
+.ac-form-actions__spacer { flex: 1 1 auto; }

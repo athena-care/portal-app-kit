@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script>
+(function () {
+  try {
+    var el = document.documentElement;
+    var v = localStorage.getItem('athena-care-theme') || 'system';
+    el.classList.remove('wa-dark');
+    if (v === 'light') {
+      el.setAttribute('data-theme', 'light');
+    } else if (v === 'dark') {
+      el.setAttribute('data-theme', 'dark');
+      el.classList.add('wa-dark');
+    } else {
+      el.removeAttribute('data-theme');
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        el.classList.add('wa-dark');
+      }
+    }
+    var b = localStorage.getItem('athena-care-brand') || 'royal';
+    if (b === 'royal' || b === 'adobe' || b === 'cumberland') {
+      el.setAttribute('data-ac-brand', b);
+    }
+    var s = localStorage.getItem('athena-care-ui-size') || 'medium';
+    if (s === 'small' || s === 'large') {
+      el.setAttribute('data-ui-size', s);
+    } else {
+      el.removeAttribute('data-ui-size');
+    }
+  } catch (e) {}
+})();
+  </script>
+  <script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  if (q.get('embed') === '1' || /\/embed\//.test(location.pathname)) {
+    document.documentElement.classList.add('embedded');
+  }
+})();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Athena Care app</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100..700;1,100..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/themes/default.css" />
+  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/native.css" />
+  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/utilities.css" />
+  <link rel="stylesheet" href="https://athena-care.github.io/portal-app-kit/assets/athena-app.css" />
+  <link rel="stylesheet" href="app.css" />
+
+  <script type="module" src="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/webawesome.loader.js"></script>
+  <script src="https://kit.fontawesome.com/da6fb3d90e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <main class="ac-section portal-app">
+    <div class="shell-page-hero portal-app__hero">
+      <h1>Athena Care app</h1>
+      <p class="shell-subtle shell-hero-tagline">Replace this with your app.</p>
+    </div>
+
+    <div class="portal-app__body wa-stack wa-gap-m">
+      <p id="viewer-greeting" class="shell-subtle" hidden></p>
+    </div>
+  </main>
+
+  <script src="https://athena-care.github.io/portal-app-kit/assets/athena-me-dev.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

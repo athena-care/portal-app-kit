@@ -1,0 +1,33 @@
+name: Sync assets
+
+# Manual: update vendored CSS/JS from design-system and portal.
+# Requires CHECKOUT_TOKEN with read access to private repos, or run locally.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync athena-app.css from design-system
+        run: |
+          curl -fsSL \
+            "https://raw.githubusercontent.com/athena-care/design-system/main/plugins/athena-design-system/athena-app.css" \
+            -o assets/athena-app.css || echo "Skip: design-system raw fetch failed (private repo?)"
+
+      - name: Sync athena-me.js from portal
+        run: |
+          curl -fsSL \
+            "https://raw.githubusercontent.com/athena-care/portal/main/public/static/athena-me.js" \
+            -o assets/athena-me.js || echo "Skip: portal raw fetch failed (private repo?)"
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/
+          git diff --staged --quiet || git commit -m "chore: sync assets from upstream"
+          git push || true
