@@ -1,7 +1,7 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "packageName": "athena-portal-app-kit",
-  "cdnBase": "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0",
+  "cdnBase": "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.1",
   "paths": {
     "athenaAppCss": "/assets/athena-app.css",
     "athenaBootstrap": "/assets/athena-bootstrap.js",
