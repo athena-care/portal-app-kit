@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "packageName": "athena-portal-app-kit",
+  "cdnBase": "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0",
+  "paths": {
+    "athenaAppCss": "/assets/athena-app.css",
+    "athenaBootstrap": "/assets/athena-bootstrap.js",
+    "athenaMe": "/assets/athena-me.js",
+    "previewShell": "/assets/preview-shell.js",
+    "previewShellCss": "/assets/preview-shell.css",
+    "shellBaseCss": "/assets/shell-base.css",
+    "webawesome": {
+      "theme": "/assets/webawesome/dist-cdn/styles/themes/default.css",
+      "native": "/assets/webawesome/dist-cdn/styles/native.css",
+      "utilities": "/assets/webawesome/dist-cdn/styles/utilities.css",
+      "loader": "/assets/webawesome/dist-cdn/webawesome.loader.js"
+    },
+    "fontawesome": {
+      "customIconsCss": "/assets/fontawesome/css/custom-icons.min.css",
+      "fontawesomeJs": "/assets/fontawesome/js/fontawesome.min.js",
+      "sharpSolidJs": "/assets/fontawesome/js/sharp-solid.min.js",
+      "customIconsJs": "/assets/fontawesome/js/custom-icons.min.js",
+      "svgSharpSolid": "/assets/fontawesome/svgs/sharp-solid"
+    }
+  }
+}

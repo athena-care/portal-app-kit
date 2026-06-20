@@ -1,19 +1,19 @@
 # Portal static app
 
-Content-only HTML for the Athena back office. The Portal shell wraps this app in an iframe at `/apps/<app-key>`.
+Content for the Athena back office. The Portal shell wraps `main.html` in an iframe at `/apps/<app-key>`.
 
 ## Playbook
 
 https://athena-care.github.io/portal-app-kit/PLAYBOOK.md
 
-## Configuration
+## Build
 
-`athena-app.config.json` controls menu metadata and dev vs production assets. Your coding agent writes this file — you do not need to edit URLs in `index.html`.
+Edit `main.html` (inside `<main>`), `app.js`, and `app.css`. **Do not edit `index.html`** — it is the dev preview frame only.
 
 ## Local preview
 
-`npx serve .` in this folder (or any static server).
+`npx serve .` then open the preview in your browser (use the default page the server opens, or the folder root).
 
 ## Platform integration
 
-Hand off this folder to the platform team when ready. They set `environment` to `production` and integrate per Portal `docs/STATIC-APP-PORTAL-CODA.md`.
+Hand off this folder when ready. The platform team integrates per Portal `STATIC-APP-PORTAL-CODA.md`.

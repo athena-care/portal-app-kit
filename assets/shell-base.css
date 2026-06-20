@@ -1,0 +1,76 @@
+/* Shell drawer chrome for preview-shell.js — mirrors portal/src/styles/shell-base.css */
+
+.shell-sidebar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.35rem;
+  border-radius: 0.375rem;
+  color: inherit;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.shell-sidebar-link:hover {
+  background: var(--wa-color-neutral-90);
+}
+
+.shell-sidebar-link[aria-current="page"] {
+  font-weight: 600;
+  background: var(--wa-color-brand-95);
+}
+
+.shell-drawer-wordmark {
+  margin-bottom: 0.75rem;
+}
+
+.shell-drawer-wordmark-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.shell-drawer-wordmark-link.shell-drawer-wordmark-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+  font-family: var(--shell-font-heading, inherit);
+}
+
+.shell-drawer-wordmark-brand .fa-athenacare-mark {
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.shell-sidebar-link wa-icon {
+  font-size: 1.1em;
+  flex-shrink: 0;
+}
+
+.shell-sidebar-link--button {
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  text-align: start;
+  word-break: break-all;
+}
+
+html.wa-dark wa-page.shell .shell-sidebar-link:hover,
+html.wa-dark .shell-sidebar-link:hover {
+  background: var(--wa-color-surface-lowered);
+}
+
+html.wa-dark wa-page.shell .shell-sidebar-link[aria-current="page"],
+html.wa-dark .shell-sidebar-link[aria-current="page"] {
+  background: color-mix(
+    in srgb,
+    var(--wa-color-brand-50) 28%,
+    var(--wa-color-surface-default)
+  );
+}

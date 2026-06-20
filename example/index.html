@@ -32,41 +32,24 @@
   } catch (e) {}
 })();
   </script>
-  <script>
-(function () {
-  var q = new URLSearchParams(location.search);
-  if (q.get('embed') === '1' || /\/embed\//.test(location.pathname)) {
-    document.documentElement.classList.add('embedded');
-  }
-})();
-  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Athena Care app</title>
+  <title>Preview</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100..700;1,100..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/themes/default.css" />
-  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/native.css" />
-  <link rel="stylesheet" href="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/styles/utilities.css" />
-  <link rel="stylesheet" href="app.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/styles/themes/default.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/styles/native.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/styles/utilities.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/preview-shell.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/shell-base.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/css/custom-icons.min.css" />
 
-  <script type="module" src="https://ka-p.webawesome.com/kit/f3ba44a03c114514/webawesome@3.5.0/webawesome.loader.js"></script>
-  <script src="https://kit.fontawesome.com/da6fb3d90e.js" crossorigin="anonymous"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/webawesome/dist-cdn/webawesome.loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/fontawesome/js/custom-icons.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <main class="ac-section portal-app">
-    <div class="shell-page-hero portal-app__hero">
-      <h1>Athena Care app</h1>
-      <p class="shell-subtle shell-hero-tagline">Replace this with your app.</p>
-    </div>
-
-    <div class="portal-app__body wa-stack wa-gap-m">
-      <p id="viewer-greeting" class="shell-subtle" hidden></p>
-    </div>
-  </main>
-
-  <script src="https://athena-care.github.io/portal-app-kit/assets/athena-bootstrap.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0/assets/preview-shell.js"></script>
 </body>
 </html>

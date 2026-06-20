@@ -1,12 +1,12 @@
 /**
  * Athena Portal static app bootstrap — loads config, design-system CSS, AthenaMe, app.js.
- * index.html references only this script (+ app.css). Do not edit asset URLs per environment.
+ * main.html references only this script (+ app.css). Do not edit asset URLs per environment.
  */
 (function (global) {
   "use strict";
 
   var CONFIG_PATH = "./athena-app.config.json";
-  var DEFAULT_KIT = "https://athena-care.github.io/portal-app-kit";
+  var DEFAULT_KIT = "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1.0.0";
   var DEFAULT_PORTAL = "https://backoffice.athenacare.health";
 
   function loadScript(src) {
@@ -53,12 +53,26 @@
     main.appendChild(el);
   }
 
+  function readConfig() {
+    if (global.__ATHENA_APP_CONFIG__) {
+      return Promise.resolve(global.__ATHENA_APP_CONFIG__);
+    }
+    return fetch(CONFIG_PATH).then(function (res) {
+      if (!res.ok) throw new Error("Missing athena-app.config.json");
+      return res.json();
+    });
+  }
+
+  function runAppJs() {
+    if (typeof global.__ATHENA_APP_RUN__ === "function") {
+      global.__ATHENA_APP_RUN__();
+      return Promise.resolve();
+    }
+    return loadScript("app.js");
+  }
+
   function bootstrap() {
-    fetch(CONFIG_PATH)
-      .then(function (res) {
-        if (!res.ok) throw new Error("Missing athena-app.config.json");
-        return res.json();
-      })
+    readConfig()
       .then(function (config) {
         if (!config.portalOrigin) config.portalOrigin = DEFAULT_PORTAL;
         if (!config.kitOrigin) config.kitOrigin = DEFAULT_KIT;
@@ -67,9 +81,7 @@
         var urls = deriveAssetUrls(config);
         injectStylesheet(urls.css);
 
-        return loadScript(urls.me).then(function () {
-          return loadScript("app.js");
-        });
+        return loadScript(urls.me).then(runAppJs);
       })
       .catch(function (err) {
         console.error("[athena-bootstrap]", err);
