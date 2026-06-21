@@ -324,7 +324,8 @@
     var built = buildEmbedShell(config, role, sections, onRoleChange);
     appSlotRef = built.appSlot;
     built.appSlot.appendChild(appMain);
-    document.body.replaceChildren(built.shell);
+    document.body.appendChild(built.shell); // append (don't replaceChildren) so sibling scripts survive
+    runApp(); // run the app directly — the preview no longer depends on athena-bootstrap.js
   }
 
   if (document.readyState === "loading") {

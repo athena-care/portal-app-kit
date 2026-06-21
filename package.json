@@ -1,6 +1,6 @@
 {
   "name": "athena-portal-app-kit",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Athena Care static app kit — CDN assets for back-office HTML apps (Claude sandbox compatible via jsDelivr)",
   "license": "UNLICENSED",
   "files": [

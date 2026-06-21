@@ -22,9 +22,11 @@ Production host: `https://backoffice.athenacare.health`
 1. **Do not scaffold** until intake is complete (unless the user says “use defaults”).
 2. **Do not show raw JSON** unless asked; summarize in plain language.
 3. **Never ask** about `environment`, `portalOrigin`, `kitOrigin`, or `appKey` — you derive and write them.
-4. After Q5: write `athena-app.config.json`, scaffold files from templates below, then build in **`main.html`**, **`app.js`**, **`app.css`** only. Keep **`preview.html`** in sync for live preview (see below).
+4. After Q5: write `athena-app.config.json`, scaffold files from templates below, then build in **`main.html`**, **`app.js`**, **`app.css`** only. **Regenerate** **`preview.html`** after each meaningful change (see below).
 5. **Never edit `index.html`** after scaffold — optional local sidebar preview; stripped on platform submit.
-6. At handoff: tell the user to **submit their app folder** on the Build with AI page (or send to platform team). Do not mention `index.html`, `preview.html`, or other plumbing filenames.
+6. **While building:** show progress only as a **Claude HTML artifact** (regenerated `preview.html`). Do **not** create zip archives, downloadable bundles, or “here’s your project folder” until the user confirms the app is **finished**.
+7. **Preview roles:** tell the user they can change **Preview as** in the preview sidebar drawer to test other permission levels. Role-gated UI must use `AthenaMe.hasMinRole` — the preview reloads when the dropdown changes. If they ask to “see it as staff/manager/etc.”, point them to that control or regenerate the artifact after updating `dev.role`.
+8. At handoff (app finished): tell the user to **submit their app folder or zip** on the Build with AI page (or send to platform team). Do not mention `index.html`, `preview.html`, or other plumbing filenames.
 
 ---
 
@@ -67,7 +69,7 @@ Derive `appKey`: lowercase, hyphens from `label`. Append `-app` if needed.
 
 ### After Q5 (agent only)
 
-Pick `icon` from the build (Font Awesome **solid** kebab-case, e.g. `list-check`, `excavator`). Tell the user in plain language (“I’ll use a checklist icon”), not the internal name.
+Pick `icon` from the build (Font Awesome **sharp solid** kebab-case, e.g. `list-check`, `excavator`). Tell the user in plain language (“I’ll use a checklist icon”), not the internal name.
 
 ### Confirmation (then scaffold immediately)
 
@@ -137,7 +139,7 @@ Authors keep `environment: "development"` until handoff. **Platform integration*
 |------|-------|
 | `main.html` | **Yes** — inside `<main>` only. Do not change `<head>` boilerplate or bootstrap script tag. |
 | `app.js` / `app.css` | **Yes** |
-| `preview.html` | **Yes** — keep in sync with the three files above (inlined preview; not deployed). |
+| `preview.html` | **Yes** — **regenerate** from `main.html` / `app.js` / `app.css` after each change (inlined preview; not deployed). |
 | `index.html` | **Never** — optional Cursor/local sidebar preview only. |
 | `athena-app.config.json` | Once at intake |
 
@@ -323,9 +325,17 @@ AthenaMe.ready().then(function (me) {
 After every meaningful change to `main.html`, `app.js`, or `app.css`:
 
 1. **Regenerate** `preview.html` from the template below — inline current config, `<style>` from `app.css`, full `<main class="portal-app">` from `main.html`, and `window.__ATHENA_APP_RUN__` with the `app.js` body (not the file wrapper).
-2. Show it as a **Claude HTML artifact** or tell the user **“open the preview I just updated.”**
+2. Deliver it as a **Claude HTML artifact** (preferred) or tell the user **“open the preview I just updated.”** Do **not** zip or bundle files during iteration.
 
 Preview identity is synchronous (`__ATHENA_VIEWER__` via `preview-embed.js` + `athena-me.js`) — no `/api/me` calls in the sandbox.
+
+### Preview role switcher (sidebar)
+
+The preview drawer includes **Preview as** (staff → admin). Changing it **re-runs the app** with a new fixture identity — same as changing `devRole` in local iframe preview. Use this when testing role-gated UI:
+
+- Implement gates with `AthenaMe.hasMinRole(me, "managers")` (etc.).
+- Tell the user: *“Use **Preview as** in the sidebar to see how this looks for other roles.”*
+- Do not hard-code a single role in `app.js` when the UI should respond to the viewer.
 
 Do not mention filenames like `preview.html` to non-technical users unless they need to download the folder.
 
@@ -400,13 +410,13 @@ window.__ATHENA_APP_RUN__ = function () {
   /* Paste app.js body here (not the file wrapper) */
 };
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/athena-me.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/preview-embed.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1/assets/athena-bootstrap.js"></script>
 </body>
 </html>
 ```
 
-`preview-embed.js` loads shell chrome (`shell-base.css`, `preview-shell.css`, `athena-app.css`) and wraps the inlined `<main>`. **`index.html`** (local only) still uses `preview-shell.js` + iframe when the author runs a static server.
+`preview-embed.js` loads shell chrome (`shell-base.css`, `preview-shell.css`, `athena-app.css`), wraps the inlined `<main>`, and runs `__ATHENA_APP_RUN__` directly (no `athena-bootstrap.js` in artifact preview). Load **`athena-me.js`** before it for `AthenaMe` / role checks. **`index.html`** (local only) still uses `preview-shell.js` + iframe when the author runs a static server.
 
 Optional: `index.html` + `npx serve .` only if the author uses Cursor with a terminal and wants iframe-based local preview.
 
@@ -434,10 +444,24 @@ Roles (descending): `admin` > `board` > `executive` > `managers` > `providers` >
 
 ---
 
+## Handoff (app finished)
+
+When the user approves the app:
+
+1. Ensure `main.html`, `app.js`, `app.css`, and `athena-app.config.json` are complete.
+2. Optionally provide a **zip** of the app folder **only now** — the Build with AI page accepts **folder or zip** upload.
+3. Direct them to **Build with AI** on the back office to submit for review.
+
+Until handoff, keep using **HTML artifacts** for preview — not zip downloads.
+
+---
+
 ## Anti-patterns
 
 - Editing `index.html` after scaffold
 - Letting `preview.html` drift — **regenerate** it from `main.html` / `app.js` / `app.css` after each change
+- **Zip archives or folder downloads while still building** — use artifacts until the user says the app is done
+- Ignoring the preview **Preview as** dropdown — use it to verify role-gated UI
 - Duplicating Portal sidebar or login in `main.html`
 - Swapping bootstrap or design-system URLs in `main.html` per environment
 - Vendoring `athena-app.css` into the app folder
@@ -447,4 +471,4 @@ Roles (descending): `admin` > `board` > `executive` > `managers` > `providers` >
 
 ## Skill version
 
-`2026-06-20` — `preview-embed.js` Back Office frame in single-file preview; `athena-icons.js` for `wa-icon name`; kit CDN `@1` (major-floating).
+`2026-06-22` — preview-embed 1.0.4: runs app directly, preserves sibling scripts; preview.html loads `athena-me.js` (not bootstrap).
