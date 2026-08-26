@@ -9,11 +9,12 @@ import WebAwesomeElement from '../../internal/webawesome-element.js';
  *
  * @slot - A label to show inside the progress indicator.
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Use the `progress-bar` part instead.
+ * @csspart progress-bar - The component's outer wrapper.
  * @csspart indicator - The progress bar's indicator.
  * @csspart label - The progress bar's label.
  *
- * @cssproperty [--track-height=1rem] - The color of the track.
+ * @cssproperty [--track-height=1rem] - The height of the track.
  * @cssproperty [--track-color=var(--wa-color-neutral-fill-normal)] - The color of the track.
  * @cssproperty [--indicator-color=var(--wa-color-brand-fill-loud)] - The color of the indicator.
  */

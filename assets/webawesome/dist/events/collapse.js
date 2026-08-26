@@ -2,7 +2,7 @@
 import {
   WaCollapseEvent
 } from "../chunks/chunk.64JGURBO.js";
-import "../chunks/chunk.7VGCIHDG.js";
+import "../chunks/chunk.7F23ACLI.js";
 export {
   WaCollapseEvent
 };

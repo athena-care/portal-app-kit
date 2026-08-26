@@ -19,7 +19,8 @@ import '../spinner/spinner.js';
  * @slot start - An element, such as `<wa-icon>`, placed before the label.
  * @slot end - An element, such as `<wa-icon>`, placed after the label.
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Use the `button` part instead.
+ * @csspart button - The component's outer wrapper.
  * @csspart start - The container that wraps the `start` slot.
  * @csspart label - The button's label.
  * @csspart end - The container that wraps the `end` slot.

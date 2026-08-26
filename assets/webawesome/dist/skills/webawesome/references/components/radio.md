@@ -1,8 +1,5 @@
 # Radio
 
-**Full documentation:** https://webawesome.com/docs/components/radio
-
-
 `<wa-radio>`
 
 Stable [Forms](https://webawesome.com/docs/components/?category=forms) [Since 2.0](https://webawesome.com/docs/resources/changelog#wa_200)
@@ -11,60 +8,112 @@ Radios represent a single option within a mutually exclusive set. Use them insid
 
 This component must be used as a child of [`<wa-radio-group>`](https://webawesome.com/docs/components/radio-group). Please see the [Radio Group docs](https://webawesome.com/docs/components/radio-group) to see examples of this component in action.
 
-## Slots
+```html
+<wa-radio-group label="Network">
+  <wa-radio value="off">Off</wa-radio>
+  <wa-radio value="wifi" data-anatomy-subject="true">Wi-Fi</wa-radio>
+  <wa-radio value="all">Everything</wa-radio>
+</wa-radio-group>
+```
 
-Valid slot names for this component (use exactly these — any other `slot` value
-is silently ignored and the element falls back to the default slot):
+## API
 
-- `(default)` — The radio's label.
+### Importing
 
-## Attributes & Properties
+If you're using the autoloader or a hosted project, components load on demand — no manual import needed. To cherry-pick a component manually, use one of the following snippets.
 
-| Attribute | Property | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `value` |  | `string` |  | The radio's value. When selected, the radio group will receive this value. |
-| `appearance` |  | `'default' \| 'button'` | `'default'` | The radio's visual appearance. |
-| `size` |  | `'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'small' \| 'medium' \| 'large'` |  | The radio's size. When used inside a radio group, the size will be determined by the radio group's size, which will override this attribute. |
-| `disabled` |  | `boolean` | `false` | Disables the radio. |
-| `name` |  | `string \| null` | `null` | The name of the input, submitted as a name/value pair with form data. |
-| `custom-error` | `customError` | `string \| null` | `null` |  |
-| `dir` |  | `string` |  |  |
-| `lang` |  | `string` |  |  |
-| `did-ssr` | `didSSR` |  |  |  |
+\*\*CDN\*\*
 
-## Methods
+Import this component directly from the CDN:
 
-| Method | Description | Arguments |
+```js
+import 'https://ka-f.webawesome.com/webawesome@3.12.0/components/radio/radio.js';
+```
+
+\*\*npm\*\*
+
+After installing Web Awesome via npm, import this component:
+
+```js
+import '@awesome.me/webawesome/dist/components/radio/radio.js';
+```
+
+\*\*Self-Hosted\*\*
+
+If you're self-hosting Web Awesome, import this component from your server:
+
+```js
+import './webawesome/dist/components/radio/radio.js';
+```
+
+\*\*React\*\*
+
+To import this component for React 18 or below, use the following code:
+
+```js
+import WaRadio from '@awesome.me/webawesome/dist/react/radio/index.js';
+```
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| (default) | The radio's label. |
+
+### Attributes & Properties
+
+| Name | Description | Reflects |
 | --- | --- | --- |
-| `setCustomValidity` | Do not use this when creating a "Validator". This is intended for end users of components. We track manually defined custom errors so we don't clear them on accident in our validators. | `message: string` |
-| `formStateRestoreCallback` | Called when the browser is trying to restore element’s state to state in which case reason is "restore", or when the browser is trying to fulfill autofill on behalf of user in which case reason is "autocomplete". In the case of "restore", state is a string, File, or FormData object previously set as the second argument to setFormValue. | `state: string \| File \| FormData \| null, reason: 'autocomplete' \| 'restore'` |
-| `resetValidity` | Reset validity is a way of removing manual custom errors and native validation. |  |
+| \`appearance\` appearance | \`'default' \\| 'button'\` The radio's visual appearance. Type Default 'default' | |
+| \`disabled\` disabled | \`boolean\` Disables the radio. Type Default false | |
+| \`form\` | \`
 
-## Events
+\` By default, form controls are associated with the nearest containing element. This attribute allows you to place the form control outside of a form and associate it with the form that has this id. The form must be in the same document or shadow root for this to work. Type HTMLFormElement \\| null | |
+| \`name\` name | \`string \\| null\` The name of the input, submitted as a name/value pair with form data. Type Default null | |
+| \`size\` size | \`'xs' \\| 's' \\| 'm' \\| 'l' \\| 'xl' \\| 'small' \\| 'medium' \\| 'large'\` The radio's size. When used inside a radio group, the size will be determined by the radio group's size, which will override this attribute. Type | |
+| \`validationTarget\` | \`undefined \\| HTMLElement\` Override this to change where constraint validation popups are anchored. Type | |
+| \`validators\` | \`observedAttributes\` Validators are static because they have , essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. Type Validator\[\] Default \[\] | |
+| \`value\` value | \`string\` The radio's value. When selected, the radio group will receive this value. Type | |
 
-| Event | Description |
-| --- | --- |
-| `blur` | Emitted when the control loses focus. |
-| `focus` | Emitted when the control gains focus. |
+### Methods
 
-## Custom States
-
-| State | Description |
-| --- | --- |
-| `checked` | Applied when the control is checked. |
-| `disabled` | Applied when the control is disabled. |
-
-## CSS Parts
-
-| Part | Description |
-| --- | --- |
-| `control` | The circular container that wraps the radio's checked state. |
-| `checked-icon` | The checked icon. |
-| `label` | The container that wraps the radio's label. |
-
-## CSS Custom Properties
-
-| Property | Default | Description |
+| Name | Description | Arguments |
 | --- | --- | --- |
-| `--checked-icon-color` |  | The color of the checked icon. |
-| `--checked-icon-scale` |  | The size of the checked icon relative to the radio. |
+| \`formStateRestoreCallback()\` | Called when the browser is trying to restore element’s state to state in which case reason is "restore", or when the browser is trying to fulfill autofill on behalf of user in which case reason is "autocomplete". In the case of "restore", state is a string, File, or FormData object previously set as the second argument to setFormValue. | \`state: string \\| File \\| FormData \\| null, reason: 'autocomplete' \\| 'restore'\` |
+| \`resetValidity()\` | Reset validity is a way of removing manual custom errors and native validation. | |
+| \`setCustomValidity()\` | Do not use this when creating a "Validator". This is intended for end users of components. We track manually defined custom errors so we don't clear them on accident in our validators. | \`message: string\` |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| \`blur\` | Emitted when the control loses focus. |
+| \`focus\` | Emitted when the control gains focus. |
+
+### CSS Custom Properties
+
+| Name | Description |
+| --- | --- |
+| \`--checked-icon-color\` | The color of the checked icon. |
+| \`--checked-icon-scale\` | The size of the checked icon relative to the radio. |
+
+### Custom States
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| \`checked\` | Applied when the control is checked. | \`:state(checked)\` |
+| \`disabled\` | Applied when the control is disabled. | \`:state(disabled)\` |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| \`checked-icon\` | The checked icon. | \`::part(checked-icon)\` |
+| \`control\` | The circular container that wraps the radio's checked state. | \`::part(control)\` |
+| \`label\` | The container that wraps the radio's label. | \`::part(label)\` |
+
+### Dependencies
+
+This component automatically imports the following elements. Sub-dependencies, if any exist, will also be included in this list.
+
+-   [`<wa-icon>`](https://webawesome.com/docs/components/icon)

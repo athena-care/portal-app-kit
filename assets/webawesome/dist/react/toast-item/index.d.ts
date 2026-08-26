@@ -33,6 +33,7 @@ export type { WaAfterHideEvent, WaAfterShowEvent, WaHideEvent, WaShowEvent } fro
  * @csspart close-icon__svg - The close icon's exported svg part.
  *
  * @cssproperty --accent-width - The width of the accent line. Defaults to 4px.
+ * @cssproperty --padding - The internal spacing of the toast item. Scales with the `size` attribute.
  * @cssproperty [--show-duration=var(--wa-transition-normal)] - The animation duration when showing.
  * @cssproperty [--hide-duration=var(--wa-transition-normal)] - The animation duration when hiding.
  */

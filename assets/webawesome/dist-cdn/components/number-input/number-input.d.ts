@@ -25,10 +25,11 @@ import '../icon/icon.js';
  *  value from changing.
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *
- * @csspart label - The label element.
- * @csspart form-control-label - Alias for the label element.
+ * @csspart form-control-label - The label.
+ * @csspart label - Deprecated. Use the `form-control-label` part instead.
  * @csspart hint - The hint element.
- * @csspart base - The wrapper containing the input and steppers.
+ * @csspart base - Deprecated. Use the `number-input` part instead.
+ * @csspart number-input - The component's outer wrapper.
  * @csspart input - The internal `<input>` control.
  * @csspart start - The container that wraps the `start` slot.
  * @csspart end - The container that wraps the `end` slot.

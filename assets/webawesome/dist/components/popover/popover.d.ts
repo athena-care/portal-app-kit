@@ -57,7 +57,7 @@ export default class WaPopover extends WebAwesomeElement {
     private eventController;
     connectedCallback(): void;
     disconnectedCallback(): void;
-    firstUpdated(): void;
+    firstUpdated(changedProperties: PropertyValues<typeof this>): void;
     updated(changedProperties: PropertyValues<this>): void;
     private handleAnchorClick;
     private handleBodyClick;

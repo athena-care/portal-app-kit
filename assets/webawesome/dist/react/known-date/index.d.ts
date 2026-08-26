@@ -3,8 +3,8 @@ import { type EventName } from '@lit/react';
 import type { WaInvalidEvent } from '../../events/events.js';
 export type { WaInvalidEvent } from '../../events/events.js';
 /**
- * @summary Known dates let users enter dates they already know — birthdays, expirations, document
- *  dates — through three separate day, month, and year fields shown in the locale's natural order.
+ * @summary Known dates let users enter dates they already know - birthdays, expirations, document
+ *  dates - through three separate day, month, and year fields shown in the locale's natural order.
  * @documentation https://webawesome.com/docs/components/known-date
  * @status experimental
  * @since 3.8
@@ -22,8 +22,9 @@ export type { WaInvalidEvent } from '../../events/events.js';
  * @csspart form-control-label - The wrapper inside the legend that styles the visible label text.
  * @csspart form-control-input - Alias on the fields row matching other form controls.
  * @csspart hint - The hint's wrapper.
- * @csspart label - Alias on the legend's inner label wrapper.
- * @csspart base - The component's outer wrapper (alias of the fields row).
+ * @csspart label - Deprecated. Use the `form-control-label` part instead.
+ * @csspart base - Deprecated. Use the `known-date` part instead.
+ * @csspart known-date - The component's outer wrapper.
  * @csspart fieldset - The `<fieldset>` element grouping the three fields (or a `role="group"` div).
  * @csspart legend - The `<legend>` element (when a label is present).
  * @csspart fields - The flex row holding the three field blocks.
@@ -33,10 +34,6 @@ export type { WaInvalidEvent } from '../../events/events.js';
  * @csspart field-year - Added to the year field block.
  * @csspart field-label - The text label above each field's input.
  * @csspart field-input - The native `<input>` inside a field.
- * @csspart error - The inline error message region. This is an intentional difference from `<wa-date-input>`
- *  and `<wa-time-input>`, which rely on the browser's native validation popup. Because this control is composed
- *  of three separate fields, an inline `role="alert"` region gives a single, predictable place to surface the
- *  validation message rather than anchoring a native popup on one of the three fields.
  *
  * @cssstate blank - The known date has no committed value.
  * @cssstate disabled - The known date is disabled.

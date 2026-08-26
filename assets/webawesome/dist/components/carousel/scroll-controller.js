@@ -5,7 +5,7 @@ import {
 import {
   prefersReducedMotion
 } from "../../chunks/chunk.ZRLIH7NU.js";
-import "../../chunks/chunk.7VGCIHDG.js";
+import "../../chunks/chunk.7F23ACLI.js";
 
 // _bundle_/src/components/carousel/scroll-controller.ts
 var ScrollController = class {

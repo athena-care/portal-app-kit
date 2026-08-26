@@ -21,7 +21,7 @@ export type { WaAfterHideEvent, WaAfterShowEvent, WaHideEvent, WaSelectEvent, Wa
  * @slot - The dropdown's items, typically `<wa-dropdown-item>` elements.
  * @slot trigger - The element that triggers the dropdown, such as a `<wa-button>` or `<button>`.
  *
- * @csspart base - The component's host element.
+ * @csspart base - Deprecated. Style the host element instead.
  * @csspart menu - The dropdown menu container.
  *
  * @cssproperty --show-duration - The duration of the show animation.

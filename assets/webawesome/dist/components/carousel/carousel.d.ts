@@ -1,6 +1,7 @@
 import '../../internal/scrollend-polyfill.js';
-import type { PropertyValueMap } from 'lit';
+import type { PropertyValueMap, PropertyValues } from 'lit';
 import WebAwesomeElement from '../../internal/webawesome-element.js';
+import type WaCarouselItem from '../carousel-item/carousel-item.js';
 import '../icon/icon.js';
 /**
  * @summary Carousels display a series of content slides along a horizontal or vertical axis, one or more at a time.
@@ -17,7 +18,8 @@ import '../icon/icon.js';
  * @slot next-icon - Optional next icon to use instead of the default. Works best with `<wa-icon>`.
  * @slot previous-icon - Optional previous icon to use instead of the default. Works best with `<wa-icon>`.
  *
- * @csspart base - The carousel's internal wrapper.
+ * @csspart base - Deprecated. Use the `carousel` part instead.
+ * @csspart carousel - The component's outer wrapper.
  * @csspart scroll-container - The scroll container that wraps the slides.
  * @csspart pagination - The pagination indicators wrapper.
  * @csspart pagination-item - The pagination indicator.
@@ -32,7 +34,7 @@ import '../icon/icon.js';
  *  partially visible as a scroll hint.
  * @cssproperty [--slide-gap=var(--wa-space-m)] - The space between each slide.
  *
- * @ssr - Carousel relies on scroll behaviors to work properly. Carousel will display the first image properly, but will not be interactive.
+ * @ssr - `<wa-carousel>` displays its first slide during SSR, but won't be interactive until it hydrates on the client.
  */
 export default class WaCarousel extends WebAwesomeElement {
     static css: import("lit").CSSResult;
@@ -64,6 +66,7 @@ export default class WaCarousel extends WebAwesomeElement {
     activeSlide: number;
     scrolling: boolean;
     dragging: boolean;
+    awaitingInitialPosition: boolean;
     private autoplayController;
     private dragStartPosition;
     private readonly localize;
@@ -72,7 +75,7 @@ export default class WaCarousel extends WebAwesomeElement {
     private pendingSlideChange;
     connectedCallback(): void;
     disconnectedCallback(): void;
-    protected firstUpdated(): void;
+    protected firstUpdated(changedProperties: PropertyValues<typeof this>): void;
     protected willUpdate(changedProperties: PropertyValueMap<WaCarousel> | Map<PropertyKey, unknown>): void;
     private getPageCount;
     private getCurrentPage;
@@ -108,6 +111,10 @@ export default class WaCarousel extends WebAwesomeElement {
      * @param behavior - The behavior used for scrolling.
      */
     next(behavior?: ScrollBehavior): void;
+    /** Adds a carousel item as the last real slide. */
+    addSlide(slide: WaCarouselItem): void;
+    /** Removes the real slide at the specified index. */
+    removeSlide(index: number): void;
     /**
      * Scrolls the carousel to the slide specified by `index`.
      *

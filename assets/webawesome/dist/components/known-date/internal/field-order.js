@@ -2,7 +2,7 @@
 import {
   localeFieldOrder
 } from "../../../chunks/chunk.UKE2VGOO.js";
-import "../../../chunks/chunk.7VGCIHDG.js";
+import "../../../chunks/chunk.7F23ACLI.js";
 export {
   localeFieldOrder
 };

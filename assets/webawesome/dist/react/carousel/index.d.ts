@@ -17,7 +17,8 @@ export type { WaSlideChangeEvent } from '../../events/events.js';
  * @slot next-icon - Optional next icon to use instead of the default. Works best with `<wa-icon>`.
  * @slot previous-icon - Optional previous icon to use instead of the default. Works best with `<wa-icon>`.
  *
- * @csspart base - The carousel's internal wrapper.
+ * @csspart base - Deprecated. Use the `carousel` part instead.
+ * @csspart carousel - The component's outer wrapper.
  * @csspart scroll-container - The scroll container that wraps the slides.
  * @csspart pagination - The pagination indicators wrapper.
  * @csspart pagination-item - The pagination indicator.
@@ -32,7 +33,7 @@ export type { WaSlideChangeEvent } from '../../events/events.js';
  *  partially visible as a scroll hint.
  * @cssproperty [--slide-gap=var(--wa-space-m)] - The space between each slide.
  *
- * @ssr - Carousel relies on scroll behaviors to work properly. Carousel will display the first image properly, but will not be interactive.
+ * @ssr - `<wa-carousel>` displays its first slide during SSR, but won't be interactive until it hydrates on the client.
  */
 declare const reactWrapper: import("@lit/react").ReactWebComponent<Component, {
     onWaSlideChange: EventName<WaSlideChangeEvent>;

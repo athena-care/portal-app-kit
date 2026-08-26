@@ -1,8 +1,5 @@
 # Split Panel
 
-**Full documentation:** https://webawesome.com/docs/components/split-panel
-
-
 `<wa-split-panel>`
 
 Stable [Layout](https://webawesome.com/docs/components/?category=layout) [Since 2.0](https://webawesome.com/docs/resources/changelog#wa_200)
@@ -11,80 +8,131 @@ Split panels display two adjacent panels separated by a draggable divider, letti
 
 ```html
 <wa-split-panel>
-  <div
-    slot="start"
-    style="height: 200px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-  >
+  <div slot="start" class="split-demo">
     Start
   </div>
-  <div
-    slot="end"
-    style="height: 200px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-  >
+  <div slot="end" class="split-demo">
     End
   </div>
 </wa-split-panel>
+
+<style>
+  .split-demo {
+    height: 200px;
+    background: var(--wa-color-surface-lowered);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+</style>
 ```
+
+## API
+
+### Importing
+
+If you're using the autoloader or a hosted project, components load on demand — no manual import needed. To cherry-pick a component manually, use one of the following snippets.
+
+\*\*CDN\*\*
+
+Import this component directly from the CDN:
+
+```js
+import 'https://ka-f.webawesome.com/webawesome@3.12.0/components/split-panel/split-panel.js';
+```
+
+\*\*npm\*\*
+
+After installing Web Awesome via npm, import this component:
+
+```js
+import '@awesome.me/webawesome/dist/components/split-panel/split-panel.js';
+```
+
+\*\*Self-Hosted\*\*
+
+If you're self-hosting Web Awesome, import this component from your server:
+
+```js
+import './webawesome/dist/components/split-panel/split-panel.js';
+```
+
+\*\*React\*\*
+
+To import this component for React 18 or below, use the following code:
+
+```js
+import WaSplitPanel from '@awesome.me/webawesome/dist/react/split-panel/index.js';
+```
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| \`divider\` | The divider. Useful for slotting in a custom icon that renders as a handle. |
+| \`end\` | Content to place in the end panel. |
+| \`start\` | Content to place in the start panel. |
+
+### Attributes & Properties
+
+| Name | Description | Reflects |
+| --- | --- | --- |
+| \`disabled\` disabled | \`boolean\` Disables resizing. Note that the position may still change as a result of resizing the host element. Type Default false | |
+| \`orientation\` orientation | \`'horizontal' \\| 'vertical'\` Sets the split panel's orientation. Type Default 'horizontal' | |
+| \`position\` position | \`number\` The current position of the divider from the primary panel's edge as a percentage 0-100. Defaults to 50% of the container's initial size. Type Default 50 | |
+| \`positionInPixels\` position-in-pixels | \`number\` The current position of the divider from the primary panel's edge in pixels. Type | |
+| \`primary\` primary | \`'start' \\| 'end' \\| undefined\` If no primary panel is designated, both panels will resize proportionally when the host element is resized. If a primary panel is designated, it will maintain its size and the other panel will grow or shrink as needed when the host element is resized. Type | |
+| \`snap\` snap | \`"100px 50%"\` One or more space-separated values at which the divider should snap. Values can be in pixels or percentages, e.g. . Type string \\| undefined | |
+| \`snapThreshold\` snap-threshold | \`number\` How close the divider must be to a snap point until snapping occurs. Type Default 12 | |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| \`wa-reposition\` | Emitted when the divider's position changes. |
+
+### CSS Custom Properties
+
+| Name | Description |
+| --- | --- |
+| \`--divider-hit-area\` | \`12px\` The invisible region around the divider where dragging can occur. This is usually wider than the divider to facilitate easier dragging. Default |
+| \`--divider-width\` | \`4px\` The width of the visible divider. Default |
+| \`--max\` | \`100%\` The maximum allowed size of the primary panel. Default |
+| \`--min\` | \`0\` The minimum allowed size of the primary panel. Default |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| \`divider\` | The divider that separates the start and end panels. | \`::part(divider)\` |
+| \`end\` | The end panel. | \`::part(end)\` |
+| \`panel\` | Targets both the start and end panels. | \`::part(panel)\` |
+| \`start\` | The start panel. | \`::part(start)\` |
 
 ## Examples
 
-Link to This Section
-
 ### Initial Position
 
-Link to This Section
-
-To set the initial position, use the `position` attribute. If no position is provided, it will default to 50% of the available space.
+Set the `position` attribute to change the divider's starting position, given as a percentage of the available space (`50` by default). To set it in pixels instead, use the `position-in-pixels` attribute.
 
 ```html
 <wa-split-panel position="75">
-  <div
-    slot="start"
-    style="
-      height: 200px;
-      background: var(--wa-color-surface-lowered);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    "
-  >
+  <div slot="start" class="split-demo">
     Start
   </div>
-  <div
-    slot="end"
-    style="
-      height: 200px;
-      background: var(--wa-color-surface-lowered);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    "
-  >
+  <div slot="end" class="split-demo">
     End
   </div>
 </wa-split-panel>
 ```
 
-### Initial Position in Pixels
-
-Link to This Section
-
-To set the initial position in pixels instead of a percentage, use the `position-in-pixels` attribute.
-
 ```html
 <wa-split-panel position-in-pixels="150">
-  <div
-    slot="start"
-    style="height: 200px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-  >
+  <div slot="start" class="split-demo">
     Start
   </div>
-  <div
-    slot="end"
-    style="height: 200px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-  >
+  <div slot="end" class="split-demo">
     End
   </div>
 </wa-split-panel>
@@ -92,22 +140,14 @@ To set the initial position in pixels instead of a percentage, use the `position
 
 ### Orientation
 
-Link to This Section
-
 Set the `orientation` attribute to `vertical` and provide a height to render the split panel in a vertical orientation where the start and end panels are stacked.
 
 ```html
 <wa-split-panel orientation="vertical" style="height: 400px;">
-  <div
-    slot="start"
-    style="height: 100%; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-  >
+  <div slot="start" class="split-demo" style="height: 100%;">
     Start
   </div>
-  <div
-    slot="end"
-    style="height: 100%; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-  >
+  <div slot="end" class="split-demo" style="height: 100%;">
     End
   </div>
 </wa-split-panel>
@@ -115,23 +155,15 @@ Set the `orientation` attribute to `vertical` and provide a height to render the
 
 ### Snapping
 
-Link to This Section
-
 To snap panels at specific positions while dragging, add the `snap` attribute with one or more space-separated values. Values must be in pixels or percentages. For example, to snap the panel at `100px` and `50%`, use `snap="100px 50%"`. You can also customize how close the divider must be before snapping with the `snap-threshold` attribute.
 
 ```html
 <div class="split-panel-snapping">
   <wa-split-panel snap="100px 50%">
-    <div
-      slot="start"
-      style="height: 200px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-    >
+    <div slot="start" class="split-demo">
       Start
     </div>
-    <div
-      slot="end"
-      style="height: 200px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-    >
+    <div slot="end" class="split-demo">
       End
     </div>
   </wa-split-panel>
@@ -168,30 +200,20 @@ To snap panels at specific positions while dragging, add the `snap` attribute wi
 
 ### Disabled
 
-Link to This Section
-
 Add the `disabled` attribute to prevent the divider from being repositioned.
 
 ```html
 <wa-split-panel disabled>
-  <div
-    slot="start"
-    style="height: 200px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-  >
+  <div slot="start" class="split-demo">
     Start
   </div>
-  <div
-    slot="end"
-    style="height: 200px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-  >
+  <div slot="end" class="split-demo">
     End
   </div>
 </wa-split-panel>
 ```
 
-### Setting the Primary Panel
-
-Link to This Section
+### Primary Panel
 
 By default, both panels will grow or shrink proportionally when the host element is resized. If a primary panel is designated, it will maintain its size and the secondary panel will grow or shrink to fit the remaining space. You can set the primary panel to `start` or `end` using the `primary` attribute.
 
@@ -200,21 +222,17 @@ Try resizing the example below with each option and notice how the panels respon
 ```html
 <div class="split-panel-primary">
   <wa-split-panel>
-    <div
-      slot="start"
-      style="height: 200px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-    >
+    <div slot="start" class="split-demo">
       Start
     </div>
-    <div
-      slot="end"
-      style="height: 200px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-    >
+    <div slot="end" class="split-demo">
       End
     </div>
   </wa-split-panel>
 
-  <wa-select label="Primary Panel" style="max-width: 200px; margin-top: 1rem;">
+  <wa-divider></wa-divider>
+
+  <wa-select label="Primary Panel" style="max-width: 200px;">
     <wa-option value="" selected>None</wa-option>
     <wa-option value="start">Start</wa-option>
     <wa-option value="end">End</wa-option>
@@ -232,24 +250,16 @@ Try resizing the example below with each option and notice how the panels respon
 
 ### Min & Max
 
-Link to This Section
-
 To set a minimum or maximum size of the primary panel, use the `--min` and `--max` custom properties. Since the secondary panel is flexible, size constraints can only be applied to the primary panel. If no primary panel is designated, these constraints will be applied to the `start` panel.
 
 This examples demonstrates how you can ensure both panels are at least 150px using `--min`, `--max`, and the `calc()` function.
 
 ```html
 <wa-split-panel style="--min: 150px; --max: calc(100% - 150px);">
-  <div
-    slot="start"
-    style="height: 200px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-  >
+  <div slot="start" class="split-demo">
     Start
   </div>
-  <div
-    slot="end"
-    style="height: 200px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden;"
-  >
+  <div slot="end" class="split-demo">
     End
   </div>
 </wa-split-panel>
@@ -257,30 +267,19 @@ This examples demonstrates how you can ensure both panels are at least 150px usi
 
 ### Nested Split Panels
 
-Link to This Section
-
 Create complex layouts that can be repositioned independently by nesting split panels.
 
 ```html
 <wa-split-panel>
-  <div
-    slot="start"
-    style="height: 400px; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden"
-  >
+  <div slot="start" class="split-demo" style="height: 400px;">
     Start
   </div>
   <div slot="end">
     <wa-split-panel orientation="vertical" style="height: 400px;">
-      <div
-        slot="start"
-        style="height: 100%; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden"
-      >
+      <div slot="start" class="split-demo" style="height: 100%;">
         Top
       </div>
-      <div
-        slot="end"
-        style="height: 100%; background: var(--wa-color-surface-lowered); display: flex; align-items: center; justify-content: center; overflow: hidden"
-      >
+      <div slot="end" class="split-demo" style="height: 100%;">
         Bottom
       </div>
     </wa-split-panel>
@@ -290,37 +289,15 @@ Create complex layouts that can be repositioned independently by nesting split p
 
 ### Customizing the Divider
 
-Link to This Section
-
 You can target the `divider` part to apply CSS properties to the divider. To add a custom handle, slot an icon into the `divider` slot. When customizing the divider, make sure to think about focus styles for keyboard users.
 
 ```html
 <wa-split-panel style="--divider-width: 20px;">
   <wa-icon slot="divider" name="grip-vertical" variant="solid"></wa-icon>
-  <div
-    slot="start"
-    style="
-      height: 200px;
-      background: var(--wa-color-surface-lowered);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    "
-  >
+  <div slot="start" class="split-demo">
     Start
   </div>
-  <div
-    slot="end"
-    style="
-      height: 200px;
-      background: var(--wa-color-surface-lowered);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    "
-  >
+  <div slot="end" class="split-demo">
     End
   </div>
 </wa-split-panel>
@@ -332,30 +309,10 @@ Here's a more elaborate example that changes the divider's color and width and a
 <div class="split-panel-divider">
   <wa-split-panel>
     <wa-icon slot="divider" name="grip-vertical" variant="solid"></wa-icon>
-    <div
-      slot="start"
-      style="
-        height: 200px;
-        background: var(--wa-color-surface-lowered);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-      "
-    >
+    <div slot="start" class="split-demo">
       Start
     </div>
-    <div
-      slot="end"
-      style="
-        height: 200px;
-        background: var(--wa-color-surface-lowered);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-      "
-    >
+    <div slot="end" class="split-demo">
       End
     </div>
   </wa-split-panel>
@@ -388,51 +345,3 @@ Here's a more elaborate example that changes the divider's color and width and a
   }
 </style>
 ```
-
-## Slots
-
-Valid slot names for this component (use exactly these — any other `slot` value
-is silently ignored and the element falls back to the default slot):
-
-- `start` — Content to place in the start panel.
-- `end` — Content to place in the end panel.
-- `divider` — The divider. Useful for slotting in a custom icon that renders as a handle.
-
-## Attributes & Properties
-
-| Attribute | Property | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `position` |  | `number` | `50` | The current position of the divider from the primary panel's edge as a percentage 0-100. Defaults to 50% of the container's initial size. |
-| `position-in-pixels` | `positionInPixels` | `number` |  | The current position of the divider from the primary panel's edge in pixels. |
-| `orientation` |  | `'horizontal' \| 'vertical'` | `'horizontal'` | Sets the split panel's orientation. |
-| `disabled` |  | `boolean` | `false` | Disables resizing. Note that the position may still change as a result of resizing the host element. |
-| `primary` |  | `'start' \| 'end' \| undefined` |  | If no primary panel is designated, both panels will resize proportionally when the host element is resized. If a primary panel is designated, it will maintain its size and the other panel will grow or shrink as needed when the host element is resized. |
-| `snap` |  | `string \| undefined` |  | One or more space-separated values at which the divider should snap. Values can be in pixels or percentages, e.g. `"100px 50%"`. |
-| `snap-threshold` | `snapThreshold` | `number` | `12` | How close the divider must be to a snap point until snapping occurs. |
-| `dir` |  | `string` |  |  |
-| `lang` |  | `string` |  |  |
-| `did-ssr` | `didSSR` |  |  |  |
-
-## Events
-
-| Event | Description |
-| --- | --- |
-| `wa-reposition` | Emitted when the divider's position changes. |
-
-## CSS Parts
-
-| Part | Description |
-| --- | --- |
-| `start` | The start panel. |
-| `end` | The end panel. |
-| `panel` | Targets both the start and end panels. |
-| `divider` | The divider that separates the start and end panels. |
-
-## CSS Custom Properties
-
-| Property | Default | Description |
-| --- | --- | --- |
-| `--divider-width` | `4px` | The width of the visible divider. |
-| `--divider-hit-area` | `12px` | The invisible region around the divider where dragging can occur. This is usually wider than the divider to facilitate easier dragging. |
-| `--min` | `0` | The minimum allowed size of the primary panel. |
-| `--max` | `100%` | The maximum allowed size of the primary panel. |

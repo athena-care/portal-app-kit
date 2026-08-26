@@ -24,7 +24,8 @@ export type { WaFocusDayEvent, WaViewChangeEvent } from '../../events/events.js'
  * @event wa-view-change - Emitted when the date picker switches between day, month, and year views.
  *  `event.detail` is `{ view, date }`.
  *
- * @csspart base - The component's outer wrapper.
+ * @csspart base - Deprecated. Use the `date-picker` part instead.
+ * @csspart date-picker - The component's outer wrapper.
  * @csspart header - The header row containing the title and navigation buttons.
  * @csspart title - The clickable month/year title button that steps the view up (days → months → years).
  * @csspart nav - The container around the previous and next buttons.

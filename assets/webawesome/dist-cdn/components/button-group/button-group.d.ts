@@ -9,7 +9,7 @@ import WebAwesomeElement from '../../internal/webawesome-element.js';
  *
  * @slot - One or more `<wa-button>` elements to display in the button group.
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Style the host element instead.
  */
 export default class WaButtonGroup extends WebAwesomeElement {
     static css: import("lit").CSSResult[];

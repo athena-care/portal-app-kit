@@ -11,7 +11,8 @@ import Component from '../../components/breadcrumb/breadcrumb.js';
  *
  * @dependency wa-icon
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Use the `breadcrumb` part instead.
+ * @csspart breadcrumb - The component's outer wrapper.
  */
 declare const reactWrapper: import("@lit/react").ReactWebComponent<Component, {}>;
 export default reactWrapper;

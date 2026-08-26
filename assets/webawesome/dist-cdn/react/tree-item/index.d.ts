@@ -26,7 +26,8 @@ export type { WaAfterCollapseEvent, WaAfterExpandEvent, WaCollapseEvent, WaExpan
  * @slot expand-icon - The icon to show when the tree item is expanded.
  * @slot collapse-icon - The icon to show when the tree item is collapsed.
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Use the `tree-item` part instead.
+ * @csspart tree-item - The component's outer wrapper.
  * @csspart item - The tree item's container. This element wraps everything except slotted tree item children.
  * @csspart indentation - The tree item's indentation container.
  * @csspart expand-button - The container that wraps the tree item's expand button and spinner.

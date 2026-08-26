@@ -20,8 +20,6 @@ By default, items stretch to fill the stack's width. Pair `wa-stack` with a [`wa
 
 ## Examples
 
-Link to This Section
-
 Stacks are well suited for forms, text, and ensuring consistent spacing between elements in the document flow.
 
 ```html
@@ -54,15 +52,7 @@ Stacks are well suited for forms, text, and ensuring consistent spacing between 
 
 ## Align Items
 
-Link to This Section
-
-By default, items stretch to fill the inline size of the `wa-stack` container. You can add any of the following [`wa-align-items-*`](https://webawesome.com/docs/utilities/align-items) classes to an element with `wa-stack` to specify how items are aligned in the inline direction:
-
--   `wa-align-items-start`
--   `wa-align-items-end`
--   `wa-align-items-center`
--   `wa-align-items-stretch`
--   `wa-align-items-baseline`
+By default, items stretch to fill the inline size of the `wa-stack` container. Add any [`wa-align-items-*`](https://webawesome.com/docs/utilities/align-items) class to change how items line up in the inline direction.
 
 ```html
 <div class="wa-grid">
@@ -86,22 +76,7 @@ By default, items stretch to fill the inline size of the `wa-stack` container. Y
 
 ## Gap
 
-Link to This Section
-
-By default, the gap between stack items uses `--wa-space-m` from your theme. You can add any of the following [`wa-gap-*`](https://webawesome.com/docs/utilities/gap) classes to an element with `wa-stack` to specify the gap between items:
-
--   `wa-gap-0`
--   `wa-gap-3xs`
--   `wa-gap-2xs`
--   `wa-gap-xs`
--   `wa-gap-s`
--   `wa-gap-m`
--   `wa-gap-l`
--   `wa-gap-xl`
--   `wa-gap-2xl`
--   `wa-gap-3xl`
--   `wa-gap-4xl`
--   `wa-gap-5xl`
+By default, the gap between stack items uses `--wa-space-m` from your theme. Add any [`wa-gap-*`](https://webawesome.com/docs/utilities/gap) class to change the spacing between items.
 
 ```html
 <div class="wa-grid">
@@ -154,8 +129,6 @@ By default, cluster children are centered vertically. Pair `wa-cluster` with a [
 
 ## Examples
 
-Link to This Section
-
 Clusters are great for inline lists and aligning items of varying sizes.
 
 ```html
@@ -194,15 +167,7 @@ Clusters are great for inline lists and aligning items of varying sizes.
 
 ## Align Items
 
-Link to This Section
-
-By default, items are centered in the block direction of the `wa-cluster` container. You can add any of the following [`wa-align-items-*`](https://webawesome.com/docs/utilities/align-items) classes to an element with `wa-cluster` to specify how items are aligned in the block direction:
-
--   `wa-align-items-start`
--   `wa-align-items-end`
--   `wa-align-items-center`
--   `wa-align-items-stretch`
--   `wa-align-items-baseline`
+By default, items are centered in the block direction of the `wa-cluster` container. Add any [`wa-align-items-*`](https://webawesome.com/docs/utilities/align-items) class to change how items line up in the block direction.
 
 ```html
 <div class="wa-stack">
@@ -231,22 +196,7 @@ By default, items are centered in the block direction of the `wa-cluster` contai
 
 ## Gap
 
-Link to This Section
-
-By default, the gap between cluster items uses `--wa-space-m` from your theme. You can add any of the following [`wa-gap-*`](https://webawesome.com/docs/utilities/gap) classes to an element with `wa-cluster` to specify the gap between items:
-
--   `wa-gap-0`
--   `wa-gap-3xs`
--   `wa-gap-2xs`
--   `wa-gap-xs`
--   `wa-gap-s`
--   `wa-gap-m`
--   `wa-gap-l`
--   `wa-gap-xl`
--   `wa-gap-2xl`
--   `wa-gap-3xl`
--   `wa-gap-4xl`
--   `wa-gap-5xl`
+By default, the gap between cluster items uses `--wa-space-m` from your theme. Add any [`wa-gap-*`](https://webawesome.com/docs/utilities/gap) class to change the spacing between items.
 
 ```html
 <div class="wa-stack">
@@ -285,8 +235,6 @@ Set `--min-column-size` to change the threshold at which items start to wrap, pa
 ```
 
 ## Examples
-
-Link to This Section
 
 Grids work especially well for card lists and content designed for browsing.
 
@@ -397,11 +345,9 @@ Grids work especially well for card lists and content designed for browsing.
 </style>
 ```
 
-## Sizing
+## Size
 
-Link to This Section
-
-By default, grid items will wrap when the grid's column size is less than `20ch`, but you can set a custom minimum column size using the `--min-column-size` property.
+By default, grid items will wrap when the grid's column size is less than `20ch`, but you can set a custom minimum column size using the `--min-column-size` custom property.
 
 ```html
 <div class="wa-stack">
@@ -426,20 +372,7 @@ By default, grid items will wrap when the grid's column size is less than `20ch`
 
 ## Gap
 
-Link to This Section
-
-By default, the gap between grid items uses `--wa-space-m` from your theme. You can add any of the following [`wa-gap-*`](https://webawesome.com/docs/utilities/gap) classes to an element with `wa-grid` to specify the gap between items:
-
--   `wa-gap-0`
--   `wa-gap-3xs`
--   `wa-gap-2xs`
--   `wa-gap-xs`
--   `wa-gap-s`
--   `wa-gap-m`
--   `wa-gap-l`
--   `wa-gap-xl`
--   `wa-gap-2xl`
--   `wa-gap-3xl`
+By default, the gap between grid items uses `--wa-space-m` from your theme. Add any [`wa-gap-*`](https://webawesome.com/docs/utilities/gap) class to change the spacing between cells.
 
 ```html
 <div class="wa-stack">
@@ -463,8 +396,6 @@ By default, the gap between grid items uses `--wa-space-m` from your theme. You 
 ```
 
 ## Span Grid
-
-Link to This Section
 
 You can add `wa-span-grid` to any grid item to allow it to span all grid columns. With this, the grid item occupies its own grid row.
 
@@ -496,8 +427,6 @@ By default a split runs horizontally; append `:column` to stack items vertically
 ```
 
 ## Examples
-
-Link to This Section
 
 Splits are especially helpful for navigation, header, and footer layouts.
 
@@ -559,8 +488,6 @@ Splits are especially helpful for navigation, header, and footer layouts.
 
 ## Direction
 
-Link to This Section
-
 Items can be split across a row or a column by appending `:row` or `:column` to the `wa-split` class.
 
 ```html
@@ -578,17 +505,7 @@ Items can be split across a row or a column by appending `:row` or `:column` to 
 
 ## Align Items
 
-Link to This Section
-
-By default, items are centered on the cross axis of the `wa-split` container. You can add any of the following [`wa-align-items-*`](https://webawesome.com/docs/utilities/align-items) classes to an element with `wa-split` to specify how items are aligned:
-
--   `wa-align-items-start`
--   `wa-align-items-end`
--   `wa-align-items-center`
--   `wa-align-items-stretch`
--   `wa-align-items-baseline`
-
-These modifiers specify how items are aligned in the block direction for `wa-split:row` and in the inline direction for `wa-split:column`.
+By default, items are centered on the cross axis of the `wa-split` container. Add any [`wa-align-items-*`](https://webawesome.com/docs/utilities/align-items) class to change how items line up: in the block direction for `wa-split:row` and in the inline direction for `wa-split:column`.
 
 ```html
 <div class="wa-stack">
@@ -613,20 +530,7 @@ These modifiers specify how items are aligned in the block direction for `wa-spl
 
 ## Gap
 
-Link to This Section
-
-A split's gap determines how close items can be before they wrap. By default, the gap between split items uses `--wa-space-m` from your theme. You can add any of the following [`wa-gap-*`](https://webawesome.com/docs/utilities/gap) classes to an element with `wa-split` to specify the gap between items:
-
--   `wa-gap-0`
--   `wa-gap-3xs`
--   `wa-gap-2xs`
--   `wa-gap-xs`
--   `wa-gap-s`
--   `wa-gap-m`
--   `wa-gap-l`
--   `wa-gap-xl`
--   `wa-gap-2xl`
--   `wa-gap-3xl`
+A split's gap determines how close items can be before they wrap. By default, the gap between split items uses `--wa-space-m` from your theme. Add any [`wa-gap-*`](https://webawesome.com/docs/utilities/gap) class to change the spacing between items.
 
 ```html
 <div class="wa-stack">
@@ -659,8 +563,6 @@ By default the first child is the flank, but you can pick either end with `wa-fl
 ```
 
 ## Examples
-
-Link to This Section
 
 Flanks work especially well for asides, inputs with adjacent buttons, and rich description lists.
 
@@ -719,8 +621,6 @@ Flanks work especially well for asides, inputs with adjacent buttons, and rich d
 
 ## Position
 
-Link to This Section
-
 By default, the first item in the `wa-flank` container will flank the other content. You can specify whether the first or last item will flank the remaining content by appending `:start` or `:end` to the `wa-flank` class.
 
 ```html
@@ -736,11 +636,9 @@ By default, the first item in the `wa-flank` container will flank the other cont
 </div>
 ```
 
-## Sizing
+## Size
 
-Link to This Section
-
-The flank's inline size is determined by the size of its content, but you can set a target size using the `--flank-size` property. When the flank wraps, it stretches to fill the inline size of the container.
+The flank's inline size is determined by the size of its content, but you can set a target size using the `--flank-size` custom property. When the flank wraps, it stretches to fill the inline size of the container.
 
 ```html
 <div class="wa-stack">
@@ -755,7 +653,7 @@ The flank's inline size is determined by the size of its content, but you can se
 </div>
 ```
 
-The main content fills the remaining inline space of the container. By default, the items wrap when the main content is less than 50% of the container. You can change the minimum size of the main content with the `--content-percentage` property.
+The main content fills the remaining inline space of the container. By default, the items wrap when the main content is less than 50% of the container. You can change the minimum size of the main content with the `--content-percentage` custom property.
 
 ```html
 <div class="wa-stack">
@@ -772,15 +670,7 @@ The main content fills the remaining inline space of the container. By default, 
 
 ## Align Items
 
-Link to This Section
-
-By default, items are centered in the block direction of the `wa-flank` container. You can add any of the following [`wa-align-items-*`](https://webawesome.com/docs/utilities/align-items) classes to an element with `wa-flank` to specify how items are aligned in the block direction:
-
--   `wa-align-items-start`
--   `wa-align-items-end`
--   `wa-align-items-center`
--   `wa-align-items-stretch`
--   `wa-align-items-baseline`
+By default, items are centered in the block direction of the `wa-flank` container. Add any [`wa-align-items-*`](https://webawesome.com/docs/utilities/align-items) class to change how items line up in the block direction.
 
 ```html
 <div class="wa-stack">
@@ -805,20 +695,7 @@ By default, items are centered in the block direction of the `wa-flank` containe
 
 ## Gap
 
-Link to This Section
-
-By default, the gap between flank items uses `--wa-space-m` from your theme. You can add any of the following [`wa-gap-*`](https://webawesome.com/docs/utilities/gap) classes to an element with `wa-flank` to specify the gap between items:
-
--   `wa-gap-0`
--   `wa-gap-3xs`
--   `wa-gap-2xs`
--   `wa-gap-xs`
--   `wa-gap-s`
--   `wa-gap-m`
--   `wa-gap-l`
--   `wa-gap-xl`
--   `wa-gap-2xl`
--   `wa-gap-3xl`
+By default, the gap between flank items uses `--wa-space-m` from your theme. Add any [`wa-gap-*`](https://webawesome.com/docs/utilities/gap) class to change the spacing between items.
 
 ```html
 <div class="wa-stack">
@@ -850,8 +727,6 @@ Pair `wa-frame` with one of the [`wa-border-radius-*`](https://webawesome.com/do
 ```
 
 ## Examples
-
-Link to This Section
 
 Frames are well-suited for images and image placeholders.
 
@@ -947,8 +822,6 @@ Frames are well-suited for images and image placeholders.
 
 ## Aspect Ratio
 
-Link to This Section
-
 Frames have a square aspect ratio by default. You can append `:square` (1 / 1), `:landscape` (16 / 9), or `:portrait` (9 / 16) to the `wa-frame` class in your markup to specify an aspect ratio for the frame. Alternatively, you can define the `aspect-ratio` property to set a custom proportion.
 
 ```html
@@ -967,18 +840,7 @@ Frames have a square aspect ratio by default. You can append `:square` (1 / 1), 
 
 ## Border Radius
 
-Link to This Section
-
-Frames have a square border radius by default. You can add any of the following [`wa-border-radius-*`](https://webawesome.com/docs/utilities/rounding) classes to an element with `wa-frame` to specify the border radius:
-
--   `wa-border-radius-s`
--   `wa-border-radius-m`
--   `wa-border-radius-l`
--   `wa-border-radius-pill`
--   `wa-border-radius-circle`
--   `wa-border-radius-square`
-
-Alternatively, you can define the `border-radius` property to set custom rounding.
+Frames have a square border radius by default. Add any [`wa-border-radius-*`](https://webawesome.com/docs/utilities/rounding) class to round the corners, or define the `border-radius` property to set custom rounding.
 
 ```html
 <div class="wa-grid">
@@ -1006,7 +868,7 @@ Every class besides `wa-gap-0` corresponds to one of the [`--wa-space-*`](https:
 
 ## Gap Classes
 
-Link to This Section | Class Name | gap Value |
+| Class Name | gap Value |
 | --- | --- |
 | \`wa-gap-0\` | \`0\` |
 | \`wa-gap-3xs\` | \`--wa-space-3xs\` |
@@ -1039,8 +901,6 @@ These utility classes control how flex and grid items line up across the contain
 
 ## Override with Align Self
 
-Link to This Section
-
 When you need a flex or grid item to deviate from the `align-items` property of its container, use the `wa-align-self-*` classes to set the item's `align-self` property and individually change its alignment on the container's [cross axis](#whats-the-cross-axis).
 
 | Class Name | align-self Value |
@@ -1052,8 +912,6 @@ When you need a flex or grid item to deviate from the `align-items` property of 
 | \`wa-align-self-stretch\` | \`stretch\` |
 
 ## What's the Cross Axis?
-
-Link to This Section
 
 The cross axis runs perpendicular to a container's content direction. For containers where `flex-direction` is `row` and content flows in the inline direction, the cross axis runs in the block direction. For containers where `flex-direction` is `column` and content flows in the block direction, the cross axis runs in the inline direction.
 
@@ -1076,8 +934,6 @@ These utility classes control how space is distributed between items along a fle
 
 ## What's the Main Axis?
 
-Link to This Section
-
 The main axis runs parallel to a container's content direction. For grid containers and flex containers where `flex-direction` is `row`, the main axis runs in the inline direction. For containers where `flex-direction` is `column`, the main axis runs in the block direction.
 
 ---
@@ -1090,7 +946,7 @@ These utility classes control whether the items inside a flex container wrap ont
 
 ## Flex Wrap Classes
 
-Link to This Section | Class Name | flex-wrap Value |
+| Class Name | flex-wrap Value |
 | --- | --- |
 | \`wa-flex-wrap\` | \`wrap\` |
 | \`wa-flex-nowrap\` | \`nowrap\` |

@@ -5,7 +5,8 @@ import Component from '../../components/sparkline/sparkline.js';
  * @status stable
  * @since 3.2
  *
- * @csspart base - The SVG container element.
+ * @csspart base - Deprecated. Use the `sparkline` part instead.
+ * @csspart sparkline - The component's outer wrapper.
  * @csspart line - The sparkline stroke path.
  * @csspart fill - The filled area under the line (visible with gradient or solid appearance).
  *

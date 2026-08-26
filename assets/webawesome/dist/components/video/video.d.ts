@@ -1,4 +1,4 @@
-import WebAwesomeElement from '$webawesome/internal/webawesome-element.js';
+import WebAwesomeElement from '../../internal/webawesome-element.js';
 import '../button/button.js';
 import '../divider/divider.js';
 import '../dropdown-item/dropdown-item.js';
@@ -38,12 +38,12 @@ import '../slider/slider.js';
  * @event ended - Emitted when playback ends.
  * @event loadedmetadata - Emitted when metadata has been loaded.
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Use the `video-wrapper` part instead.
+ * @csspart video-wrapper - The component's outer wrapper.
  * @csspart video - The video element.
  * @csspart controls - The controls container.
  * @csspart controls-overlay - The overlay wrapping timeline and controls bar.
  * @csspart timeline - The timeline/scrubber container.
- * @csspart progress - The progress bar.
  * @csspart thumbnail - The thumbnail preview.
  * @csspart poster-overlay - The poster image overlay.
  * @csspart poster-play-button - The play button on the poster overlay.

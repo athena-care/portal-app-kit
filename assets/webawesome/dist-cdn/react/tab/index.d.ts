@@ -7,7 +7,8 @@ import Component from '../../components/tab/tab.js';
  *
  * @slot - The tab's label.
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Use the `tab` part instead.
+ * @csspart tab - The component's outer wrapper.
  */
 declare const reactWrapper: import("@lit/react").ReactWebComponent<Component, {}>;
 export default reactWrapper;

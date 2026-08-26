@@ -8,8 +8,6 @@ Svelte [plays nice](https://custom-elements-everywhere.com/#svelte) with custom 
 
 ## Installation
 
-Link to This Section
-
 To add Web Awesome to your Svelte app, install the package from npm.
 
 ```bash
@@ -18,11 +16,9 @@ npm install @awesome.me/webawesome
 
 ## Usage
 
-Link to This Section
+Import the Web Awesome stylesheet and the components you need, then start using them:
 
-Next, import the Web Awesome stylesheet, import the components you need, and then start using Web Awesome!
-
-```jsx
+```html
 <!-- app.html -->
 <script>
   import '@awesome.me/webawesome/dist/styles/webawesome.css';
@@ -42,13 +38,11 @@ Next, import the Web Awesome stylesheet, import the components you need, and the
 </wa-callout>
 ```
 
-### Two-way Binding
+### Two-Way Binding
 
-Link to This Section
+One caveat: Svelte currently only supports the `bind:value` directive on `<input>`, `<textarea>`, and `<select>`, but you can still achieve two-way binding manually.
 
-One caveat is there's currently Svelte only supports `bind:value` directive in `<input>`, `<textarea>` and `<select>`, but you can still achieve two-way binding manually.
-
-```jsx
+```html
 // ❌ These do not work
 <wa-input bind:value="name"></wa-input>
 
@@ -68,13 +62,11 @@ One caveat is there's currently Svelte only supports `bind:value` directive in `
 
 ### Slots
 
-Link to This Section
-
 Slots in Web Awesome/web components are functionally the same as basic slots in Svelte. Slots can be assigned to elements using the `slot` attribute followed by the name of the slot it is being assigned to.
 
 Here is an example:
 
-```jsx
+```html
 <wa-drawer label="Drawer" placement="start" class="drawer-placement-start" bind:open={drawerIsOpen}>
   This drawer slides in from the start.
   <div slot="footer">
@@ -85,4 +77,30 @@ Here is an example:
 </wa-drawer>
 ```
 
-Are you using Web Awesome with Svelte? [Help us improve this page!](https://github.com/shoelace-style/webawesome/blob/next/packages/webawesome/docs/docs/frameworks/svelte.md)
+**Web Awesome is ready to use.**  
+Explore components, utilities, and theming to start building.
+
+## Next Steps
+
+[Components
+
+Start building your interface.
+
+](https://webawesome.com/docs/components)[CSS Utilities
+
+Lay out and style without custom CSS.
+
+](https://webawesome.com/docs/utilities)[Theming
+
+Match Web Awesome to your brand.
+
+](https://webawesome.com/docs/themes)[Svelte Docs
+
+The official Svelte documentation.
+
+](https://svelte.dev)
+
+**Using Web Awesome with Svelte?**  
+Found a bug or have a suggestion? Help make things more awesome!
+
+Share feedback

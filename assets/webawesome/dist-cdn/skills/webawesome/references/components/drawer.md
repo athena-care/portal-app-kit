@@ -1,8 +1,5 @@
 # Drawer
 
-**Full documentation:** https://webawesome.com/docs/components/drawer
-
-
 `<wa-drawer>`
 
 Stable [Layout](https://webawesome.com/docs/components/?category=layout) [Since 2.0](https://webawesome.com/docs/resources/changelog#wa_200)
@@ -25,13 +22,108 @@ Drawers slide in from the edge of a container to expose additional options and i
 </script>
 ```
 
+## API
+
+### Importing
+
+If you're using the autoloader or a hosted project, components load on demand — no manual import needed. To cherry-pick a component manually, use one of the following snippets.
+
+\*\*CDN\*\*
+
+Import this component directly from the CDN:
+
+```js
+import 'https://ka-f.webawesome.com/webawesome@3.12.0/components/drawer/drawer.js';
+```
+
+\*\*npm\*\*
+
+After installing Web Awesome via npm, import this component:
+
+```js
+import '@awesome.me/webawesome/dist/components/drawer/drawer.js';
+```
+
+\*\*Self-Hosted\*\*
+
+If you're self-hosting Web Awesome, import this component from your server:
+
+```js
+import './webawesome/dist/components/drawer/drawer.js';
+```
+
+\*\*React\*\*
+
+To import this component for React 18 or below, use the following code:
+
+```js
+import WaDrawer from '@awesome.me/webawesome/dist/react/drawer/index.js';
+```
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| (default) | The drawer's main content. |
+| \`footer\` | The drawer's footer, usually one or more buttons representing various options. |
+| \`header-actions\` | \`\` Optional actions to add to the header. Works best with . |
+| \`label\` | \`label\` The drawer's . Alternatively, you can use the label attribute. |
+
+### Attributes & Properties
+
+| Name | Description | Reflects |
+| --- | --- | --- |
+| \`label\` label | \`label\` The drawer's as displayed in the header. You should always include a relevant label, as it is required for proper accessibility. If you need to display HTML, use the label slot instead. Type string Default '' | |
+| \`lightDismiss\` light-dismiss | \`boolean\` When enabled, the drawer will be closed when the user clicks outside of it. Type Default false | |
+| \`modal\` | \`modal.activateExternal()\` Exposes the internal modal utility that controls focus trapping. To temporarily disable focus trapping and allow third-party modals spawned from an active Shoelace modal, call when the third-party modal opens. Upon closing, call modal.deactivateExternal() to restore Shoelace's focus trapping. | |
+| \`open\` open | \`boolean\` Indicates whether or not the drawer is open. Toggle this attribute to show and hide the drawer. Type Default false | |
+| \`placement\` placement | \`'top' \\| 'end' \\| 'bottom' \\| 'start'\` The direction from which the drawer will open. Type Default 'end' | |
+| \`withFooter\` with-footer | \`true\` Only required for SSR. Set to if you're slotting in a footer element so the server-rendered markup includes the footer before the component hydrates on the client. Type boolean Default false | |
+| \`withoutHeader\` without-header | \`boolean\` Disables the header. This will also remove the default close button. Type Default false | |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| \`wa-after-hide\` | Emitted after the drawer closes and all animations are complete. |
+| \`wa-after-show\` | Emitted after the drawer opens and all animations are complete. |
+| \`wa-hide\` | \`event.preventDefault()\` Emitted when the drawer is requesting to close. Calling will prevent the drawer from closing. You can inspect event.detail.source to see which element caused the drawer to close. If the source is the drawer element itself, the user has pressed Escape or the drawer has been closed programmatically. Avoid using this unless closing the drawer will result in destructive behavior such as data loss. |
+| \`wa-show\` | Emitted when the drawer opens. |
+
+### CSS Custom Properties
+
+| Name | Description |
+| --- | --- |
+| \`--backdrop-filter\` | \`none\` A filter to apply to the backdrop behind the drawer. Default |
+| \`--hide-duration\` | \`var(--wa-transition-normal)\` The animation duration when hiding the drawer. Default |
+| \`--show-duration\` | \`var(--wa-transition-normal)\` The animation duration when showing the drawer. Default |
+| \`--size\` | \`placement\` The preferred size of the drawer. This will be applied to the drawer's width or height depending on its . Note that the drawer will shrink to accommodate smaller screens. |
+| \`--spacing\` | The amount of space around and between the drawer's content. |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| \`body\` | The drawer's body. | \`::part(body)\` |
+| \`close-button\` | \`\` The close button, a . | \`::part(close-button)\` |
+| \`close-button\_\_base\` | \`base\` The close button's exported part. | \`::part(close-button\_\_base)\` |
+| \`dialog\` | \`\` The drawer's internal element. | \`::part(dialog)\` |
+| \`footer\` | The drawer's footer. | \`::part(footer)\` |
+| \`header\` | The drawer's header. This element wraps the title and header actions. | \`::part(header)\` |
+| \`header-actions\` | \`\` Optional actions to add to the header. Works best with . | \`::part(header-actions)\` |
+| \`title\` | The drawer's title. | \`::part(title)\` |
+
+### Dependencies
+
+This component automatically imports the following elements. Sub-dependencies, if any exist, will also be included in this list.
+
+-   [`<wa-button>`](https://webawesome.com/docs/components/button)
+-   [`<wa-icon>`](https://webawesome.com/docs/components/icon)
+-   [`<wa-spinner>`](https://webawesome.com/docs/components/spinner)
+
 ## Examples
 
-Link to This Section
-
-### Drawer without Header
-
-Link to This Section
+### Without a Header
 
 Headers are enabled by default. To render a drawer without a header, add the `without-header` attribute.
 
@@ -51,9 +143,7 @@ Headers are enabled by default. To render a drawer without a header, add the `wi
 </script>
 ```
 
-### Drawer with Footer
-
-Link to This Section
+### Footer
 
 Footers can be used to display titles and more. Use the `footer` slot to add a footer to the drawer.
 
@@ -73,9 +163,7 @@ Footers can be used to display titles and more. Use the `footer` slot to add a f
 </script>
 ```
 
-### Opening and Closing Drawers Declaratively
-
-Link to This Section
+### Opening & Closing Declaratively
 
 You can open and close drawers with JavaScript by toggling the `open` attribute, but you can also do it declaratively. Add the `data-drawer="open id"` to any button on the page, where `id` is the ID of the drawer you want to open.
 
@@ -99,11 +187,16 @@ Similarly, you can add `data-drawer="close"` to a button _inside_ of a drawer to
 <wa-button appearance="filled" data-drawer="open drawer-dismiss">Open Drawer</wa-button>
 ```
 
-### Slide in From Start
+### Placement
 
-Link to This Section
+Drawers slide in from the end by default. Set the `placement` attribute to slide in from a different edge.
 
-By default, drawers slide in from the end. To make the drawer slide in from the start, set the `placement` attribute to `start`.
+| Placement | Slides in from |
+| --- | --- |
+| \`end\` default | The end (right, in LTR) |
+| \`start\` | The start (left, in LTR) |
+| \`top\` | The top |
+| \`bottom\` | The bottom |
 
 ```html
 <wa-drawer label="Drawer" placement="start" class="drawer-placement-start">
@@ -111,7 +204,7 @@ By default, drawers slide in from the end. To make the drawer slide in from the 
   <wa-button slot="footer" variant="brand" data-drawer="close">Close</wa-button>
 </wa-drawer>
 
-<wa-button appearance="filled">Open Drawer</wa-button>
+<wa-button appearance="filled">Open from Start</wa-button>
 
 <script>
   const drawer = document.querySelector('.drawer-placement-start');
@@ -121,41 +214,13 @@ By default, drawers slide in from the end. To make the drawer slide in from the 
 </script>
 ```
 
-### Slide in From Top
-
-Link to This Section
-
-To make the drawer slide in from the top, set the `placement` attribute to `top`.
-
-```html
-<wa-drawer label="Drawer" placement="top" class="drawer-placement-top">
-  This drawer slides in from the top.
-  <wa-button slot="footer" variant="brand" data-drawer="close">Close</wa-button>
-</wa-drawer>
-
-<wa-button appearance="filled">Open Drawer</wa-button>
-
-<script>
-  const drawer = document.querySelector('.drawer-placement-top');
-  const openButton = drawer.nextElementSibling;
-
-  openButton.addEventListener('click', () => (drawer.open = true));
-</script>
-```
-
-### Slide in From Bottom
-
-Link to This Section
-
-To make the drawer slide in from the bottom, set the `placement` attribute to `bottom`.
-
 ```html
 <wa-drawer label="Drawer" placement="bottom" class="drawer-placement-bottom">
   This drawer slides in from the bottom.
   <wa-button slot="footer" variant="brand" data-drawer="close">Close</wa-button>
 </wa-drawer>
 
-<wa-button appearance="filled">Open Drawer</wa-button>
+<wa-button appearance="filled">Open from Bottom</wa-button>
 
 <script>
   const drawer = document.querySelector('.drawer-placement-bottom');
@@ -165,9 +230,7 @@ To make the drawer slide in from the bottom, set the `placement` attribute to `b
 </script>
 ```
 
-### Custom Size
-
-Link to This Section
+### Size
 
 Use the `--size` custom property to set the drawer's size. This will be applied to the drawer's width or height depending on its `placement`.
 
@@ -188,8 +251,6 @@ Use the `--size` custom property to set the drawer's size. This will be applied 
 ```
 
 ### Scrolling
-
-Link to This Section
 
 By design, a drawer's height will never exceed 100% of its container. As such, drawers will not scroll with the page to ensure the header and footer are always accessible to the user.
 
@@ -212,8 +273,6 @@ By design, a drawer's height will never exceed 100% of its container. As such, d
 ```
 
 ### Header Actions
-
-Link to This Section
 
 The header shows a functional close button by default. You can use the `header-actions` slot to add additional [buttons](https://webawesome.com/docs/components/button) if needed.
 
@@ -240,8 +299,6 @@ The header shows a functional close button by default. You can use the `header-a
 
 ### Light Dismissal
 
-Link to This Section
-
 If you want the drawer to close when the user clicks on the overlay, add the `light-dismiss` attribute.
 
 ```html
@@ -261,8 +318,6 @@ If you want the drawer to close when the user clicks on the overlay, add the `li
 ```
 
 ### Preventing the Drawer from Closing
-
-Link to This Section
 
 By default, drawers will close when the user clicks the close button, clicks the overlay, or presses the Escape key. In most cases, the default behavior is the best behavior in terms of UX. However, there are situations where this may be undesirable, such as when data loss will occur.
 
@@ -294,9 +349,7 @@ You can use `event.detail.source` to determine what triggered the request to clo
 </script>
 ```
 
-### Setting Initial Focus
-
-Link to This Section
+### Initial Focus
 
 To give focus to a specific element when the drawer opens, use the `autofocus` attribute.
 
@@ -316,59 +369,3 @@ To give focus to a specific element when the drawer opens, use the `autofocus` a
   openButton.addEventListener('click', () => (drawer.open = true));
 </script>
 ```
-
-## Slots
-
-Valid slot names for this component (use exactly these — any other `slot` value
-is silently ignored and the element falls back to the default slot):
-
-- `(default)` — The drawer's main content.
-- `label` — The drawer's label. Alternatively, you can use the `label` attribute.
-- `header-actions` — Optional actions to add to the header. Works best with `<wa-button>`.
-- `footer` — The drawer's footer, usually one or more buttons representing various options.
-
-## Attributes & Properties
-
-| Attribute | Property | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `open` |  | `boolean` | `false` | Indicates whether or not the drawer is open. Toggle this attribute to show and hide the drawer. |
-| `label` |  | `string` | `''` | The drawer's label as displayed in the header. You should always include a relevant label, as it is required for proper accessibility. If you need to display HTML, use the `label` slot instead. |
-| `placement` |  | `'top' \| 'end' \| 'bottom' \| 'start'` | `'end'` | The direction from which the drawer will open. |
-| `without-header` | `withoutHeader` | `boolean` | `false` | Disables the header. This will also remove the default close button. |
-| `light-dismiss` | `lightDismiss` | `boolean` | `false` | When enabled, the drawer will be closed when the user clicks outside of it. |
-| `with-footer` | `withFooter` | `boolean` | `false` | Only required for SSR. Set to `true` if you're slotting in a `footer` element so the server-rendered markup includes the footer before the component hydrates on the client. |
-| `dir` |  | `string` |  |  |
-| `lang` |  | `string` |  |  |
-| `did-ssr` | `didSSR` |  |  |  |
-
-## Events
-
-| Event | Description |
-| --- | --- |
-| `wa-show` | Emitted when the drawer opens. |
-| `wa-after-show` | Emitted after the drawer opens and all animations are complete. |
-| `wa-hide` | Emitted when the drawer is requesting to close. Calling `event.preventDefault()` will prevent the drawer from closing. You can inspect `event.detail.source` to see which element caused the drawer to close. If the source is the drawer element itself, the user has pressed [[Escape]] or the drawer has been closed programmatically. Avoid using this unless closing the drawer will result in destructive behavior such as data loss. |
-| `wa-after-hide` | Emitted after the drawer closes and all animations are complete. |
-
-## CSS Parts
-
-| Part | Description |
-| --- | --- |
-| `dialog` | The drawer's internal `<dialog>` element. |
-| `header` | The drawer's header. This element wraps the title and header actions. |
-| `header-actions` | Optional actions to add to the header. Works best with `<wa-button>`. |
-| `title` | The drawer's title. |
-| `close-button` | The close button, a `<wa-button>`. |
-| `close-button__base` | The close button's exported `base` part. |
-| `body` | The drawer's body. |
-| `footer` | The drawer's footer. |
-
-## CSS Custom Properties
-
-| Property | Default | Description |
-| --- | --- | --- |
-| `--spacing` |  | The amount of space around and between the drawer's content. |
-| `--size` |  | The preferred size of the drawer. This will be applied to the drawer's width or height depending on its `placement`. Note that the drawer will shrink to accommodate smaller screens. |
-| `--backdrop-filter` | `none` | A filter to apply to the backdrop behind the drawer. |
-| `--show-duration` | `var(--wa-transition-normal)` | The animation duration when showing the drawer. |
-| `--hide-duration` | `var(--wa-transition-normal)` | The animation duration when hiding the drawer. |

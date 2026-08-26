@@ -6,8 +6,6 @@ Web Awesome form controls are form-associated custom elements, meaning they will
 
 ## Constraint Validation
 
-Link to This Section
-
 Client-side validation can be enabled through the browser's [Constraint Validation API](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation) for Web Awesome form controls. You can activate it using attributes such as `required`, `pattern`, `minlength`, `maxlength`, etc. Web Awesome implements many of the same attributes as native form controls, but check the documentation for a list of supported properties for each component.
 
 If you don't want to use client-side validation, you can suppress this behavior by adding `novalidate` to the surrounding `<form>` element.
@@ -17,8 +15,6 @@ And if this syntax looks unfamiliar, don't worry! Most of what you're learning o
 Client-side validation can be used to improve the UX of forms, but it is not a replacement for server-side validation. You should always validate and sanitize user input on the server!
 
 ### Required Fields
-
-Link to This Section
 
 To make a field required, use the `required` attribute. Required fields will automatically receive an asterisk after their labels. The form will not be submitted if a required field is incomplete.
 
@@ -60,9 +56,31 @@ To make a field required, use the `required` attribute. Required fields will aut
 </script>
 ```
 
-### Input Patterns
+#### Styling the Required Indicator
 
-Link to This Section
+The asterisk is drawn with three [design tokens](https://webawesome.com/docs/tokens/component-groups#form-controls). Override them to change the character, its color, and the space between it and the label.
+
+-   [`--wa-form-control-required-content`](https://webawesome.com/docs/tokens/component-groups#token-wa-form-control-required-content) - the content appended to the label, e.g. `'*'`
+-   [`--wa-form-control-required-content-color`](https://webawesome.com/docs/tokens/component-groups#token-wa-form-control-required-content-color) - the indicator's color
+-   [`--wa-form-control-required-content-offset`](https://webawesome.com/docs/tokens/component-groups#token-wa-form-control-required-content-offset) - the inline space between the label and the indicator
+
+```html
+<form class="custom-required-indicator">
+  <wa-input name="name" label="Name" required></wa-input>
+</form>
+
+<style>
+  .custom-required-indicator {
+    --wa-form-control-required-content: '(required)';
+    --wa-form-control-required-content-color: var(--wa-color-danger-on-quiet);
+    --wa-form-control-required-content-offset: 0.5em;
+  }
+</style>
+```
+
+Set `--wa-form-control-required-content` to `''` to remove the indicator.
+
+### Input Patterns
 
 To restrict a value to a specific [pattern](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern), use the `pattern` attribute. This example only allows the letters A-Z, so the form will not submit if a number or symbol is entered. This only works with [`<wa-input>`](https://webawesome.com/docs/components/input) elements.
 
@@ -88,8 +106,6 @@ To restrict a value to a specific [pattern](https://developer.mozilla.org/en-US/
 ```
 
 ### Input Types
-
-Link to This Section
 
 Some input types will automatically trigger constraints, such as `email` and `url`.
 
@@ -117,8 +133,6 @@ Some input types will automatically trigger constraints, such as `email` and `ur
 ```
 
 ### Custom Error Messages
-
-Link to This Section
 
 To create a custom validation error, pass a non-empty string to the `setCustomValidity()` method. This will override any existing validation constraints. The form will not be submitted when a custom validity is set and the browser will show a validation error when the containing form is submitted. To make the input valid again, call `setCustomValidity()` again with an empty string.
 
@@ -155,8 +169,6 @@ To create a custom validation error, pass a non-empty string to the `setCustomVa
 Custom validation can be applied to any form control that supports the `setCustomValidity()` method. It is not limited to inputs and textareas.
 
 ## Custom Validation Styles
-
-Link to This Section
 
 Due to the many ways form controls are used, Web Awesome doesn't provide out of the box validation styles for form controls as part of its default theme.
 

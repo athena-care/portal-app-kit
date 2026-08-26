@@ -2,7 +2,7 @@
 import {
   WaFinishEvent
 } from "../chunks/chunk.EGYXXMXT.js";
-import "../chunks/chunk.7VGCIHDG.js";
+import "../chunks/chunk.7F23ACLI.js";
 export {
   WaFinishEvent
 };

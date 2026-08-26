@@ -4,7 +4,7 @@ description: Web Awesome is a UI component library built with web components. Us
 license: MIT / Commercial (for Web Awesome Pro)
 metadata:
   author: Web Awesome
-  version: "3.9.0"
+  version: "3.12.0"
   homepage: https://webawesome.com
   repository: https://github.com/shoelace-style/webawesome
 compatibility: Works in modern browsers. Requires no build tools when using CDN. Works with bundlers like Webpack and Vite when installed via npm.
@@ -100,6 +100,8 @@ wait time and preventing layout shift. ([docs](https://webawesome.com/docs/compo
 where a determinate progress bar isn't practical. ([docs](https://webawesome.com/docs/components/spinner))
 - [`<wa-tag>`](references/components/tag.md) - Tags label, categorize, or represent selections with a compact visual marker. Use them for status
 indicators, filters, or removable chips. ([docs](https://webawesome.com/docs/components/tag))
+- [`<wa-toast>`](references/components/toast.md) - Toasts display brief, non-blocking notifications that appear temporarily above the page content. ([docs](https://webawesome.com/docs/components/toast))
+- [`<wa-toast-item>`](references/components/toast-item.md) - Toast items are individual notifications displayed within a toast container. ([docs](https://webawesome.com/docs/components/toast-item))
 - [`<wa-tooltip>`](references/components/tooltip.md) - Tooltips display brief contextual information when the user hovers, focuses, or taps a target element. ([docs](https://webawesome.com/docs/components/tooltip))
 
 #### Forms
@@ -111,12 +113,14 @@ indeterminate state for partial selections in groups. ([docs](https://webawesome
 HSL, and HSV formats with optional alpha channel and swatch presets. ([docs](https://webawesome.com/docs/components/color-picker))
 - [`<wa-input>`](references/components/input.md) - Inputs collect single-line data from the user, such as text, numbers, email addresses, and passwords. They
 support labels, hints, validation, and prefix or suffix slots. ([docs](https://webawesome.com/docs/components/input))
-- [`<wa-known-date>`](references/components/known-date.md) - Known dates let users enter dates they already know — birthdays, expirations, document
-dates — through three separate day, month, and year fields shown in the locale's natural order. ([docs](https://webawesome.com/docs/components/known-date))
+- [`<wa-known-date>`](references/components/known-date.md) - Known dates let users enter dates they already know - birthdays, expirations, document
+dates - through three separate day, month, and year fields shown in the locale's natural order. ([docs](https://webawesome.com/docs/components/known-date))
 - [`<wa-number-input>`](references/components/number-input.md) - Number inputs let users enter and edit numeric values, with optional stepper buttons for incrementing and
 decrementing. Use them for quantities, measurements, and other numeric form fields. ([docs](https://webawesome.com/docs/components/number-input))
 - [`<wa-option>`](references/components/option.md) - Options represent the individual choices inside a select or similar form control. Each option holds a value
 and the label shown to the user. ([docs](https://webawesome.com/docs/components/option))
+- [`<wa-otp-input>`](references/components/otp-input.md) - OTP inputs collect one-time passcodes, PINs, and other fixed-length codes, one character per segment.
+Use them for SMS verification, two-factor authentication, and invite codes. ([docs](https://webawesome.com/docs/components/otp-input))
 - [`<wa-radio>`](references/components/radio.md) - Radios represent a single option within a mutually exclusive set. Use them inside a radio group when users
 must pick exactly one choice from a small list. ([docs](https://webawesome.com/docs/components/radio))
 - [`<wa-radio-group>`](references/components/radio-group.md) - Radio groups wrap a set of radios so they function as a single form control with one shared value. They
@@ -152,6 +156,7 @@ thin, declarative interface to the browser's MutationObserver API. ([docs](https
 them for rich tooltips, menus, or any content that appears on demand without navigating away. ([docs](https://webawesome.com/docs/components/popover))
 - [`<wa-popup>`](references/components/popup.md) - Popups declaratively anchor one element to another and keep them positioned together as the page scrolls or
 resizes. Primarily a low-level building block for popovers, dropdowns, and tooltips. ([docs](https://webawesome.com/docs/components/popup))
+- [`<wa-random-content>`](references/components/random-content.md) - Selects one or more child elements at random and displays them, hiding the rest. ([docs](https://webawesome.com/docs/components/random-content))
 - [`<wa-relative-time>`](references/components/relative-time.md) - Relative times display a date as a localized phrase relative to now, such as "3 hours ago" or "in 2 days".
 The phrase updates automatically as time passes and respects the user's locale. ([docs](https://webawesome.com/docs/components/relative-time))
 - [`<wa-resize-observer>`](references/components/resize-observer.md) - Resize observers watch their slotted elements for size changes and emit an event when they occur. Provides a
@@ -203,6 +208,7 @@ Use them to share links, contact info, or Wi-Fi credentials that visitors can sc
 understand the current location and navigate back to parent pages. ([docs](https://webawesome.com/docs/components/breadcrumb))
 - [`<wa-breadcrumb-item>`](references/components/breadcrumb-item.md) - Breadcrumb items represent individual links inside a breadcrumb, typically one per level of the site
 hierarchy. ([docs](https://webawesome.com/docs/components/breadcrumb-item))
+- [`<wa-pagination>`](references/components/pagination.md) - Pagination splits long lists of content into pages, letting users navigate between them. ([docs](https://webawesome.com/docs/components/pagination))
 - [`<wa-tab>`](references/components/tab.md) - Tabs label and activate an individual panel inside a tab group. ([docs](https://webawesome.com/docs/components/tab))
 - [`<wa-tab-group>`](references/components/tab-group.md) - Tab groups organize related content into a single container that displays one panel at a time, with tabs for
 switching between them. ([docs](https://webawesome.com/docs/components/tab-group))
@@ -224,6 +230,7 @@ highlighting differences between groups, and tracking changes across time period
 for visualizing relationships where a third variable adds meaning beyond a simple x/y correlation. ([docs](https://webawesome.com/docs/components/bubble-chart))
 - [`<wa-chart>`](references/components/chart.md) [Pro] - Charts provide a flexible wrapper around Chart.js for building themed data visualizations. Use this
 component for advanced configuration such as mixed chart types, custom plugins, and direct Chart.js instance access. ([docs](https://webawesome.com/docs/components/chart))
+- [`<wa-data-grid>`](references/components/data-grid.md) [Pro] - Data grids display tabular data with sorting, selection, pagination, and virtualization for large datasets. ([docs](https://webawesome.com/docs/components/data-grid))
 - [`<wa-doughnut-chart>`](references/components/doughnut-chart.md) [Pro] - Doughnut charts show proportional data as slices of a ring with a hollow center. They offer a cleaner look
 than pie charts and work well in dashboards where the center space can provide additional context. ([docs](https://webawesome.com/docs/components/doughnut-chart))
 - [`<wa-line-chart>`](references/components/line-chart.md) [Pro] - Line charts show trends over time by connecting data points with line segments. Use them when the x-axis
@@ -239,11 +246,6 @@ comparing profiles across several dimensions, such as skill assessments, product
 for identifying correlations, clusters, and outliers in datasets. ([docs](https://webawesome.com/docs/components/scatter-chart))
 - [`<wa-sparkline>`](references/components/sparkline.md) [Pro] - Sparklines display inline data trends as compact, visual charts. ([docs](https://webawesome.com/docs/components/sparkline))
 
-#### Feedback
-
-- [`<wa-toast>`](references/components/toast.md) [Pro] - Toasts display brief, non-blocking notifications that appear temporarily above the page content. ([docs](https://webawesome.com/docs/components/toast))
-- [`<wa-toast-item>`](references/components/toast-item.md) [Pro] - Toast items are individual notifications displayed within a toast container. ([docs](https://webawesome.com/docs/components/toast-item))
-
 #### Forms
 
 - [`<wa-combobox>`](references/components/combobox.md) [Pro] - Comboboxes combine a text input with a listbox, allowing users to filter and select from predefined options
@@ -256,8 +258,8 @@ need to remain visible, such as in scheduling interfaces or embedded inside anot
 
 #### Media
 
-- [`<wa-video>`](references/components/video.md) [Pro] - Videos are used to embed and play video content with custom controls, and captions. ([docs](https://webawesome.com/docs/components/video))
-- [`<wa-video-playlist>`](references/components/video-playlist.md) [Pro] - Video playlist wraps multiple videos into a playlist with navigation controls and a sidebar. ([docs](https://webawesome.com/docs/components/video-playlist))
+- [`<wa-video>`](references/components/video.md) [Pro] - Videos are used to embed and play video content with custom controls and captions. ([docs](https://webawesome.com/docs/components/video))
+- [`<wa-video-playlist>`](references/components/video-playlist.md) [Pro] - Video playlists wrap multiple `<wa-video>` elements into a playlist with navigation controls. ([docs](https://webawesome.com/docs/components/video-playlist))
 
 ## Building Full Pages with `<wa-page>`
 

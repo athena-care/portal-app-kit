@@ -6,7 +6,7 @@ import type WaTooltip from '../tooltip/tooltip.js';
  * <wa-slider>
  *
  * @summary Sliders let users choose a numeric value within a defined range by dragging a thumb along a track.
- * @documentation https://webawesome.com/docs/components/range
+ * @documentation https://webawesome.com/docs/components/slider
  * @status stable
  * @since 2.0
  *
@@ -36,7 +36,7 @@ import type WaTooltip from '../tooltip/tooltip.js';
  * @csspart thumb-max - The max value thumb in a range slider.
  * @csspart tooltip - The tooltip, a `<wa-tooltip>` element.
  * @csspart tooltip__tooltip - The tooltip's `tooltip` part.
- * @csspart tooltip__content - The tooltip's `content` part.
+ * @csspart tooltip__body - The tooltip's `body` part.
  * @csspart tooltip__arrow - The tooltip's `arrow` part.
  *
  * @cssstate disabled - Applied when the slider is disabled.
@@ -138,7 +138,7 @@ export default class WaSlider extends WebAwesomeFormAssociatedElement {
      * readers. Must be set with JavaScript. Property only.
      */
     valueFormatter: (value: number) => string;
-    firstUpdated(): void;
+    firstUpdated(changedProperties: PropertyValues<this>): void;
     protected willUpdate(changedProperties: PropertyValues<this>): void;
     updated(changedProperties: PropertyValues<this>): void;
     /** @internal Called when a containing fieldset is disabled. */

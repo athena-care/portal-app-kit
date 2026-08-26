@@ -9,12 +9,15 @@ import WebAwesomeElement from '../../internal/webawesome-element.js';
  * @event wa-load - Emitted when the included file is loaded.
  * @event {{ status: number }} wa-include-error - Emitted when the included file fails to load due to an error.
  *
- * @ssr - `<wa-include>` uses fetch, but due to its asynchronous nature similar to `<wa-icon>`, there is no way to get the rendered content on your server.
+ * @ssr - `<wa-include>` fetches its content asynchronously (like `<wa-icon>`), so the rendered output isn't available during SSR.
  */
 export default class WaInclude extends WebAwesomeElement {
     static css: import("lit").CSSResult;
     /**
-     * The location of the HTML file to include. Be sure you trust the content you are including as it will be executed as
+     * The location of the content to include. This can be a URL to an HTML file, a same-page reference to an element's id
+     * (e.g. `#my-id`), or a URL with a fragment that targets an element's id within the fetched file
+     * (e.g. `/partials.html#my-id`). When targeting an element by id, its content is cloned. If the target is a
+     * `<template>`, its child nodes are cloned. Be sure you trust the content you are including as it will be executed as
      * code and can result in XSS attacks.
      */
     src: string;
@@ -26,6 +29,9 @@ export default class WaInclude extends WebAwesomeElement {
      */
     allowScripts: boolean;
     private executeScript;
+    /** Clones the contents of an element — a template's `content`, or any other element's children — for insertion. */
+    private cloneFragment;
+    private childNodesToFragment;
     handleSrcChange(): Promise<void>;
     render(): import("lit-html").TemplateResult<1>;
 }

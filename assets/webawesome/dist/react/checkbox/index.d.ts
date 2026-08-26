@@ -20,7 +20,8 @@ export type { WaInvalidEvent } from '../../events/events.js';
  * @event input - Emitted when the checkbox receives input.
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *
- * @csspart base - The component's label .
+ * @csspart base - Deprecated. Use the `checkbox` part instead.
+ * @csspart checkbox - The component's outer wrapper.
  * @csspart control - The square container that wraps the checkbox's checked state.
  * @csspart checked-icon - The checked icon, a `<wa-icon>` element.
  * @csspart indeterminate-icon - The indeterminate icon, a `<wa-icon>` element.

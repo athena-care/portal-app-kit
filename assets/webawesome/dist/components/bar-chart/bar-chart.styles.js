@@ -1,9 +1,12 @@
 /*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */
-import "../../chunks/chunk.7VGCIHDG.js";
+import {
+  i
+} from "../../chunks/chunk.E4Q7ZNYW.js";
+import "../../chunks/chunk.BKE5EYM3.js";
+import "../../chunks/chunk.7F23ACLI.js";
 
 // _bundle_/src/components/bar-chart/bar-chart.styles.ts
-import { css } from "lit";
-var bar_chart_styles_default = css`
+var bar_chart_styles_default = i`
   :host {
     display: inline-block;
   }

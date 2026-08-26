@@ -25,9 +25,11 @@ import '../icon/icon.js';
  * @event wa-clear - Emitted when the clear button is activated.
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *
- * @csspart label - The label
+ * @csspart form-control-label - The label.
+ * @csspart label - Deprecated. Use the `form-control-label` part instead.
  * @csspart hint - The hint's wrapper.
- * @csspart base - The wrapper being rendered as an input
+ * @csspart base - Deprecated. Use the `input-wrapper` part instead.
+ * @csspart input-wrapper - The component's outer wrapper.
  * @csspart input - The internal `<input>` control.
  * @csspart start - The container that wraps the `start` slot.
  * @csspart clear-button - The clear button.

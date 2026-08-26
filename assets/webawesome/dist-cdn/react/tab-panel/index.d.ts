@@ -7,7 +7,7 @@ import Component from '../../components/tab-panel/tab-panel.js';
  *
  * @slot - The tab panel's content.
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Style the host element instead.
  *
  * @cssproperty --padding - The tab panel's padding.
  */

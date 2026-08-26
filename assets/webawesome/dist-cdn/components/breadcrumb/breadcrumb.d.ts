@@ -12,7 +12,8 @@ import '../icon/icon.js';
  *
  * @dependency wa-icon
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Use the `breadcrumb` part instead.
+ * @csspart breadcrumb - The component's outer wrapper.
  */
 export default class WaBreadcrumb extends WebAwesomeElement {
     static css: import("lit").CSSResult;

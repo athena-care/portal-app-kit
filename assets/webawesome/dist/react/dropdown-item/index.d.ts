@@ -22,6 +22,13 @@ import Component from '../../components/dropdown-item/dropdown-item.js';
  * @csspart details - The container for the details slot.
  * @csspart submenu-icon - The submenu indicator icon (a `<wa-icon>` element).
  * @csspart submenu - The submenu container.
+ *
+ * @cssstate active - Applied when the item is the active item in the menu.
+ * @cssstate checked - Applied when the item is checked.
+ * @cssstate disabled - Applied when the item is disabled.
+ * @cssstate has-submenu - Applied when the item has a submenu.
+ * @cssstate link - Applied when the item is a link (i.e. `href` is set).
+ * @cssstate submenu-open - Applied when the item's submenu is open.
  */
 declare const reactWrapper: import("@lit/react").ReactWebComponent<Component, {}>;
 export default reactWrapper;

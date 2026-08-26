@@ -3,7 +3,7 @@ import Component from '../../components/accordion-item/accordion-item.js';
  * @summary Accordion items are used inside `<wa-accordion>` to create expandable sections with accessible headers.
  * @documentation https://webawesome.com/docs/components/accordion
  * @status experimental
- * @since 1.0
+ * @since 3.8
  *
  * @dependency wa-icon
  *
@@ -11,7 +11,8 @@ import Component from '../../components/accordion-item/accordion-item.js';
  * @slot label - The accordion item's label. Alternatively, use the `label` attribute.
  * @slot icon - Optional expand/collapse icon. Works best with `<wa-icon>`.
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Use the `accordion-item` part instead.
+ * @csspart accordion-item - The component's outer wrapper.
  * @csspart heading - The heading element wrapping the trigger button. Omitted when `heading-level="none"`.
  * @csspart button - The trigger button that toggles the panel.
  * @csspart label - The container that wraps the label.

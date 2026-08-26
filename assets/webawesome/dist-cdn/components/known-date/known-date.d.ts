@@ -1,11 +1,12 @@
+import { type PropertyValues } from 'lit';
 import { WebAwesomeFormAssociatedElement } from '../../internal/webawesome-form-associated-element.js';
 import { LocalizeController } from '../../utilities/localize.js';
 import { type DateParts } from './internal/parts.js';
 export type WaKnownDateSize = 'xs' | 's' | 'm' | 'l' | 'xl';
 export type WaKnownDateAppearance = 'filled' | 'outlined' | 'filled-outlined';
 /**
- * @summary Known dates let users enter dates they already know — birthdays, expirations, document
- *  dates — through three separate day, month, and year fields shown in the locale's natural order.
+ * @summary Known dates let users enter dates they already know - birthdays, expirations, document
+ *  dates - through three separate day, month, and year fields shown in the locale's natural order.
  * @documentation https://webawesome.com/docs/components/known-date
  * @status experimental
  * @since 3.8
@@ -23,8 +24,9 @@ export type WaKnownDateAppearance = 'filled' | 'outlined' | 'filled-outlined';
  * @csspart form-control-label - The wrapper inside the legend that styles the visible label text.
  * @csspart form-control-input - Alias on the fields row matching other form controls.
  * @csspart hint - The hint's wrapper.
- * @csspart label - Alias on the legend's inner label wrapper.
- * @csspart base - The component's outer wrapper (alias of the fields row).
+ * @csspart label - Deprecated. Use the `form-control-label` part instead.
+ * @csspart base - Deprecated. Use the `known-date` part instead.
+ * @csspart known-date - The component's outer wrapper.
  * @csspart fieldset - The `<fieldset>` element grouping the three fields (or a `role="group"` div).
  * @csspart legend - The `<legend>` element (when a label is present).
  * @csspart fields - The flex row holding the three field blocks.
@@ -34,10 +36,6 @@ export type WaKnownDateAppearance = 'filled' | 'outlined' | 'filled-outlined';
  * @csspart field-year - Added to the year field block.
  * @csspart field-label - The text label above each field's input.
  * @csspart field-input - The native `<input>` inside a field.
- * @csspart error - The inline error message region. This is an intentional difference from `<wa-date-input>`
- *  and `<wa-time-input>`, which rely on the browser's native validation popup. Because this control is composed
- *  of three separate fields, an inline `role="alert"` region gives a single, predictable place to surface the
- *  validation message rather than anchoring a native popup on one of the three fields.
  *
  * @cssstate blank - The known date has no committed value.
  * @cssstate disabled - The known date is disabled.
@@ -58,7 +56,6 @@ export default class WaKnownDate extends WebAwesomeFormAssociatedElement {
     private readonly hasSlotController;
     private readonly groupId;
     private readonly hintId;
-    private readonly errorId;
     /** Hidden mirror used for native constraint validation (min/max/required + valid-date roundtrip). */
     valueInput: HTMLInputElement;
     /** Debounces duplicate `change` events when the value hasn't transitioned. */
@@ -110,7 +107,7 @@ export default class WaKnownDate extends WebAwesomeFormAssociatedElement {
     withLabel: boolean;
     /** Only required for SSR. Set to `true` if you're slotting in a `hint` element. */
     withHint: boolean;
-    firstUpdated(): void;
+    firstUpdated(changedProperties: PropertyValues<typeof this>): void;
     protected updated(changed: Map<string, unknown>): void;
     /** Focuses the first empty field, or the first field when all are filled. */
     focus(options?: FocusOptions): void;
@@ -132,6 +129,12 @@ export default class WaKnownDate extends WebAwesomeFormAssociatedElement {
     private updateHiddenInput;
     private recomputeValue;
     private firstFocusableInput;
+    /**
+     * Returns the field to fix when the value doesn't compose, in locale order: the first empty field, else the first
+     * out-of-range field (year < 1, month not 1–12, day not 1–31), else the day (e.g. Feb 30). Null when the value
+     * composes cleanly.
+     */
+    private firstInvalidField;
     private autocompleteFor;
     private handleFieldInput;
     render(): import("lit-html").TemplateResult<1>;

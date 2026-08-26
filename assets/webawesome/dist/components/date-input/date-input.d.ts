@@ -1,6 +1,6 @@
-import '$webawesome/components/popup/popup.js';
-import type WaPopup from '$webawesome/components/popup/popup.js';
-import { WebAwesomeFormAssociatedElement } from '$webawesome/internal/webawesome-form-associated-element.js';
+import '../../components/popup/popup.js';
+import type WaPopup from '../../components/popup/popup.js';
+import { WebAwesomeFormAssociatedElement } from '../../internal/webawesome-form-associated-element.js';
 import type { TemplateResult } from 'lit-html';
 import '../date-picker/date-picker.js';
 import type WaDatePicker from '../date-picker/date-picker.js';
@@ -48,10 +48,12 @@ export type WaDateInputDayContent = (date: Date) => string | TemplateResult | nu
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *
  * @csspart form-control - The form control that wraps the label, input, and hint.
- * @csspart form-control-label - The label's wrapper.
+ * @csspart form-control-label - The label.
+ * @csspart label - Deprecated. Use the `form-control-label` part instead.
  * @csspart form-control-input - The input's wrapper.
  * @csspart hint - The hint's wrapper.
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Use the `date-input` part instead.
+ * @csspart date-input - The component's outer wrapper.
  * @csspart input-wrapper - The container that wraps the start slot, segmented input, clear button, and expand button.
  * @csspart start - The container that wraps the `start` slot.
  * @csspart end - The container that wraps the `end` slot.
@@ -83,7 +85,7 @@ export default class WaDateInput extends WebAwesomeFormAssociatedElement {
         serializable?: boolean;
         slotAssignment?: SlotAssignmentMode;
     };
-    static get validators(): import("$webawesome/internal/webawesome-form-associated-element.js").Validator<WebAwesomeFormAssociatedElement>[];
+    static get validators(): import("../../internal/webawesome-form-associated-element.js").Validator<WebAwesomeFormAssociatedElement>[];
     /**
      * Native `input` events do not fire on `role=spinbutton` elements (they aren't real `<input>`s). The component
      * dispatches a composed host `input` event on every segment edit, every step, and on calendar selection, so a

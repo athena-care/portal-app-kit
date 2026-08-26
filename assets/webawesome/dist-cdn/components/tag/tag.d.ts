@@ -13,7 +13,7 @@ import '../button/button.js';
  *
  * @event wa-remove - Emitted when the remove button is activated.
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Style the host element instead.
  * @csspart content - The tag's content.
  * @csspart remove-button - The tag's remove button, a `<wa-button>`.
  * @csspart remove-button__base - The remove button's exported `base` part.

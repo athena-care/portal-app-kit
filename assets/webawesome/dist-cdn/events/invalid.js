@@ -2,7 +2,7 @@
 import {
   WaInvalidEvent
 } from "../chunks/chunk.S7GU24DN.js";
-import "../chunks/chunk.JHZRD2LV.js";
+import "../chunks/chunk.7F23ACLI.js";
 export {
   WaInvalidEvent
 };

@@ -15,7 +15,8 @@ import '../icon/icon.js';
  *
  * @event change - Emitted when the position changes.
  *
- * @csspart base - The container that wraps the before and after content.
+ * @csspart base - Deprecated. Use the `comparison` part instead.
+ * @csspart comparison - The component's outer wrapper.
  * @csspart before - The container that wraps the before content.
  * @csspart after - The container that wraps the after content.
  * @csspart divider - The divider that separates the before and after content.

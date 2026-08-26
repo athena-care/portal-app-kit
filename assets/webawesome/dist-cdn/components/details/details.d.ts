@@ -20,8 +20,9 @@ import '../icon/icon.js';
  * @event wa-hide - Emitted when the details closes.
  * @event wa-after-hide - Emitted after the details closes and all animations are complete.
  *
- * @csspart base - The inner `<details>` element used to render the component.
- *                 Styles you apply to the component are automatically applied to this part, so you usually don't need to deal with it unless you need to set the `display` property.
+ * @csspart base - Deprecated. Use the `details` part instead.
+ * @csspart details - The component's outer wrapper.
+ *                    Styles you apply to the component are automatically applied to this part, so you usually don't need to deal with it unless you need to set the `display` property.
  * @csspart header - The header that wraps both the summary and the expand/collapse icon.
  * @csspart summary - The container that wraps the summary.
  * @csspart icon - The container that wraps the expand/collapse icons.
@@ -59,7 +60,7 @@ export default class WaDetails extends WebAwesomeElement {
     /** The location of the expand/collapse icon. */
     iconPlacement: 'start' | 'end';
     disconnectedCallback(): void;
-    firstUpdated(): void;
+    firstUpdated(changedProperties: PropertyValues<typeof this>): void;
     updated(changedProperties: PropertyValues<this>): void;
     private handleSummaryClick;
     private handleSummaryKeyDown;

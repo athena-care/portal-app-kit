@@ -6,7 +6,7 @@ export type { WaAfterCollapseEvent, WaAfterExpandEvent, WaCollapseEvent, WaExpan
  * @summary Accordions are a vertically stacked set of interactive headings that each contain a title, representing a section of content.
  * @documentation https://webawesome.com/docs/components/accordion
  * @status experimental
- * @since 3.7
+ * @since 3.8
  *
  * @dependency wa-accordion-item
  *

@@ -7,7 +7,8 @@ import WebAwesomeElement from '../../internal/webawesome-element.js';
  *
  * @slot - The tab's label.
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Use the `tab` part instead.
+ * @csspart tab - The component's outer wrapper.
  */
 export default class WaTab extends WebAwesomeElement {
     static css: import("lit").CSSResult;

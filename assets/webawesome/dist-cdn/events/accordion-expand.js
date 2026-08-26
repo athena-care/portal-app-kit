@@ -2,7 +2,7 @@
 import {
   WaAccordionExpandEvent
 } from "../chunks/chunk.HOAMYZ22.js";
-import "../chunks/chunk.JHZRD2LV.js";
+import "../chunks/chunk.7F23ACLI.js";
 export {
   WaAccordionExpandEvent
 };

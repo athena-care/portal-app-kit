@@ -10,14 +10,21 @@ You can load Web Awesome via CDN or by installing it locally. If you’re using 
 
 ## CDN (Easiest)
 
-Link to This Section
-
 The CDN is the fastest way to get started with Web Awesome. Just copy and paste the following into the `<head>` of your HTML to get started!
 
 ```html
-<link rel="stylesheet" href="https://ka-f.webawesome.com/webawesome@3.9.0/styles/webawesome.css" />
-<script type="module" src="https://ka-f.webawesome.com/webawesome@3.9.0/webawesome.loader.js"></script>
+<!-- Required: default theme + autoloader -->
+<link rel="stylesheet" href="https://ka-f.webawesome.com/webawesome@3.12.0/styles/themes/default.css" />
+<script type="module" src="https://ka-f.webawesome.com/webawesome@3.12.0/webawesome.loader.js"></script>
+
+<!-- Recommended: utility classes ("CSS Utilities") -->
+<link rel="stylesheet" href="https://ka-f.webawesome.com/webawesome@3.12.0/styles/utilities.css" />
+
+<!-- Optional: CSS reset ("Native Styles") -->
+<link rel="stylesheet" href="https://ka-f.webawesome.com/webawesome@3.12.0/styles/native.css" />
 ```
+
+Prefer one line? `styles/webawesome.css` pulls in the theme, utility classes, and native styles together.
 
 Now you can [use any Web Awesome component](https://webawesome.com/docs/components)! Try putting a button on the page:
 
@@ -25,13 +32,9 @@ Now you can [use any Web Awesome component](https://webawesome.com/docs/componen
 <wa-button variant="brand">Click me!</wa-button>
 ```
 
-**Using Web Awesome Pro?**
-
-Get personalized installation instructions from [your workspaces](https://webawesome.com/workspaces) instead.
+**Using Web Awesome Pro?** Visit [your workspaces](https://webawesome.com/workspaces) for personalized installation docs.
 
 ## Installing with npm
-
-Link to This Section
 
 Start by installing the Web Awesome package:
 
@@ -52,13 +55,9 @@ import '@awesome.me/webawesome/dist/components/input/input.js';
 
 Once a component has been imported, you can use it in your HTML normally. Components are cherry picked to ensure you're getting the smallest possible bundle. You can find each component import in the "Importing" section of its documentation.
 
-**Using Web Awesome Pro?**
-
-Get personalized installation instructions from [your workspaces](https://webawesome.com/workspaces) instead.
+**Using Web Awesome Pro?** Visit [your workspaces](https://webawesome.com/workspaces) for personalized installation docs.
 
 ## Get the Download (Advanced)
-
-Link to This Section
 
 You can download Web Awesome from npm and self-host it.
 
@@ -72,11 +71,7 @@ This will download a `.tgz` archive containing all Web Awesome files. Extract it
 
 ## Additional Setup
 
-Link to This Section
-
 ### The Difference Between /dist & /dist-cdn
-
-Link to This Section
 
 If you have Web Awesome installed locally via npm, you'll notice the following directories in the project's root:
 
@@ -91,8 +86,6 @@ Use `dist-cdn` if you're loading directly in the browser or from a CDN. Use `dis
 
 ### Referencing Necessary Styles
 
-Link to This Section
-
 If you're self-hosting Web Awesome, you'll need to set up your pages to reference any necessary styles. You can do so by referencing `webawesome.css`, or you can pick and choose specific stylesheets you'd like to use.
 
 ```html
@@ -101,21 +94,19 @@ If you're self-hosting Web Awesome, you'll need to set up your pages to referenc
 
 <!-- Option 2: pick and choose styles -->
 
-<!-- theme (required) -->
+<!-- Required: theme -->
 <link rel="stylesheet" href="/dist/styles/themes/default.css" />
 
-<!-- native styles (optional) -->
-<link rel="stylesheet" href="/dist/styles/native.css" />
-
-<!-- CSS utilities (optional) -->
+<!-- Recommended: utility classes ("CSS Utilities") -->
 <link rel="stylesheet" href="/dist/styles/utilities.css" />
+
+<!-- Optional: CSS reset ("Native Styles") -->
+<link rel="stylesheet" href="/dist/styles/native.css" />
 ```
 
 If you choose to use a theme other than the default theme, be sure to add the corresponding class (e.g. `.wa-theme-awesome`) to your `<html>` element so that the class is applied.
 
 ### Setting the Base Path
-
-Link to This Section
 
 Some components rely on assets (icons, images, etc.) and Web Awesome needs to know where they're located. For convenience, Web Awesome will try to auto-detect the correct location based on the script you've loaded it from. This assumes assets are colocated with `webawesome.loader.js` and will "just work" for most users.
 
@@ -133,8 +124,6 @@ If you're using the CDN, you can skip this section. However, if you're using npm
 ```
 
 ### Referencing Assets
-
-Link to This Section
 
 Most of the magic behind assets is handled internally by Web Awesome, but if you need to reference the base path for any reason, the same module exports a function called `getBasePath()`. An optional string argument can be passed, allowing you to get the full path to any asset.
 
@@ -154,9 +143,7 @@ Most of the magic behind assets is handled internally by Web Awesome, but if you
 </script>
 ```
 
-### Using Font Awesome Pro and Pro+
-
-Link to This Section
+### Using Font Awesome Pro & Pro+
 
 Font Awesome users can provide their kit code to unlock Pro and Pro+ icon packs. You can do so by adding the `data-fa-kit-code` attribute to any element on the page, or by calling the `setKitCode()` method.
 
@@ -166,7 +153,7 @@ Font Awesome users can provide their kit code to unlock Pro and Pro+ icon packs.
 
 <!-- Option 2: the setKitCode() method -->
 <script type="module">
-  import { setKitCode } from 'https://ka-f.webawesome.com/webawesome@3.9.0/webawesome.loader.js';
+  import { setKitCode } from 'https://ka-f.webawesome.com/webawesome@3.12.0/webawesome.loader.js';
   setKitCode('YOUR_KIT_CODE_HERE');
 </script>
 ```

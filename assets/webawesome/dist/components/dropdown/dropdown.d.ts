@@ -21,7 +21,7 @@ import '../popup/popup.js';
  * @slot - The dropdown's items, typically `<wa-dropdown-item>` elements.
  * @slot trigger - The element that triggers the dropdown, such as a `<wa-button>` or `<button>`.
  *
- * @csspart base - The component's host element.
+ * @csspart base - Deprecated. Style the host element instead.
  * @csspart menu - The dropdown menu container.
  *
  * @cssproperty --show-duration - The duration of the show animation.
@@ -52,8 +52,8 @@ export default class WaDropdown extends WebAwesomeElement {
     /** The offset of the dropdown menu along its trigger. */
     skidding: number;
     disconnectedCallback(): void;
-    firstUpdated(): void;
-    updated(changedProperties: PropertyValues): Promise<void>;
+    firstUpdated(changedProperties: PropertyValues<typeof this>): void;
+    updated(changedProperties: PropertyValues<typeof this>): Promise<void>;
     /** Gets all dropdown items slotted in the menu. */
     private getItems;
     /** Gets all dropdown items in a specific submenu. */

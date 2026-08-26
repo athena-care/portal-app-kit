@@ -1,8 +1,5 @@
 # Dialog
 
-**Full documentation:** https://webawesome.com/docs/components/dialog
-
-
 `<wa-dialog>`
 
 Stable [Layout](https://webawesome.com/docs/components/?category=layout) [Since 2.0](https://webawesome.com/docs/resources/changelog#wa_200)
@@ -25,13 +22,106 @@ Dialogs appear above the page and require the user's immediate attention. Use th
 </script>
 ```
 
+## API
+
+### Importing
+
+If you're using the autoloader or a hosted project, components load on demand — no manual import needed. To cherry-pick a component manually, use one of the following snippets.
+
+\*\*CDN\*\*
+
+Import this component directly from the CDN:
+
+```js
+import 'https://ka-f.webawesome.com/webawesome@3.12.0/components/dialog/dialog.js';
+```
+
+\*\*npm\*\*
+
+After installing Web Awesome via npm, import this component:
+
+```js
+import '@awesome.me/webawesome/dist/components/dialog/dialog.js';
+```
+
+\*\*Self-Hosted\*\*
+
+If you're self-hosting Web Awesome, import this component from your server:
+
+```js
+import './webawesome/dist/components/dialog/dialog.js';
+```
+
+\*\*React\*\*
+
+To import this component for React 18 or below, use the following code:
+
+```js
+import WaDialog from '@awesome.me/webawesome/dist/react/dialog/index.js';
+```
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| (default) | The dialog's main content. |
+| \`footer\` | The dialog's footer, usually one or more buttons representing various options. |
+| \`header-actions\` | \`\` Optional actions to add to the header. Works best with . |
+| \`label\` | \`label\` The dialog's . Alternatively, you can use the label attribute. |
+
+### Attributes & Properties
+
+| Name | Description | Reflects |
+| --- | --- | --- |
+| \`label\` label | \`label\` The dialog's as displayed in the header. You should always include a relevant label, as it is required for proper accessibility. If you need to display HTML, use the label slot instead. Type string Default '' | |
+| \`lightDismiss\` light-dismiss | \`boolean\` When enabled, the dialog will be closed when the user clicks outside of it. Type Default false | |
+| \`open\` open | \`boolean\` Indicates whether or not the dialog is open. Toggle this attribute to show and hide the dialog. Type Default false | |
+| \`withFooter\` with-footer | \`true\` Only required for SSR. Set to if you're slotting in a footer element so the server-rendered markup includes the footer before the component hydrates on the client. Type boolean Default false | |
+| \`withoutHeader\` without-header | \`boolean\` Disables the header. This will also remove the default close button. Type Default false | |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| \`wa-after-hide\` | Emitted after the dialog closes and all animations are complete. |
+| \`wa-after-show\` | Emitted after the dialog opens and all animations are complete. |
+| \`wa-hide\` | \`event.preventDefault()\` Emitted when the dialog is requested to close. Calling will prevent the dialog from closing. You can inspect event.detail.source to see which element caused the dialog to close. If the source is the dialog element itself, the user has pressed Escape or the dialog has been closed programmatically. Avoid using this unless closing the dialog will result in destructive behavior such as data loss. |
+| \`wa-show\` | Emitted when the dialog opens. |
+
+### CSS Custom Properties
+
+| Name | Description |
+| --- | --- |
+| \`--backdrop-filter\` | \`none\` A filter to apply to the backdrop behind the dialog. Default |
+| \`--hide-duration\` | \`var(--wa-transition-normal)\` The animation duration when hiding the dialog. Default |
+| \`--show-duration\` | \`var(--wa-transition-normal)\` The animation duration when showing the dialog. Default |
+| \`--spacing\` | The amount of space around and between the dialog's content. |
+| \`--width\` | The preferred width of the dialog. Note that the dialog will shrink to accommodate smaller screens. |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| \`body\` | The dialog's body. | \`::part(body)\` |
+| \`close-button\` | \`\` The close button, a . | \`::part(close-button)\` |
+| \`close-button\_\_base\` | \`base\` The close button's exported part. | \`::part(close-button\_\_base)\` |
+| \`dialog\` | \`\` The dialog's internal element. | \`::part(dialog)\` |
+| \`footer\` | The dialog's footer. | \`::part(footer)\` |
+| \`header\` | The dialog's header. This element wraps the title and header actions. | \`::part(header)\` |
+| \`header-actions\` | \`\` Optional actions to add to the header. Works best with . | \`::part(header-actions)\` |
+| \`title\` | The dialog's title. | \`::part(title)\` |
+
+### Dependencies
+
+This component automatically imports the following elements. Sub-dependencies, if any exist, will also be included in this list.
+
+-   [`<wa-button>`](https://webawesome.com/docs/components/button)
+-   [`<wa-icon>`](https://webawesome.com/docs/components/icon)
+-   [`<wa-spinner>`](https://webawesome.com/docs/components/spinner)
+
 ## Examples
 
-Link to This Section
-
-### Dialog without Header
-
-Link to This Section
+### Without a Header
 
 Headers are enabled by default. To render a dialog without a header, add the `without-header` attribute.
 
@@ -51,9 +141,7 @@ Headers are enabled by default. To render a dialog without a header, add the `wi
 </script>
 ```
 
-### Dialog with Footer
-
-Link to This Section
+### Footer
 
 Footers can be used to display titles and more. Use the `footer` slot to add a footer to the dialog.
 
@@ -73,9 +161,7 @@ Footers can be used to display titles and more. Use the `footer` slot to add a f
 </script>
 ```
 
-### Opening and Closing Dialogs Declaratively
-
-Link to This Section
+### Opening & Closing Declaratively
 
 You can open and close dialogs with JavaScript by toggling the `open` attribute, but you can also do it declaratively. Add the `data-dialog="open id"` to any button on the page, where `id` is the ID of the dialog you want to open.
 
@@ -99,11 +185,9 @@ Similarly, you can add `data-dialog="close"` to a button _inside_ of a dialog to
 <wa-button appearance="filled" data-dialog="open dialog-dismiss">Open Dialog</wa-button>
 ```
 
-### Custom Width
+### Width
 
-Link to This Section
-
-Just use the `--width` custom property to set the dialog's width.
+Use the `--width` custom property to set the dialog's width.
 
 ```html
 <wa-dialog label="Dialog" class="dialog-width" style="--width: 50vw;">
@@ -122,8 +206,6 @@ Just use the `--width` custom property to set the dialog's width.
 ```
 
 ### Scrolling
-
-Link to This Section
 
 By design, a dialog's height will never exceed that of the viewport. As such, dialogs will not scroll with the page ensuring the header and footer are always accessible to the user.
 
@@ -146,8 +228,6 @@ By design, a dialog's height will never exceed that of the viewport. As such, di
 ```
 
 ### Header Actions
-
-Link to This Section
 
 The header shows a functional close button by default. You can use the `header-actions` slot to add additional [buttons](https://webawesome.com/docs/components/button) if needed.
 
@@ -174,8 +254,6 @@ The header shows a functional close button by default. You can use the `header-a
 
 ### Light Dismissal
 
-Link to This Section
-
 If you want the dialog to close when the user clicks on the overlay, add the `light-dismiss` attribute.
 
 ```html
@@ -195,8 +273,6 @@ If you want the dialog to close when the user clicks on the overlay, add the `li
 ```
 
 ### Preventing the Dialog from Closing
-
-Link to This Section
 
 By default, dialogs will close when the user clicks the close button or presses the Escape key. In most cases, the default behavior is the best behavior in terms of UX. However, there are situations where this may be undesirable, such as when data loss will occur.
 
@@ -228,9 +304,7 @@ You can use `event.detail.source` to determine which element triggered the reque
 </script>
 ```
 
-### Setting Initial Focus
-
-Link to This Section
+### Initial Focus
 
 To give focus to a specific element when the dialog opens, use the `autofocus` attribute.
 
@@ -250,58 +324,3 @@ To give focus to a specific element when the dialog opens, use the `autofocus` a
   openButton.addEventListener('click', () => (dialog.open = true));
 </script>
 ```
-
-## Slots
-
-Valid slot names for this component (use exactly these — any other `slot` value
-is silently ignored and the element falls back to the default slot):
-
-- `(default)` — The dialog's main content.
-- `label` — The dialog's label. Alternatively, you can use the `label` attribute.
-- `header-actions` — Optional actions to add to the header. Works best with `<wa-button>`.
-- `footer` — The dialog's footer, usually one or more buttons representing various options.
-
-## Attributes & Properties
-
-| Attribute | Property | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `open` |  | `boolean` | `false` | Indicates whether or not the dialog is open. Toggle this attribute to show and hide the dialog. |
-| `label` |  | `string` | `''` | The dialog's label as displayed in the header. You should always include a relevant label, as it is required for proper accessibility. If you need to display HTML, use the `label` slot instead. |
-| `without-header` | `withoutHeader` | `boolean` | `false` | Disables the header. This will also remove the default close button. |
-| `light-dismiss` | `lightDismiss` | `boolean` | `false` | When enabled, the dialog will be closed when the user clicks outside of it. |
-| `with-footer` | `withFooter` | `boolean` | `false` | Only required for SSR. Set to `true` if you're slotting in a `footer` element so the server-rendered markup includes the footer before the component hydrates on the client. |
-| `dir` |  | `string` |  |  |
-| `lang` |  | `string` |  |  |
-| `did-ssr` | `didSSR` |  |  |  |
-
-## Events
-
-| Event | Description |
-| --- | --- |
-| `wa-show` | Emitted when the dialog opens. |
-| `wa-after-show` | Emitted after the dialog opens and all animations are complete. |
-| `wa-hide` | Emitted when the dialog is requested to close. Calling `event.preventDefault()` will prevent the dialog from closing. You can inspect `event.detail.source` to see which element caused the dialog to close. If the source is the dialog element itself, the user has pressed [[Escape]] or the dialog has been closed programmatically. Avoid using this unless closing the dialog will result in destructive behavior such as data loss. |
-| `wa-after-hide` | Emitted after the dialog closes and all animations are complete. |
-
-## CSS Parts
-
-| Part | Description |
-| --- | --- |
-| `dialog` | The dialog's internal `<dialog>` element. |
-| `header` | The dialog's header. This element wraps the title and header actions. |
-| `header-actions` | Optional actions to add to the header. Works best with `<wa-button>`. |
-| `title` | The dialog's title. |
-| `close-button` | The close button, a `<wa-button>`. |
-| `close-button__base` | The close button's exported `base` part. |
-| `body` | The dialog's body. |
-| `footer` | The dialog's footer. |
-
-## CSS Custom Properties
-
-| Property | Default | Description |
-| --- | --- | --- |
-| `--spacing` |  | The amount of space around and between the dialog's content. |
-| `--width` |  | The preferred width of the dialog. Note that the dialog will shrink to accommodate smaller screens. |
-| `--backdrop-filter` | `none` | A filter to apply to the backdrop behind the dialog. |
-| `--show-duration` | `var(--wa-transition-normal)` | The animation duration when showing the dialog. |
-| `--hide-duration` | `var(--wa-transition-normal)` | The animation duration when hiding the dialog. |

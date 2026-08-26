@@ -3,8 +3,8 @@ import {
   dist_exports,
   getAnimationNames,
   getEasingNames
-} from "../../chunks/chunk.H2XRXZJT.js";
-import "../../chunks/chunk.JHZRD2LV.js";
+} from "../../chunks/chunk.JULJEDTU.js";
+import "../../chunks/chunk.7F23ACLI.js";
 export {
   dist_exports as animations,
   getAnimationNames,

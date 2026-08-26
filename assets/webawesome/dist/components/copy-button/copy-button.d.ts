@@ -1,3 +1,4 @@
+import { type PropertyValues } from 'lit';
 import WebAwesomeElement from '../../internal/webawesome-element.js';
 import '../icon/icon.js';
 import '../tooltip/tooltip.js';
@@ -41,7 +42,6 @@ export default class WaCopyButton extends WebAwesomeElement {
     isCopying: boolean;
     status: 'rest' | 'success' | 'error';
     hasCustomTrigger: boolean;
-    liveAnnouncement: string;
     private customTriggerEl;
     private lightTooltip;
     private feedbackTimeout;
@@ -74,7 +74,7 @@ export default class WaCopyButton extends WebAwesomeElement {
      * `none` disables the tooltip entirely. Applies to both the default and custom triggers.
      */
     tooltip: 'full' | 'copy' | 'none';
-    firstUpdated(): void;
+    firstUpdated(changedProperties: PropertyValues<typeof this>): void;
     disconnectedCallback(): void;
     handleStatusChange(): void;
     handleLabelChange(): void;

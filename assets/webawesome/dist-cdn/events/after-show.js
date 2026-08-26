@@ -2,7 +2,7 @@
 import {
   WaAfterShowEvent
 } from "../chunks/chunk.HOKX4ZNE.js";
-import "../chunks/chunk.JHZRD2LV.js";
+import "../chunks/chunk.7F23ACLI.js";
 export {
   WaAfterShowEvent
 };

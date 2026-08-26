@@ -1,19 +1,10 @@
 # Popup
 
-**Full documentation:** https://webawesome.com/docs/components/popup
-
-
 `<wa-popup>`
 
 Stable [Helpers](https://webawesome.com/docs/components/?category=helpers) [Since 2.0](https://webawesome.com/docs/resources/changelog#wa_200)
 
 Popups declaratively anchor one element to another and keep them positioned together as the page scrolls or resizes. Primarily a low-level building block for popovers, dropdowns, and tooltips.
-
-This component's name is inspired by [`<popup>`](https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/Popup/explainer.md). It uses [Floating UI](https://floating-ui.com/) under the hood to provide a well-tested, lightweight, and fully declarative positioning utility for tooltips, dropdowns, and more.
-
-Popup doesn't provide any styles — just positioning! The popup's preferred placement, distance, and skidding (offset) can be configured using attributes. An arrow that points to the anchor can be shown and customized to your liking. Additional positioning options are available and described in more detail below.
-
-Popup is a low-level utility built specifically for positioning elements. Do not mistake it for a [tooltip](https://webawesome.com/docs/components/tooltip) or similar because _it does not facilitate an accessible experience!_ Almost every correct usage of `<wa-popup>` will involve building other components. It should rarely, if ever, occur directly in your HTML.
 
 ```html
 <div class="popup-overview">
@@ -22,20 +13,24 @@ Popup is a low-level utility built specifically for positioning elements. Do not
     <div class="box"></div>
   </wa-popup>
 
-  <div class="popup-overview-options">
-    <wa-combobox
-      label="Placement"
-      name="placement"
-      placeholder="Select placement..."
-      class="popup-overview-select"
-    ></wa-combobox>
-    <wa-input type="number" name="distance" label="distance" value="0"></wa-input>
-    <wa-input type="number" name="skidding" label="Skidding" value="0"></wa-input>
-  </div>
+  <wa-divider></wa-divider>
 
-  <div class="popup-overview-options">
-    <wa-switch name="active" checked>Active</wa-switch>
-    <wa-switch name="arrow">Arrow</wa-switch>
+  <div class="wa-cluster">
+    <div class="popup-overview-options">
+      <wa-combobox
+        label="Placement"
+        name="placement"
+        placeholder="Select placement..."
+        class="popup-overview-select"
+      ></wa-combobox>
+      <wa-input type="number" name="distance" label="distance" value="0"></wa-input>
+      <wa-input type="number" name="skidding" label="Skidding" value="0"></wa-input>
+    </div>
+
+    <div class="popup-overview-options">
+      <wa-switch name="active" checked>Active</wa-switch>
+      <wa-switch name="arrow">Arrow</wa-switch>
+    </div>
   </div>
 </div>
 
@@ -125,15 +120,124 @@ Popup is a low-level utility built specifically for positioning elements. Do not
 </style>
 ```
 
-A popup's anchor should not be styled with `display: contents` since the coordinates will not be eligible for calculation. However, if the anchor is a `<slot>` element, popup will use the first assigned element as the anchor. This behavior allows other components to pass anchors through more easily via composition.
+This component's name is inspired by [`<popup>`](https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/Popup/explainer.md). It uses [Floating UI](https://floating-ui.com/) under the hood to provide a well-tested, lightweight, and fully declarative positioning utility for tooltips, dropdowns, and more.
+
+Popup doesn't provide any styles — just positioning! The popup's preferred placement, distance, and skidding (offset) can be configured using attributes. An arrow that points to the anchor can be shown and customized to your liking. Additional positioning options are available and described in more detail below.
+
+**Popup is a low-level positioning utility, not an accessible component.**  
+Don't use it as a [tooltip](https://webawesome.com/docs/components/tooltip) or similar — it doesn't facilitate an accessible experience. Almost every correct use builds it into another component rather than placing `<wa-popup>` directly in your HTML.
+
+**Don't style a popup's anchor with `display: contents`.**  
+The coordinates won't be eligible for calculation. If the anchor is a `<slot>`, popup uses the first assigned element as the anchor, so components can pass anchors through via composition.
+
+## API
+
+### Importing
+
+If you're using the autoloader or a hosted project, components load on demand — no manual import needed. To cherry-pick a component manually, use one of the following snippets.
+
+\*\*CDN\*\*
+
+Import this component directly from the CDN:
+
+```js
+import 'https://ka-f.webawesome.com/webawesome@3.12.0/components/popup/popup.js';
+```
+
+\*\*npm\*\*
+
+After installing Web Awesome via npm, import this component:
+
+```js
+import '@awesome.me/webawesome/dist/components/popup/popup.js';
+```
+
+\*\*Self-Hosted\*\*
+
+If you're self-hosting Web Awesome, import this component from your server:
+
+```js
+import './webawesome/dist/components/popup/popup.js';
+```
+
+\*\*React\*\*
+
+To import this component for React 18 or below, use the following code:
+
+```js
+import WaPopup from '@awesome.me/webawesome/dist/react/popup/index.js';
+```
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| (default) | The popup's content. |
+| \`anchor\` | \`anchor\` The element the popup will be ed to. If the anchor lives outside of the popup, you can use the anchor attribute or property instead. |
+
+### Attributes & Properties
+
+| Name | Description | Reflects |
+| --- | --- | --- |
+| \`active\` active | \`boolean\` Activates the positioning logic and shows the popup. When this attribute is removed, the positioning logic is torn down and the popup will be hidden. Type Default false | |
+| \`anchor\` anchor | \`id\` The element the popup will be anchored to. If the anchor lives outse of the popup, you can provide the anchor element id, a DOM element reference, or a VirtualElement. If the anchor lives inside the popup, use the anchor slot instead. Type Element \\| string \\| VirtualElement | |
+| \`arrow\` arrow | \`--arrow-size\` Attaches an arrow to the popup. The arrow's size and color can be customized using the and --arrow-color custom properties. For additional customizations, you can also target the arrow using ::part(arrow) in your stylesheet. Type boolean Default false | |
+| \`arrowPadding\` arrow-padding | \`number\` The amount of padding between the arrow and the edges of the popup. If the popup has a border-radius, for example, this will prevent it from overflowing the corners. Type Default 10 | |
+| \`arrowPlacement\` arrow-placement | \`anchor\` The placement of the arrow. The default is , which will align the arrow as close to the center of the anchor as possible, considering available space and arrow-padding. A value of start, end, or center will align the arrow to the start, end, or center of the popover instead. Type 'start' \\| 'end' \\| 'center' \\| 'anchor' Default 'anchor' | |
+| \`autoSize\` auto-size | \`'horizontal' \\| 'vertical' \\| 'both'\` When set, this will cause the popup to automatically resize itself to prevent it from overflowing. Type | |
+| \`autoSizeBoundary\` autoSizeBoundary | \`Element \\| Element\[\]\` The auto-size boundary describes clipping element(s) that overflow will be checked relative to when resizing. By default, the boundary includes overflow ancestors that will cause the element to be clipped. If needed, you can change the boundary by passing a reference to one or more elements to this property. Type | |
+| \`autoSizePadding\` auto-size-padding | \`number\` The amount of padding, in pixels, to exceed before the auto-size behavior will occur. Type Default 0 | |
+| \`boundary\` boundary | \`'viewport' \\| 'scroll'\` The bounding box to use for flipping, shifting, and auto-sizing. Type Default 'viewport' | |
+| \`distance\` distance | \`number\` The distance in pixels from which to offset the panel away from its anchor. Type Default 0 | |
+| \`flip\` flip | \`flipFallbackPlacements\` When set, placement of the popup will flip to the opposite site to keep it in view. You can use to further configure how the fallback placement is determined. Type boolean Default false | |
+| \`flipBoundary\` flipBoundary | \`Element \\| Element\[\]\` The flip boundary describes clipping element(s) that overflow will be checked relative to when flipping. By default, the boundary includes overflow ancestors that will cause the element to be clipped. If needed, you can change the boundary by passing a reference to one or more elements to this property. Type | |
+| \`flipFallbackPlacements\` flip-fallback-placements | \`string\` If the preferred placement doesn't fit, popup will be tested in these fallback placements until one fits. Must be a of any number of placements separated by a space, e.g. "top bottom left". If no placement fits, the flip fallback strategy will be used instead. Type string Default '' | |
+| \`flipFallbackStrategy\` flip-fallback-strategy | \`'best-fit' \\| 'initial'\` When neither the preferred placement nor the fallback placements fit, this value will be used to determine whether the popup should be positioned using the best available fit based on available space or as it was initially preferred. Type Default 'best-fit' | |
+| \`flipPadding\` flip-padding | \`number\` The amount of padding, in pixels, to exceed before the flip behavior will occur. Type Default 0 | |
+| \`hoverBridge\` hover-bridge | \`mouseenter\` When a gap exists between the anchor and the popup element, this option will add a "hover bridge" that fills the gap using an invisible element. This makes listening for events such as and mouseleave more sane because the pointer never technically leaves the element. The hover bridge will only be drawn when the popover is active. Type boolean Default false | |
+| \`placement\` placement | \`'top' \\| 'top-start' \\| 'top-end' \\| 'bottom' \\| 'bottom-start' \\| 'bottom-end' \\| 'right' \\| 'right-start' \\| 'right-end' \\| 'left' \\| 'left-start' \\| 'left-end'\` The preferred placement of the popup. Note that the actual placement will vary as configured to keep the panel inside of the viewport. Type Default 'top' | |
+| \`popup\` | \`HTMLElement\` A reference to the internal popup container. Useful for animating and styling the popup with JavaScript. Type | |
+| \`shift\` shift | \`boolean\` Moves the popup along the axis to keep it in view when clipped. Type Default false | |
+| \`shiftBoundary\` shiftBoundary | \`Element \\| Element\[\]\` The shift boundary describes clipping element(s) that overflow will be checked relative to when shifting. By default, the boundary includes overflow ancestors that will cause the element to be clipped. If needed, you can change the boundary by passing a reference to one or more elements to this property. Type | |
+| \`shiftPadding\` shift-padding | \`number\` The amount of padding, in pixels, to exceed before the shift behavior will occur. Type Default 0 | |
+| \`skidding\` skidding | \`number\` The distance in pixels from which to offset the panel along its anchor. Type Default 0 | |
+| \`sync\` sync | \`'width' \\| 'height' \\| 'both'\` Syncs the popup's width or height to that of the anchor element. Type | |
+
+### Methods
+
+| Name | Description | Arguments |
+| --- | --- | --- |
+| \`reposition()\` | Forces the popup to recalculate and reposition itself. | |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| \`wa-reposition\` | Emitted when the popup is repositioned. This event can fire a lot, so avoid putting expensive operations in your listener or consider debouncing it. |
+
+### CSS Custom Properties
+
+| Name | Description |
+| --- | --- |
+| \`--arrow-color\` | \`black\` The color of the arrow. Default |
+| \`--arrow-size\` | \`arrow\` The size of the . Note that an arrow won't be shown unless the arrow attribute is used. Default 6px |
+| \`--auto-size-available-height\` | \`auto-size\` A read-only custom property that determines the amount of height the popup can be before overflowing. Useful for positioning child elements that need to overflow. This property is only available when using . |
+| \`--auto-size-available-width\` | \`auto-size\` A read-only custom property that determines the amount of width the popup can be before overflowing. Useful for positioning child elements that need to overflow. This property is only available when using . |
+| \`--hide-duration\` | \`var(--wa-transition-fast)\` The hide duration to use when applying built-in animation classes. Default |
+| \`--popup-border-width\` | The width of any custom border applied to the popup. This is used to reposition the arrow to overlap to the inside edge of the popup border. |
+| \`--show-duration\` | \`var(--wa-transition-fast)\` The show duration to use when applying built-in animation classes. Default |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| \`arrow\` | \`top\\|bottom\\|left\\|right\` The arrow's container. Avoid setting properties, as these values are assigned dynamically as the popup moves. This is most useful for applying a background color to match the popup, and maybe a border or box shadow. | \`::part(arrow)\` |
+| \`hover-bridge\` | \`hover-bridge\` The hover bridge element. Only available when the option is enabled. | \`::part(hover-bridge)\` |
+| \`popup\` | The popup's container. Useful for setting a background color, box shadow, etc. | \`::part(popup)\` |
 
 ## Examples
 
-Link to This Section
-
 ### Activating
-
-Link to This Section
 
 Popups are inactive and hidden until the `active` attribute is applied. Removing the attribute will tear down all positioning logic and listeners, meaning you can have many idle popups on the page without affecting performance.
 
@@ -144,7 +248,8 @@ Popups are inactive and hidden until the `active` attribute is applied. Removing
     <div class="box"></div>
   </wa-popup>
 
-  <br />
+  <wa-divider></wa-divider>
+
   <wa-switch checked>Active</wa-switch>
 </div>
 
@@ -176,8 +281,6 @@ Popups are inactive and hidden until the `active` attribute is applied. Removing
 
 ### External Anchors
 
-Link to This Section
-
 By default, anchors are slotted into the popup using the `anchor` slot. If your anchor needs to live outside of the popup, you can pass the anchor's `id` to the `anchor` attribute. Alternatively, you can pass an element reference to the `anchor` property to achieve the same effect without using an `id`.
 
 ```html
@@ -207,8 +310,6 @@ By default, anchors are slotted into the popup using the `anchor` slot. If your 
 
 ### Placement
 
-Link to This Section
-
 Use the `placement` attribute to tell the popup the preferred placement of the popup. Note that the actual position will vary to ensure the panel remains in the viewport if you're using positioning features such as `flip` and `shift`.
 
 Since placement is preferred when using `flip`, you can observe the popup's current placement when it's active by looking at the `data-current-placement` attribute. This attribute will update as the popup flips to find available space and it will be removed when the popup is deactivated.
@@ -219,6 +320,8 @@ Since placement is preferred when using `flip`, you can observe the popup's curr
     <span slot="anchor"></span>
     <div class="box"></div>
   </wa-popup>
+
+  <wa-divider></wa-divider>
 
   <wa-combobox name="placement" label="Placement" placeholder="Select placement..."></wa-combobox>
 </div>
@@ -284,8 +387,6 @@ Since placement is preferred when using `flip`, you can observe the popup's curr
 
 ### Distance
 
-Link to This Section
-
 Use the `distance` attribute to change the distance between the popup and its anchor. A positive value will move the popup further away and a negative value will move it closer.
 
 ```html
@@ -294,6 +395,8 @@ Use the `distance` attribute to change the distance between the popup and its an
     <span slot="anchor"></span>
     <div class="box"></div>
   </wa-popup>
+
+  <wa-divider></wa-divider>
 
   <wa-slider min="-50" max="50" step="1" value="0" label="Distance"></wa-slider>
 </div>
@@ -330,8 +433,6 @@ Use the `distance` attribute to change the distance between the popup and its an
 
 ### Skidding
 
-Link to This Section
-
 The `skidding` attribute is similar to `distance`, but instead allows you to offset the popup along the anchor's axis. Both positive and negative values are allowed.
 
 ```html
@@ -340,6 +441,8 @@ The `skidding` attribute is similar to `distance`, but instead allows you to off
     <span slot="anchor"></span>
     <div class="box"></div>
   </wa-popup>
+
+  <wa-divider></wa-divider>
 
   <wa-slider min="-50" max="50" step="1" value="0" label="Skidding"></wa-slider>
 </div>
@@ -376,8 +479,6 @@ The `skidding` attribute is similar to `distance`, but instead allows you to off
 
 ### Arrows
 
-Link to This Section
-
 Add an arrow to your popup with the `arrow` attribute. It's usually a good idea to set a `distance` to make room for the arrow. To adjust the arrow's color and size, use the `--arrow-color` and `--arrow-size` custom properties, respectively. You can also target the `arrow` part to add additional styles such as shadows and borders to match styles applied to rest of the popup element.
 
 By default, the arrow will be aligned as close to the center of the _anchor_ as possible, considering available space and `arrow-padding`. You can use the `arrow-placement` attribute to force the arrow to align to the start, end, or center of the _popup_ instead.
@@ -389,24 +490,28 @@ By default, the arrow will be aligned as close to the center of the _anchor_ as 
     <div class="box"></div>
   </wa-popup>
 
-  <div class="popup-arrow-options">
-    <wa-combobox
-      label="Placement"
-      name="placement"
-      placeholder="Select placement..."
-      class="popup-overview-select"
-    ></wa-combobox>
+  <wa-divider></wa-divider>
 
-    <wa-select label="Arrow Placement" name="arrow-placement" value="anchor">
-      <wa-option value="anchor">anchor</wa-option>
-      <wa-option value="start">start</wa-option>
-      <wa-option value="end">end</wa-option>
-      <wa-option value="center">center</wa-option>
-    </wa-select>
-  </div>
+  <div class="wa-cluster">
+    <div class="popup-arrow-options">
+      <wa-combobox
+        label="Placement"
+        name="placement"
+        placeholder="Select placement..."
+        class="popup-overview-select"
+      ></wa-combobox>
 
-  <div class="popup-arrow-options">
-    <wa-switch name="arrow" checked>Arrow</wa-switch>
+      <wa-select label="Arrow Placement" name="arrow-placement" value="anchor">
+        <wa-option value="anchor">anchor</wa-option>
+        <wa-option value="start">start</wa-option>
+        <wa-option value="end">end</wa-option>
+        <wa-option value="center">center</wa-option>
+      </wa-select>
+    </div>
+
+    <div class="popup-arrow-options">
+      <wa-switch name="arrow" checked>Arrow</wa-switch>
+    </div>
   </div>
 
   <style>
@@ -489,9 +594,7 @@ By default, the arrow will be aligned as close to the center of the _anchor_ as 
 </div>
 ```
 
-### Adding a border
-
-Link to This Section
+### Border
 
 Borders can also be added to the popup element by targeting the contents of the `wa-popup` element. This styling can also be extended to the arrow itself by targeting `.arrow` class in the popup.
 
@@ -503,6 +606,8 @@ When adding borders to the popup element which has an arrow, make sure to set th
     <span slot="anchor"></span>
     <div class="box"></div>
   </wa-popup>
+
+  <wa-divider></wa-divider>
 
   <div class="popup-border-options">
     <wa-combobox
@@ -536,9 +641,10 @@ When adding borders to the popup element which has an arrow, make sure to set th
       --arrow-color: var(--wa-color-brand-on-loud);
       --popup-border-width: var(--wa-panel-border-width);
 
+      /* Inset box-shadow, not a border: Safari seams a clip-path edge that runs along a border. */
       &::part(arrow) {
-        border-bottom: var(--wa-panel-border-width) var(--wa-panel-border-style) var(--wa-color-brand-border-loud);
-        border-right: var(--wa-panel-border-width) var(--wa-panel-border-style) var(--wa-color-brand-border-loud);
+        box-shadow: inset calc(-1 * var(--wa-panel-border-width)) calc(-1 * var(--wa-panel-border-width)) 0 0
+          var(--wa-color-brand-border-loud);
       }
     }
 
@@ -594,8 +700,6 @@ When adding borders to the popup element which has an arrow, make sure to set th
 
 ### Flip
 
-Link to This Section
-
 When the popup doesn't have enough room in its preferred placement, it can automatically flip to keep it in view and visually connected to its anchor. To enable this, use the `flip` attribute. By default, the popup will flip to the opposite placement, but you can configure preferred fallback placements using `flip-fallback-placement` and `flip-fallback-strategy`. Additional options are available to control the flip behavior's boundary and padding.
 
 By default, flip takes effect when the popup would overflow the viewport. You can use `boundary="scroll"` to make the popup resize when it overflows its nearest scrollable container instead.
@@ -611,7 +715,8 @@ Scroll the container to see how the popup flips to prevent clipping.
     </wa-popup>
   </div>
 
-  <br />
+  <wa-divider></wa-divider>
+
   <wa-switch checked>Flip</wa-switch>
 </div>
 
@@ -649,8 +754,6 @@ Scroll the container to see how the popup flips to prevent clipping.
 ```
 
 ### Flip Fallbacks
-
-Link to This Section
 
 While using the `flip` attribute, you can customize the placement of the popup when the preferred placement doesn't have room. For this, use `flip-fallback-placements` and `flip-fallback-strategy`.
 
@@ -704,8 +807,6 @@ Scroll the container to see how the popup changes it's fallback placement to pre
 
 ### Shift
 
-Link to This Section
-
 When a popup is longer than its anchor, it risks overflowing. In this case, use the `shift` attribute to shift the popup along its axis and back into view. You can customize the shift behavior using `shiftBoundary` and `shift-padding`.
 
 By default, auto-size takes effect when the popup would overflow the viewport. You can use `boundary="scroll"` to make the popup resize when it overflows its nearest scrollable container instead.
@@ -720,6 +821,8 @@ Toggle the switch to see the difference.
       <div class="box"></div>
     </wa-popup>
   </div>
+
+  <wa-divider></wa-divider>
 
   <wa-switch checked>Shift</wa-switch>
 </div>
@@ -756,9 +859,7 @@ Toggle the switch to see the difference.
 </script>
 ```
 
-### Auto-size
-
-Link to This Section
+### Auto-Size
 
 Use the `auto-size` attribute to tell the popup to resize when necessary to prevent it from overflowing. Possible values are `horizontal`, `vertical`, and `both`. You can use `autoSizeBoundary` and `auto-size-padding` to customize the behavior of this option. Auto-size works well with `flip`, but if you're using `auto-size-padding` make sure `flip-padding` is the same value.
 
@@ -777,7 +878,8 @@ Scroll the container to see the popup resize as its available space changes.
     </wa-popup>
   </div>
 
-  <br />
+  <wa-divider></wa-divider>
+
   <wa-switch checked>Auto-size</wa-switch>
 </div>
 
@@ -823,8 +925,6 @@ Scroll the container to see the popup resize as its available space changes.
 
 ### Hover Bridge
 
-Link to This Section
-
 When a gap exists between the anchor and the popup element, this option will add a "hover bridge" that fills the gap using an invisible element. This makes listening for events such as `mouseover` and `mouseout` more sane because the pointer never technically leaves the element. The hover bridge will only be drawn when the popover is active. For demonstration purposes, the bridge in this example is shown in orange.
 
 ```html
@@ -833,10 +933,14 @@ When a gap exists between the anchor and the popup element, this option will add
     <span slot="anchor"></span>
     <div class="box"></div>
   </wa-popup>
-  <br />
-  <wa-switch checked>Hover Bridge</wa-switch><br />
-  <wa-slider min="0" max="50" step="1" value="10" label="Distance"></wa-slider>
-  <wa-slider min="-50" max="50" step="1" value="0" label="Skidding"></wa-slider>
+
+  <wa-divider></wa-divider>
+
+  <div class="wa-cluster">
+    <wa-switch checked>Hover Bridge</wa-switch>
+    <wa-slider min="0" max="50" step="1" value="10" label="Distance"></wa-slider>
+    <wa-slider min="-50" max="50" step="1" value="0" label="Skidding"></wa-slider>
+  </div>
 </div>
 <style>
   .popup-hover-bridge span[slot='anchor'] {
@@ -860,7 +964,7 @@ When a gap exists between the anchor and the popup element, this option will add
   }
 
   .popup-hover-bridge wa-popup::part(hover-bridge) {
-    background: tomato;
+    background: var(--wa-color-warning-fill-loud);
     opacity: 0.5;
   }
 </style>
@@ -877,8 +981,6 @@ When a gap exists between the anchor and the popup element, this option will add
 ```
 
 ### Virtual Elements
-
-Link to This Section
 
 In most cases, popups are anchored to an actual element. Sometimes, it can be useful to anchor them to a non-element. To do this, you can pass a `VirtualElement` to the anchor property. A virtual element must contain a function called `getBoundingClientRect()` that returns a [`DOMRect`](https://developer.mozilla.org/en-US/docs/Web/API/DOMRect) object as shown below.
 
@@ -898,6 +1000,8 @@ This example anchors a popup to the mouse cursor using a virtual element. As suc
   <wa-popup placement="right-start">
     <div class="circle"></div>
   </wa-popup>
+
+  <wa-divider></wa-divider>
 
   <wa-switch>Highlight mouse cursor</wa-switch>
 </div>
@@ -975,79 +1079,7 @@ This example anchors a popup to the mouse cursor using a virtual element. As suc
 
 ### Built-in Animations
 
-Link to This Section
-
 The following classes can be applied to the popup's `popup` part to animate it in or out programmatically. You can control the animation duration with the `--show-duration` and `--hide-duration` custom properties.
 
 -   `show` / `hide` - Shows or hides the popover with a fade
 -   `show-with-scale` / `hide-with-scale` - Shows or hides the popover with a fade and subtle scale effect
-
-## Slots
-
-Valid slot names for this component (use exactly these — any other `slot` value
-is silently ignored and the element falls back to the default slot):
-
-- `(default)` — The popup's content.
-- `anchor` — The element the popup will be anchored to. If the anchor lives outside of the popup, you can use the `anchor` attribute or property instead.
-
-## Attributes & Properties
-
-| Attribute | Property | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `anchor` |  | `Element \| string \| VirtualElement` |  | The element the popup will be anchored to. If the anchor lives outside of the popup, you can provide the anchor element `id`, a DOM element reference, or a `VirtualElement`. If the anchor lives inside the popup, use the `anchor` slot instead. |
-| `active` |  | `boolean` | `false` | Activates the positioning logic and shows the popup. When this attribute is removed, the positioning logic is torn down and the popup will be hidden. |
-| `placement` |  | `\| 'top' \| 'top-start' \| 'top-end' \| 'bottom' \| 'bottom-start' \| 'bottom-end' \| 'right' \| 'right-start' \| 'right-end' \| 'left' \| 'left-start' \| 'left-end'` | `'top'` | The preferred placement of the popup. Note that the actual placement will vary as configured to keep the panel inside of the viewport. |
-| `boundary` |  | `'viewport' \| 'scroll'` | `'viewport'` | The bounding box to use for flipping, shifting, and auto-sizing. |
-| `distance` |  | `number` | `0` | The distance in pixels from which to offset the panel away from its anchor. |
-| `skidding` |  | `number` | `0` | The distance in pixels from which to offset the panel along its anchor. |
-| `arrow` |  | `boolean` | `false` | Attaches an arrow to the popup. The arrow's size and color can be customized using the `--arrow-size` and `--arrow-color` custom properties. For additional customizations, you can also target the arrow using `::part(arrow)` in your stylesheet. |
-| `arrow-placement` | `arrowPlacement` | `'start' \| 'end' \| 'center' \| 'anchor'` | `'anchor'` | The placement of the arrow. The default is `anchor`, which will align the arrow as close to the center of the anchor as possible, considering available space and `arrow-padding`. A value of `start`, `end`, or `center` will align the arrow to the start, end, or center of the popover instead. |
-| `arrow-padding` | `arrowPadding` | `number` | `10` | The amount of padding between the arrow and the edges of the popup. If the popup has a border-radius, for example, this will prevent it from overflowing the corners. |
-| `flip` |  | `boolean` | `false` | When set, placement of the popup will flip to the opposite site to keep it in view. You can use `flipFallbackPlacements` to further configure how the fallback placement is determined. |
-| `flip-fallback-placements` | `flipFallbackPlacements` | `string` | `''` | If the preferred placement doesn't fit, popup will be tested in these fallback placements until one fits. Must be a string of any number of placements separated by a space, e.g. "top bottom left". If no placement fits, the flip fallback strategy will be used instead. |
-| `flip-fallback-strategy` | `flipFallbackStrategy` | `'best-fit' \| 'initial'` | `'best-fit'` | When neither the preferred placement nor the fallback placements fit, this value will be used to determine whether the popup should be positioned using the best available fit based on available space or as it was initially preferred. |
-| `flipBoundary` |  | `Element \| Element[]` |  | The flip boundary describes clipping element(s) that overflow will be checked relative to when flipping. By default, the boundary includes overflow ancestors that will cause the element to be clipped. If needed, you can change the boundary by passing a reference to one or more elements to this property. |
-| `flip-padding` | `flipPadding` | `number` | `0` | The amount of padding, in pixels, to exceed before the flip behavior will occur. |
-| `shift` |  | `boolean` | `false` | Moves the popup along the axis to keep it in view when clipped. |
-| `shiftBoundary` |  | `Element \| Element[]` |  | The shift boundary describes clipping element(s) that overflow will be checked relative to when shifting. By default, the boundary includes overflow ancestors that will cause the element to be clipped. If needed, you can change the boundary by passing a reference to one or more elements to this property. |
-| `shift-padding` | `shiftPadding` | `number` | `0` | The amount of padding, in pixels, to exceed before the shift behavior will occur. |
-| `auto-size` | `autoSize` | `'horizontal' \| 'vertical' \| 'both'` |  | When set, this will cause the popup to automatically resize itself to prevent it from overflowing. |
-| `sync` |  | `'width' \| 'height' \| 'both'` |  | Syncs the popup's width or height to that of the anchor element. |
-| `autoSizeBoundary` |  | `Element \| Element[]` |  | The auto-size boundary describes clipping element(s) that overflow will be checked relative to when resizing. By default, the boundary includes overflow ancestors that will cause the element to be clipped. If needed, you can change the boundary by passing a reference to one or more elements to this property. |
-| `auto-size-padding` | `autoSizePadding` | `number` | `0` | The amount of padding, in pixels, to exceed before the auto-size behavior will occur. |
-| `hover-bridge` | `hoverBridge` | `boolean` | `false` | When a gap exists between the anchor and the popup element, this option will add a "hover bridge" that fills the gap using an invisible element. This makes listening for events such as `mouseenter` and `mouseleave` more sane because the pointer never technically leaves the element. The hover bridge will only be drawn when the popover is active. |
-| `dir` |  | `string` |  |  |
-| `lang` |  | `string` |  |  |
-| `did-ssr` | `didSSR` |  |  |  |
-
-## Methods
-
-| Method | Description | Arguments |
-| --- | --- | --- |
-| `reposition` | Forces the popup to recalculate and reposition itself. |  |
-
-## Events
-
-| Event | Description |
-| --- | --- |
-| `wa-reposition` | Emitted when the popup is repositioned. This event can fire a lot, so avoid putting expensive operations in your listener or consider debouncing it. |
-
-## CSS Parts
-
-| Part | Description |
-| --- | --- |
-| `arrow` | The arrow's container. Avoid setting `top\|bottom\|left\|right` properties, as these values are assigned dynamically as the popup moves. This is most useful for applying a background color to match the popup, and maybe a border or box shadow. |
-| `popup` | The popup's container. Useful for setting a background color, box shadow, etc. |
-| `hover-bridge` | The hover bridge element. Only available when the `hover-bridge` option is enabled. |
-
-## CSS Custom Properties
-
-| Property | Default | Description |
-| --- | --- | --- |
-| `--arrow-size` | `6px` | The size of the arrow. Note that an arrow won't be shown unless the `arrow` attribute is used. |
-| `--popup-border-width` |  | The width of any custom border applied to the popup. This is used to reposition the arrow to overlap to the inside edge of the popup border. |
-| `--arrow-color` | `black` | The color of the arrow. |
-| `--auto-size-available-width` |  | A read-only custom property that determines the amount of width the popup can be before overflowing. Useful for positioning child elements that need to overflow. This property is only available when using `auto-size`. |
-| `--auto-size-available-height` |  | A read-only custom property that determines the amount of height the popup can be before overflowing. Useful for positioning child elements that need to overflow. This property is only available when using `auto-size`. |
-| `--show-duration` | `var(--wa-transition-fast)` | The show duration to use when applying built-in animation classes. |
-| `--hide-duration` | `var(--wa-transition-fast)` | The hide duration to use when applying built-in animation classes. |

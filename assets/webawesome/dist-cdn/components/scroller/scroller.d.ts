@@ -12,6 +12,8 @@ import WebAwesomeElement from '../../internal/webawesome-element.js';
  * @cssproperty [--shadow-size=2rem] - The size of the shadow.
  *
  * @csspart content - The container that wraps the slotted content.
+ * @csspart start-shadow - The scroll shadow shown at the start edge when more content is available, unless `without-shadow` is set.
+ * @csspart end-shadow - The scroll shadow shown at the end edge when more content is available, unless `without-shadow` is set.
  */
 export default class WaScroller extends WebAwesomeElement {
     static css: import("lit").CSSResult[];

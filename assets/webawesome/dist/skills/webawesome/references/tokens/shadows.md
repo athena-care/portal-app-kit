@@ -4,7 +4,7 @@
 
 Design Tokens Shadows
 
-Shadow tokens indicate elevation and, often, interactivity. Web Awesome provides three size-based shadow shorthands built from modular offset, blur, and spread tokens. Together with [`--wa-color-shadow`](?active_tab=color), these tokens create realistic drop shadows.
+Shadow tokens indicate elevation and, often, interactivity. Web Awesome provides three size-based shadow shorthands built from modular offset, blur, and spread tokens. Together with [`--wa-color-shadow`](https://webawesome.com/docs/tokens/color), these tokens create realistic drop shadows.
 
 Larger shadows have greater offset and blur values to suggest greater distance from the surface below. Any shadow can also be used as an inner shadow with the `inset` keyword, e.g. `box-shadow: inset var(--wa-shadow-s)`.
 
@@ -15,8 +15,6 @@ Larger shadows have greater offset and blur values to suggest greater distance f
 | \`--wa-shadow-l\` | Large shadow for high elevation (e.g., dialogs, drawers) |
 
 ## Horizontal Offset (X)
-
-Link to This Section
 
 Offset-x tokens control a shadow's horizontal position relative to the element. Use `--wa-shadow-offset-x-scale` to change all offset-x tokens at once.
 
@@ -29,8 +27,6 @@ Offset-x tokens control a shadow's horizontal position relative to the element. 
 
 ## Vertical Offset (Y)
 
-Link to This Section
-
 Offset-y tokens control a shadow's vertical position relative to the element. Use `--wa-shadow-offset-y-scale` to change all offset-y tokens at once.
 
 | Custom Property | Description |
@@ -42,8 +38,6 @@ Offset-y tokens control a shadow's vertical position relative to the element. Us
 
 ## Blur
 
-Link to This Section
-
 Blur tokens control how soft or sharp the shadow edge is. Use `--wa-shadow-blur-scale` to change all blur tokens at once.
 
 | Custom Property | Description |
@@ -54,8 +48,6 @@ Blur tokens control how soft or sharp the shadow edge is. Use `--wa-shadow-blur-
 | \`--wa-shadow-blur-l\` | Large shadow blur radius |
 
 ## Spread
-
-Link to This Section
 
 Spread tokens expand or contract the shadow shape. A negative spread (the default) contracts the shadow inward for a more natural look. Use `--wa-shadow-spread-scale` to change all spread tokens at once.
 

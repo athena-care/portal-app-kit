@@ -1,55 +1,93 @@
 /*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */
-import "../chunks/chunk.7VGCIHDG.js";
+import {
+  registerTranslation
+} from "../chunks/chunk.HOKYDFUG.js";
+import "../chunks/chunk.7F23ACLI.js";
 
 // _bundle_/src/translations/hr.ts
-import { registerTranslation } from "@shoelace-style/localize";
 var translation = {
   $code: "hr",
   $name: "Hrvatski",
   $dir: "ltr",
   am: "AM",
-  carousel: "Vrtuljak",
+  autosizeColumn: "Automatski prilagodi veli\u010Dinu stupca",
   captions: "Titlovi",
+  carousel: "Vrtuljak",
   chooseDate: "Odaberi datum",
-  chooseTime: "Odaberi vrijeme",
   chooseDecade: "Odaberi desetlje\u0107e",
   chooseMonth: "Odaberi mjesec",
+  chooseTime: "Odaberi vrijeme",
   chooseYear: "Odaberi godinu",
   clearEntry: "O\u010Disti unos",
-  createOption: (value) => `Stvori "${value}"`,
+  clearFilter: "Poni\u0161ti filtar",
+  clearSort: "Poni\u0161ti sortiranje",
   close: "Zatvori",
   closeCalendar: "Zatvori kalendar",
   closeTimeInput: "Zatvori bira\u010D vremena",
+  collapseRow: "Sa\u017Emi redak",
+  columnMenu: "Opcije stupca",
+  columnMovedToPosition: (label, position, total) => `${label} premje\u0161ten na poziciju ${position} od ${total}`,
+  columns: "Stupci",
+  compactPageXOfY: (page, total) => `${page} od ${total}`,
   copied: "Kopirano",
   copy: "Kopiraj",
+  createOption: (value) => `Stvori "${value}"`,
+  currentlyPlaying: "trenutno se reproducira",
   currentValue: "Trenutna vrijednost",
   date: "Datum",
   datePickerKeyboardHelp: "Strelicama mijenjajte vrijednosti; pritisnite Alt+Strelica dolje za otvaranje kalendara.",
   day: "Dan",
   dayPeriod: "AM/PM",
   decrement: "Smanji",
+  deselectAllRows: "Poni\u0161ti odabir svih redaka",
   dropFileHere: "Drop file here or click to browse",
   dropFilesHere: "Drop files here or click to browse",
   empty: "Prazno",
-  error: "Gre\u0161ka",
-  enterFullscreen: "U\u0111i u cijeli zaslon",
   endDate: "Datum zavr\u0161etka",
+  enterFullscreen: "U\u0111i u cijeli zaslon",
+  error: "Gre\u0161ka",
   exitFullscreen: "Iza\u0111i iz cijelog zaslona",
+  expandRow: "Pro\u0161iri redak",
+  filterByColumn: (label) => `Filtriraj po stupcu ${label}`,
+  filterFrom: "Od",
+  filterMax: "Maks",
+  filterMin: "Min",
+  filterTo: "Do",
+  firstPage: "Prva stranica",
   goToSlide: (slide, count) => `Idi na slajd ${slide} od ${count}`,
+  hideColumn: "Sakrij stupac",
   hidePassword: "Sakrij lozinku",
   hour: "Sat",
-  incompleteDate: "Unesite potpuni datum.",
+  incompleteDate: "Unesite valjani datum.",
   increment: "Pove\u0107aj",
+  jumpBackwardX: (count) => {
+    const mod10 = count % 10;
+    const mod100 = count % 100;
+    if (mod10 === 1 && mod100 !== 11) return `Sko\u010Di ${count} stranicu unatrag`;
+    if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return `Sko\u010Di ${count} stranice unatrag`;
+    return `Sko\u010Di ${count} stranica unatrag`;
+  },
+  jumpForwardX: (count) => {
+    const mod10 = count % 10;
+    const mod100 = count % 100;
+    if (mod10 === 1 && mod100 !== 11) return `Sko\u010Di ${count} stranicu unaprijed`;
+    if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return `Sko\u010Di ${count} stranice unaprijed`;
+    return `Sko\u010Di ${count} stranica unaprijed`;
+  },
+  lastPage: "Posljednja stranica",
   loading: "U\u010Ditavanje",
   minute: "Minuta",
-  moreOptions: "Vi\u0161e opcija",
   month: "Mjesec",
+  moreOptions: "Vi\u0161e opcija",
   mute: "Uti\u0161aj",
   nextDecade: "Sljede\u0107e desetlje\u0107e",
   nextMonth: "Sljede\u0107i mjesec",
+  nextPage: "Sljede\u0107a stranica",
   nextSlide: "Sljede\u0107i slajd",
   nextVideo: "Sljede\u0107i video",
   nextYear: "Sljede\u0107a godina",
+  noData: "Nema podataka",
+  noResults: "Nema odgovaraju\u0107ih rezultata",
   now: "Sada",
   numCharacters: (num) => {
     if (num === 1) return "1 znak";
@@ -70,16 +108,35 @@ var translation = {
     if (num === 1) return "1 opcija je odabrana";
     return `${num} odabranih opcija`;
   },
+  numRowsCopied: (num) => {
+    if (num === 1) return "1 redak kopiran";
+    const mod10 = num % 10;
+    const mod100 = num % 100;
+    if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return `${num} retka kopirana`;
+    return `${num} redaka kopirano`;
+  },
+  numRowsSelected: (num) => {
+    if (num === 1) return "1 redak odabran";
+    const mod10 = num % 10;
+    const mod100 = num % 100;
+    if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return `${num} retka odabrana`;
+    return `${num} redaka odabrano`;
+  },
+  pageXOfY: (page, total) => `Stranica ${page} od ${total}`,
+  pagination: "Strani\u010Denje",
   pause: "Pauziraj",
   pauseAnimation: "Pauziraj animaciju",
   pictureInPicture: "Slika u slici",
-  pm: "PM",
+  pinLeft: "Prikva\u010Di lijevo",
+  pinRight: "Prikva\u010Di desno",
   play: "Reproduciraj",
+  playAnimation: "Reproduciraj animaciju",
   playbackSpeed: "Brzina reprodukcije",
   playlist: "Popis za reprodukciju",
-  playAnimation: "Reproduciraj animaciju",
+  pm: "PM",
   previousDecade: "Prethodno desetlje\u0107e",
   previousMonth: "Prethodni mjesec",
+  previousPage: "Prethodna stranica",
   previousSlide: "Prethodni slajd",
   previousVideo: "Prethodni video",
   previousYear: "Prethodna godina",
@@ -100,27 +157,40 @@ var translation = {
   },
   readonly: "Samo za \u010Ditanje",
   remove: "Makni",
+  resetColumns: "Vrati zadane stupce",
   resize: "Promijeni veli\u010Dinu",
+  resizeColumn: "Promijeni veli\u010Dinu stupca",
+  rowsPerPage: "Redaka po stranici",
   scrollableRegion: "Podru\u010Dje s mogu\u0107no\u0161\u0107u pomicanja",
   scrollToEnd: "Skrolaj do kraja",
   scrollToStart: "Skrolaj na po\u010Detak",
+  search: "Pretra\u017Ei",
   second: "Sekunda",
+  seek: "Tra\u017Ei",
+  seekProgress: (current, duration) => `${current} od ${duration}`,
   selectAColorFromTheScreen: "Odaberi boju sa ekrana",
+  selectAllRows: "Odaberi sve retke",
   selected: "Odabrano",
   selectedDateLabel: (date) => `Odabrano: ${date}`,
   selectedRangeLabel: (range) => `Odabrani raspon: ${range}`,
+  selectGroup: "Odaberi grupu",
   selectionCleared: "Odabir poni\u0161ten",
+  selectRow: "Odaberi redak",
+  showingNofMRows: (shown, total) => `Prikazuje se ${shown} od ${total} redaka`,
+  showingXtoYofZ: (start, end, total) => `${start}\u2013${end} od ${total}`,
   showPassword: "Poka\u017Ei lozinku",
   slideNum: (slide) => `Slajd ${slide}`,
+  sortAscending: "Sortiraj uzlazno",
+  sortColumn: "Sortiraj stupac",
+  sortDescending: "Sortiraj silazno",
   startDate: "Datum po\u010Detka",
   time: "Vrijeme",
   timeInputKeyboardHelp: "Strelicama mijenjajte vrijednosti; pritisnite Alt+Strelica dolje za otvaranje bira\u010Da vremena.",
   today: "Danas",
   toggleColorFormat: "Zamijeni format boje",
-  seek: "Tra\u017Ei",
-  seekProgress: (current, duration) => `${current} od ${duration}`,
-  currentlyPlaying: "trenutno se reproducira",
   unmute: "Uklju\u010Di zvuk",
+  unpin: "Otkva\u010Di",
+  unpinColumn: "Otkva\u010Di stupac",
   videoPlayer: "Video player",
   volume: "Glasno\u0107a",
   year: "Godina",

@@ -1,8 +1,5 @@
 # Badge
 
-**Full documentation:** https://webawesome.com/docs/components/badge
-
-
 `<wa-badge>`
 
 Stable [Feedback](https://webawesome.com/docs/components/?category=feedback) [Since 2.0](https://webawesome.com/docs/resources/changelog#wa_200)
@@ -10,16 +7,89 @@ Stable [Feedback](https://webawesome.com/docs/components/?category=feedback) [Si
 Badges draw attention to adjacent content by displaying a status, count, or label. Use them to highlight notifications, categorize items, or flag new activity.
 
 ```html
-<wa-badge>Badge</wa-badge>
+<wa-badge>New</wa-badge>
 ```
+
+```html
+<wa-badge variant="brand">
+  <wa-icon slot="start" name="star"></wa-icon>
+  Featured
+  <wa-icon slot="end" name="arrow-right"></wa-icon>
+</wa-badge>
+```
+
+## API
+
+### Importing
+
+If you're using the autoloader or a hosted project, components load on demand — no manual import needed. To cherry-pick a component manually, use one of the following snippets.
+
+\*\*CDN\*\*
+
+Import this component directly from the CDN:
+
+```js
+import 'https://ka-f.webawesome.com/webawesome@3.12.0/components/badge/badge.js';
+```
+
+\*\*npm\*\*
+
+After installing Web Awesome via npm, import this component:
+
+```js
+import '@awesome.me/webawesome/dist/components/badge/badge.js';
+```
+
+\*\*Self-Hosted\*\*
+
+If you're self-hosting Web Awesome, import this component from your server:
+
+```js
+import './webawesome/dist/components/badge/badge.js';
+```
+
+\*\*React\*\*
+
+To import this component for React 18 or below, use the following code:
+
+```js
+import WaBadge from '@awesome.me/webawesome/dist/react/badge/index.js';
+```
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| (default) | The badge's content. |
+| \`end\` | \`\` An element, such as , placed before the label. |
+
+### Attributes & Properties
+
+| Name | Description | Reflects |
+| --- | --- | --- |
+| \`appearance\` appearance | \`'accent' \\| 'filled' \\| 'outlined' \\| 'filled-outlined'\` The badge's visual appearance. Type Default 'accent' | |
+| \`attention\` attention | \`'none' \\| 'pulse' \\| 'bounce'\` Adds an animation to draw attention to the badge. Type Default 'none' | |
+| \`pill\` pill | \`boolean\` Draws a pill-style badge with rounded edges. Type Default false | |
+| \`variant\` variant | \`brand\` The badge's theme variant. Defaults to if not within another element with a variant. Type 'brand' \\| 'neutral' \\| 'success' \\| 'warning' \\| 'danger' Default 'brand' | |
+
+### CSS Custom Properties
+
+| Name | Description |
+| --- | --- |
+| \`--pulse-color\` | \`attention="pulse"\` The color of the badge's pulse effect when using . |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| \`badge\` | The component's outer wrapper. | \`::part(badge)\` |
+| \`end\` | \`end\` The container that wraps the slot. | \`::part(end)\` |
+| \`start\` | \`start\` The container that wraps the slot. | \`::part(start)\` |
+| \`base\` | \`badge\` Deprecated. Use the part instead. | \`::part(base)\` |
 
 ## Examples
 
-Link to This Section
-
-### Variants
-
-Link to This Section
+### Variant
 
 Set the `variant` attribute to change the badge's variant.
 
@@ -32,8 +102,6 @@ Set the `variant` attribute to change the badge's variant.
 ```
 
 ### Appearance
-
-Link to This Section
 
 Use the `appearance` attribute to change the badge's visual appearance.
 
@@ -72,21 +140,17 @@ Use the `appearance` attribute to change the badge's visual appearance.
 
 ### Size
 
-Link to This Section
-
 Badges are sized relative to the current font size. You can set `font-size` on any badge (or an ancestor element) to change it.
 
 ```html
-<wa-badge variant="brand" style="font-size: var(--wa-font-size-xs);">Brand</wa-badge>
-<wa-badge variant="brand" style="font-size: var(--wa-font-size-s);">Brand</wa-badge>
-<wa-badge variant="brand" style="font-size: var(--wa-font-size-m);">Brand</wa-badge>
-<wa-badge variant="brand" style="font-size: var(--wa-font-size-l);">Brand</wa-badge>
-<wa-badge variant="brand" style="font-size: var(--wa-font-size-xl);">Brand</wa-badge>
+<wa-badge variant="brand" style="font-size: var(--wa-font-size-xs);">Extra Small</wa-badge>
+<wa-badge variant="brand" style="font-size: var(--wa-font-size-s);">Small</wa-badge>
+<wa-badge variant="brand" style="font-size: var(--wa-font-size-m);">Medium</wa-badge>
+<wa-badge variant="brand" style="font-size: var(--wa-font-size-l);">Large</wa-badge>
+<wa-badge variant="brand" style="font-size: var(--wa-font-size-xl);">Extra Large</wa-badge>
 ```
 
-### Pill Badges
-
-Link to This Section
+### Pill
 
 Use the `pill` attribute to give badges rounded edges.
 
@@ -99,8 +163,6 @@ Use the `pill` attribute to give badges rounded edges.
 ```
 
 ### Drawing Attention
-
-Link to This Section
 
 Use the `attention` attribute to draw attention to the badge with a subtle animation. Supported effects are `bounce`, `pulse` and `none`.
 
@@ -132,9 +194,13 @@ Use the `attention` attribute to draw attention to the badge with a subtle anima
 </style>
 ```
 
-### Start & End Decorations
+Set the `--pulse-color` custom property to color the pulse independently of the badge's variant.
 
-Link to This Section
+```html
+<wa-badge variant="neutral" attention="pulse" pill style="--pulse-color: var(--wa-color-brand-fill-loud)">1</wa-badge>
+```
+
+### Start & End Decorations
 
 Use the `start` and `end` slots to add presentational elements like [`<wa-icon>`](https://webawesome.com/docs/components/icon) alongside the badge's label.
 
@@ -156,8 +222,6 @@ Use the `start` and `end` slots to add presentational elements like [`<wa-icon>`
 
 ### With Buttons
 
-Link to This Section
-
 One of the most common use cases for badges is attaching them to buttons. To make this easier, badges will be automatically positioned at the top-right when they're a child of a button.
 
 ```html
@@ -176,38 +240,3 @@ One of the most common use cases for badges is attaching them to buttons. To mak
   <wa-badge variant="danger" pill>6</wa-badge>
 </wa-button>
 ```
-
-## Slots
-
-Valid slot names for this component (use exactly these — any other `slot` value
-is silently ignored and the element falls back to the default slot):
-
-- `(default)` — The badge's content.
-- `start` — An element, such as `<wa-icon>`, placed before the label.
-- `end` — An element, such as `<wa-icon>`, placed after the label.
-
-## Attributes & Properties
-
-| Attribute | Property | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `variant` |  | `'brand' \| 'neutral' \| 'success' \| 'warning' \| 'danger'` | `'brand'` | The badge's theme variant. Defaults to `brand` if not within another element with a variant. |
-| `appearance` |  | `'accent' \| 'filled' \| 'outlined' \| 'filled-outlined'` | `'accent'` | The badge's visual appearance. |
-| `pill` |  | `boolean` | `false` | Draws a pill-style badge with rounded edges. |
-| `attention` |  | `'none' \| 'pulse' \| 'bounce'` | `'none'` | Adds an animation to draw attention to the badge. |
-| `dir` |  | `string` |  |  |
-| `lang` |  | `string` |  |  |
-| `did-ssr` | `didSSR` |  |  |  |
-
-## CSS Parts
-
-| Part | Description |
-| --- | --- |
-| `base` | The component's base wrapper. |
-| `start` | The container that wraps the `start` slot. |
-| `end` | The container that wraps the `end` slot. |
-
-## CSS Custom Properties
-
-| Property | Default | Description |
-| --- | --- | --- |
-| `--pulse-color` |  | The color of the badge's pulse effect when using `attention="pulse"`. |

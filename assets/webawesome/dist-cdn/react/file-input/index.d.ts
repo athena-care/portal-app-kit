@@ -22,9 +22,11 @@ export type { WaInvalidEvent } from '../../events/events.js';
  * @event blur - Emitted when the dropzone loses focus.
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *
- * @csspart label - The label element.
+ * @csspart form-control-label - The label.
+ * @csspart label - Deprecated. Use the `form-control-label` part instead.
  * @csspart hint - The hint element.
- * @csspart base - The main component wrapper.
+ * @csspart base - Deprecated. Use the `file-input` part instead.
+ * @csspart file-input - The component's outer wrapper.
  * @csspart dropzone - The drag-and-drop area.
  * @csspart dropzone-icon - The upload icon in the dropzone.
  * @csspart dropzone-text - The instruction text in the dropzone.

@@ -2,7 +2,7 @@
 import {
   trimOuterMarkers
 } from "../chunks/chunk.W7RD5SSL.js";
-import "../chunks/chunk.7VGCIHDG.js";
+import "../chunks/chunk.7F23ACLI.js";
 export {
   trimOuterMarkers
 };

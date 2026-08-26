@@ -1,11 +1,12 @@
-import WebAwesomeElement from '$webawesome/internal/webawesome-element.js';
+import WebAwesomeElement from '../../internal/webawesome-element.js';
 /**
  * @summary Sparklines display inline data trends as compact, visual charts.
  * @documentation https://webawesome.com/docs/components/sparkline
  * @status stable
  * @since 3.2
  *
- * @csspart base - The SVG container element.
+ * @csspart base - Deprecated. Use the `sparkline` part instead.
+ * @csspart sparkline - The component's outer wrapper.
  * @csspart line - The sparkline stroke path.
  * @csspart fill - The filled area under the line (visible with gradient or solid appearance).
  *

@@ -1,3 +1,4 @@
+import { type PropertyValues } from 'lit';
 import WebAwesomeElement from '../../internal/webawesome-element.js';
 import '../button/button.js';
 /**
@@ -42,6 +43,7 @@ export default class WaDialog extends WebAwesomeElement {
     static css: import("lit").CSSResult;
     private readonly localize;
     private readonly hasSlotController;
+    private readonly renderedWatcher;
     private originalTrigger;
     dialog: HTMLDialogElement;
     /** Indicates whether or not the dialog is open. Toggle this attribute to show and hide the dialog. */
@@ -60,7 +62,7 @@ export default class WaDialog extends WebAwesomeElement {
      * includes the footer before the component hydrates on the client.
      */
     withFooter: boolean;
-    firstUpdated(): void;
+    firstUpdated(changedProperties: PropertyValues<typeof this>): void;
     disconnectedCallback(): void;
     private requestClose;
     private addOpenListeners;
@@ -69,6 +71,11 @@ export default class WaDialog extends WebAwesomeElement {
     private handleDialogClick;
     private handleDialogPointerDown;
     private handleDocumentKeyDown;
+    /**
+     * Suspends the modal when third-party CSS (e.g. cookie banner blockers) hides an open dialog, so the page isn't
+     * left scroll locked and inert. "open" stays true so the modal resumes if the dialog is rendered again.
+     */
+    private handleRenderedChange;
     handleOpenChange(): void;
     /** Shows the dialog. */
     private show;

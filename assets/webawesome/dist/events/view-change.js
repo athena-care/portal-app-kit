@@ -2,7 +2,7 @@
 import {
   WaViewChangeEvent
 } from "../chunks/chunk.5Q3C7XRF.js";
-import "../chunks/chunk.7VGCIHDG.js";
+import "../chunks/chunk.7F23ACLI.js";
 export {
   WaViewChangeEvent
 };

@@ -1,3 +1,4 @@
+import { type PropertyValues } from 'lit';
 import WebAwesomeElement from '../../internal/webawesome-element.js';
 import WaPopup from '../popup/popup.js';
 /**
@@ -15,7 +16,8 @@ import WaPopup from '../popup/popup.js';
  * @event wa-hide - Emitted when the tooltip begins to hide.
  * @event wa-after-hide - Emitted after the tooltip has hidden and all animations are complete.
  *
- * @csspart base - The component's base wrapper, an `<wa-popup>` element.
+ * @csspart base - Deprecated. Use the `tooltip` part instead.
+ * @csspart tooltip - The component's outer wrapper.
  * @csspart base__popup - The popup's exported `popup` part. Use this to target the tooltip's popup container.
  * @csspart base__arrow - The popup's exported `arrow` part. Use this to target the tooltip's arrow.
  * @csspart body - The tooltip's body where its content is rendered.
@@ -28,6 +30,7 @@ export default class WaTooltip extends WebAwesomeElement {
         'wa-popup': typeof WaPopup;
     };
     private hoverTimeout;
+    private dismissedByPress;
     defaultSlot: HTMLSlotElement;
     body: HTMLElement;
     popup: WaPopup;
@@ -61,11 +64,15 @@ export default class WaTooltip extends WebAwesomeElement {
     private eventController;
     connectedCallback(): void;
     disconnectedCallback(): void;
-    firstUpdated(): void;
+    firstUpdated(changedProperties: PropertyValues<typeof this>): void;
     private handleBlur;
     private handleClick;
     private handleFocus;
+    private handleMouseDown;
+    /** Hides the tooltip, or cancels a pending show, and keeps it hidden until re-armed. */
+    private lightDismiss;
     private handleDocumentKeyDown;
+    private handleDocumentClick;
     private handleMouseOver;
     private handleMouseOut;
     private hasTrigger;

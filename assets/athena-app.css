@@ -156,6 +156,9 @@ html {
   --wa-color-brand-80: var(--ac-brand-80);
   --wa-color-brand-90: var(--ac-brand-90);
   --wa-color-brand-95: var(--ac-brand-95);
+  /* Core brand alias — WA defaults this to blue; keep it on the Athena ramp. */
+  --wa-color-brand: var(--wa-color-brand-50);
+  --wa-color-brand-on: white;
 
   /*
    * Root font-size drives rem everywhere (body via --wa-font-size-m, shell headings, spacing).

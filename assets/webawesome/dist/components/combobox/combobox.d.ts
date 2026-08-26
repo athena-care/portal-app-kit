@@ -1,6 +1,6 @@
-import type WaOption from '$webawesome/components/option/option.js';
-import type WaPopup from '$webawesome/components/popup/popup.js';
-import { WebAwesomeFormAssociatedElement } from '$webawesome/internal/webawesome-form-associated-element.js';
+import type WaOption from '../../components/option/option.js';
+import type WaPopup from '../../components/popup/popup.js';
+import { WebAwesomeFormAssociatedElement } from '../../internal/webawesome-form-associated-element.js';
 import type { PropertyValues, TemplateResult } from 'lit';
 import '../icon/icon.js';
 import '../option/option.js';
@@ -39,7 +39,8 @@ import '../tag/tag.js';
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *
  * @csspart form-control - The form control that wraps the label, input, and hint.
- * @csspart form-control-label - The label's wrapper.
+ * @csspart form-control-label - The label.
+ * @csspart label - Deprecated. Use the `form-control-label` part instead.
  * @csspart form-control-input - The combobox's wrapper.
  * @csspart hint - The hint's wrapper.
  * @csspart combobox - The container the wraps the start, end, value, clear icon, and expand button.
@@ -64,7 +65,7 @@ import '../tag/tag.js';
  */
 export default class WaCombobox extends WebAwesomeFormAssociatedElement {
     static css: import("lit").CSSResult[];
-    static get validators(): import("$webawesome/internal/webawesome-form-associated-element.js").Validator<WebAwesomeFormAssociatedElement>[];
+    static get validators(): import("../../internal/webawesome-form-associated-element.js").Validator<WebAwesomeFormAssociatedElement>[];
     assumeInteractionOn: string[];
     private createOptionEl;
     private hasInputSinceOpening;

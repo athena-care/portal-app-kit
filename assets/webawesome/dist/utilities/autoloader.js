@@ -6,7 +6,7 @@ import {
   stopLoader
 } from "../chunks/chunk.YOU5ZTWW.js";
 import "../chunks/chunk.KNQBIPHQ.js";
-import "../chunks/chunk.7VGCIHDG.js";
+import "../chunks/chunk.7F23ACLI.js";
 export {
   discover,
   preventTurboFouce,

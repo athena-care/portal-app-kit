@@ -4,7 +4,7 @@ import {
   intlFirstDayToJsDay,
   intlWeekendToJsDays
 } from "../../../chunks/chunk.QNBIIK3Q.js";
-import "../../../chunks/chunk.JHZRD2LV.js";
+import "../../../chunks/chunk.7F23ACLI.js";
 export {
   getWeekInfo,
   intlFirstDayToJsDay,

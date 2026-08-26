@@ -1,6 +1,6 @@
-import '$webawesome/components/icon/icon.js';
-import '$webawesome/components/progress-ring/progress-ring.js';
-import WebAwesomeElement from '$webawesome/internal/webawesome-element.js';
+import WebAwesomeElement from '../../internal/webawesome-element.js';
+import '../icon/icon.js';
+import '../progress-ring/progress-ring.js';
 /**
  * @summary Toast items are individual notifications displayed within a toast container.
  * @documentation https://webawesome.com/docs/components/toast
@@ -32,6 +32,7 @@ import WebAwesomeElement from '$webawesome/internal/webawesome-element.js';
  * @csspart close-icon__svg - The close icon's exported svg part.
  *
  * @cssproperty --accent-width - The width of the accent line. Defaults to 4px.
+ * @cssproperty --padding - The internal spacing of the toast item. Scales with the `size` attribute.
  * @cssproperty [--show-duration=var(--wa-transition-normal)] - The animation duration when showing.
  * @cssproperty [--hide-duration=var(--wa-transition-normal)] - The animation duration when hiding.
  */

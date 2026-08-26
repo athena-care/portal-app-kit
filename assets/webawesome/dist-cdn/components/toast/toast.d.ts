@@ -1,4 +1,4 @@
-import WebAwesomeElement from '$webawesome/internal/webawesome-element.js';
+import WebAwesomeElement from '../../internal/webawesome-element.js';
 import '../toast-item/toast-item.js';
 import type WaToastItem from '../toast-item/toast-item.js';
 export interface ToastIconOptions {

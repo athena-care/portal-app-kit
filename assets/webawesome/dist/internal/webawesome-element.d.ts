@@ -9,6 +9,9 @@ declare module 'lit' {
         initial?: any;
     }
 }
+/**
+ * @internal
+ */
 export default class WebAwesomeElement extends LitElement {
     #private;
     static css?: CSSResultGroup;

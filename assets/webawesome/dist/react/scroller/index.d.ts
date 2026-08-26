@@ -12,6 +12,8 @@ import Component from '../../components/scroller/scroller.js';
  * @cssproperty [--shadow-size=2rem] - The size of the shadow.
  *
  * @csspart content - The container that wraps the slotted content.
+ * @csspart start-shadow - The scroll shadow shown at the start edge when more content is available, unless `without-shadow` is set.
+ * @csspart end-shadow - The scroll shadow shown at the end edge when more content is available, unless `without-shadow` is set.
  */
 declare const reactWrapper: import("@lit/react").ReactWebComponent<Component, {}>;
 export default reactWrapper;

@@ -7,7 +7,7 @@ import {
   setIconPath,
   setKitCode
 } from "../chunks/chunk.KNQBIPHQ.js";
-import "../chunks/chunk.7VGCIHDG.js";
+import "../chunks/chunk.7F23ACLI.js";
 export {
   getBasePath,
   getIconPath,

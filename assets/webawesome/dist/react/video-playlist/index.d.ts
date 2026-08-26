@@ -15,7 +15,8 @@ export type { WaVideoChangeEvent } from '../../events/events.js';
  *
  * @event wa-video-change - Emitted when the active video changes.
  *
- * @csspart base - The component's base wrapper.
+ * @csspart base - Deprecated. Use the `video-playlist` part instead.
+ * @csspart video-playlist - The component's outer wrapper.
  * @csspart playlist - The playlist sidebar container.
  * @csspart playlist-item - An individual playlist item button.
  * @csspart playlist-thumbnail - The thumbnail image within a playlist item.

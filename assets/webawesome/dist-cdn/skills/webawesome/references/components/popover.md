@@ -1,34 +1,129 @@
 # Popover
 
-**Full documentation:** https://webawesome.com/docs/components/popover
-
-
 `<wa-popover>`
 
 Stable [Helpers](https://webawesome.com/docs/components/?category=helpers) [Since 3.0](https://webawesome.com/docs/resources/changelog#wa_300)
 
 Popovers display contextual content and interactive elements in a floating panel anchored to a trigger. Use them for rich tooltips, menus, or any content that appears on demand without navigating away.
 
-Popovers display interactive content when their anchor element is clicked. Unlike [tooltips](https://webawesome.com/docs/components/tooltip), popovers can contain links, buttons, and form controls. They appear without an overlay and will close when you click outside or press Escape. Only one popover can be open at a time.
-
 ```html
 <wa-popover for="popover__overview">
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <p>This popover contains interactive content that users can engage with directly.</p>
-    <wa-button appearance="filled" variant="primary" size="s">Take Action</wa-button>
+    <wa-button appearance="filled" variant="brand" size="s">Take Action</wa-button>
   </div>
 </wa-popover>
 
 <wa-button appearance="filled" id="popover__overview">Show popover</wa-button>
 ```
 
+Unlike [tooltips](https://webawesome.com/docs/components/tooltip), popovers can contain links, buttons, and form controls. They appear without an overlay and close when you click outside or press Escape. Only one popover can be open at a time.
+
+## API
+
+### Importing
+
+If you're using the autoloader or a hosted project, components load on demand — no manual import needed. To cherry-pick a component manually, use one of the following snippets.
+
+\*\*CDN\*\*
+
+Import this component directly from the CDN:
+
+```js
+import 'https://ka-f.webawesome.com/webawesome@3.12.0/components/popover/popover.js';
+```
+
+\*\*npm\*\*
+
+After installing Web Awesome via npm, import this component:
+
+```js
+import '@awesome.me/webawesome/dist/components/popover/popover.js';
+```
+
+\*\*Self-Hosted\*\*
+
+If you're self-hosting Web Awesome, import this component from your server:
+
+```js
+import './webawesome/dist/components/popover/popover.js';
+```
+
+\*\*React\*\*
+
+To import this component for React 18 or below, use the following code:
+
+```js
+import WaPopover from '@awesome.me/webawesome/dist/react/popover/index.js';
+```
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| (default) | The popover's content. Interactive elements such as buttons and links are supported. |
+
+### Attributes & Properties
+
+| Name | Description | Reflects |
+| --- | --- | --- |
+| \`distance\` distance | \`number\` The distance in pixels from which to offset the popover away from its target. Type Default 8 | |
+| \`for\` for | \`string \\| null\` The ID of the popover's anchor element. This must be an interactive/focusable element such as a button. Type Default null | |
+| \`open\` open | \`boolean\` Shows or hides the popover. Type Default false | |
+| \`placement\` placement | \`'top' \\| 'top-start' \\| 'top-end' \\| 'right' \\| 'right-start' \\| 'right-end' \\| 'bottom' \\| 'bottom-start' \\| 'bottom-end' \\| 'left' \\| 'left-start' \\| 'left-end'\` The preferred placement of the popover. Note that the actual placement may vary as needed to keep the popover inside of the viewport. Type Default 'top' | |
+| \`skidding\` skidding | \`number\` The distance in pixels from which to offset the popover along its target. Type Default 0 | |
+| \`withoutArrow\` without-arrow | \`boolean\` Removes the arrow from the popover. Type Default false | |
+
+### Methods
+
+| Name | Description | Arguments |
+| --- | --- | --- |
+| \`hide()\` | Hides the popover. | |
+| \`show()\` | Shows the popover. | |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| \`wa-after-hide\` | Emitted after the popover has hidden and all animations are complete. |
+| \`wa-after-show\` | Emitted after the popover has shown and all animations are complete. |
+| \`wa-hide\` | Emitted when the popover begins to hide. Canceling this event will stop the popover from hiding. |
+| \`wa-show\` | Emitted when the popover begins to show. Canceling this event will stop the popover from showing. |
+
+### CSS Custom Properties
+
+| Name | Description |
+| --- | --- |
+| \`--arrow-size\` | \`0.375rem\` The size of the tiny arrow that points to the popover (set to zero to remove). Default |
+| \`--hide-duration\` | \`var(--wa-transition-fast)\` The speed of the hide animation. Default |
+| \`--max-width\` | \`25rem\` The maximum width of the popover's body content. Default |
+| \`--show-duration\` | \`var(--wa-transition-fast)\` The speed of the show animation. Default |
+
+### Custom States
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| \`open\` | Applied when the popover is open. | \`:state(open)\` |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| \`body\` | The popover's body where its content is rendered. | \`::part(body)\` |
+| \`dialog\` | The native dialog element that contains the popover content. | \`::part(dialog)\` |
+| \`popup\` | \`\` The internal element that positions the popover. | \`::part(popup)\` |
+| \`popup\_\_arrow\` | \`arrow\` The popup's exported part. Use this to target the popover's arrow. | \`::part(popup\_\_arrow)\` |
+| \`popup\_\_popup\` | \`popup\` The 's exported popup part. Use this to target the popover's popup container. | \`::part(popup\_\_popup)\` |
+
+### Dependencies
+
+This component automatically imports the following elements. Sub-dependencies, if any exist, will also be included in this list.
+
+-   [`<wa-popup>`](https://webawesome.com/docs/components/popup)
+
 ## Examples
 
-Link to This Section
-
-### Assigning an Anchor
-
-Link to This Section
+### Anchor
 
 Use [`<wa-button>`](https://webawesome.com/docs/components/button) or `<button>` elements as popover anchors. Connect the popover to its anchor by setting the `for` attribute to match the anchor's `id`.
 
@@ -44,11 +139,10 @@ Use [`<wa-button>`](https://webawesome.com/docs/components/button) or `<button>`
 <wa-popover for="popover__anchor-native-button"> I'm anchored to a native button. </wa-popover>
 ```
 
-Make sure the anchor element exists in the DOM before the popover connects. If it doesn't exist, the popover won't attach and you'll see a console warning.
+**The anchor must exist in the DOM before the popover connects.**  
+Otherwise the popover won't attach and you'll see a console warning.
 
-### Opening and Closing
-
-Link to This Section
+### Opening & Closing
 
 Popovers show when you click their anchor element. You can also control them programmatically by setting the `open` property to `true` or `false`.
 
@@ -57,15 +151,13 @@ Use `data-popover="close"` on any button inside a popover to close it automatica
 ```html
 <wa-popover for="popover__opening">
   <p>The button below has <code>data-popover="close"</code> so clicking it will close the popover.</p>
-  <wa-button appearance="filled" data-popover="close" variant="primary">Dismiss</wa-button>
+  <wa-button appearance="filled" data-popover="close" variant="brand">Dismiss</wa-button>
 </wa-popover>
 
 <wa-button appearance="filled" id="popover__opening">Show popover</wa-button>
 ```
 
 ### Placement
-
-Link to This Section
 
 Use the `placement` attribute to set where the popover appears relative to its anchor. The popover will automatically reposition if there isn't enough space in the preferred location. The default placement is `top`.
 
@@ -87,8 +179,6 @@ Use the `placement` attribute to set where the popover appears relative to its a
 
 ### Distance
 
-Link to This Section
-
 Use the `distance` attribute to control how far the popover appears from its anchor.
 
 ```html
@@ -103,8 +193,6 @@ Use the `distance` attribute to control how far the popover appears from its anc
 
 ### Arrow Size
 
-Link to This Section
-
 Use the `--arrow-size` custom property to change the size of the popover's arrow. To remove it, use the `without-arrow` attribute.
 
 ```html
@@ -117,9 +205,7 @@ Use the `--arrow-size` custom property to change the size of the popover's arrow
 </div>
 ```
 
-### Setting a Maximum Width
-
-Link to This Section
+### Max Width
 
 Use the `--max-width` custom property to control the maximum width of the popover.
 
@@ -130,9 +216,7 @@ Use the `--max-width` custom property to control the maximum width of the popove
 </wa-popover>
 ```
 
-### Setting Focus
-
-Link to This Section
+### Initial Focus
 
 Use the [`autofocus`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) global attribute to move focus to a specific form control when the popover opens.
 
@@ -140,7 +224,7 @@ Use the [`autofocus`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_a
 <wa-popover for="popover__autofocus">
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <wa-textarea autofocus placeholder="What's on your mind?" size="s" resize="none" rows="2"></wa-textarea>
-    <wa-button appearance="filled" variant="primary" size="s" data-popover="close"> Submit </wa-button>
+    <wa-button appearance="filled" variant="brand" size="s" data-popover="close"> Submit </wa-button>
   </div>
 </wa-popover>
 
@@ -149,65 +233,3 @@ Use the [`autofocus`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_a
   Feedback
 </wa-button>
 ```
-
-## Slots
-
-Valid slot names for this component (use exactly these — any other `slot` value
-is silently ignored and the element falls back to the default slot):
-
-- `(default)` — The popover's content. Interactive elements such as buttons and links are supported.
-
-## Attributes & Properties
-
-| Attribute | Property | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `placement` |  | `\| 'top' \| 'top-start' \| 'top-end' \| 'right' \| 'right-start' \| 'right-end' \| 'bottom' \| 'bottom-start' \| 'bottom-end' \| 'left' \| 'left-start' \| 'left-end'` | `'top'` | The preferred placement of the popover. Note that the actual placement may vary as needed to keep the popover inside of the viewport. |
-| `open` |  | `boolean` | `false` | Shows or hides the popover. |
-| `distance` |  | `number` | `8` | The distance in pixels from which to offset the popover away from its target. |
-| `skidding` |  | `number` | `0` | The distance in pixels from which to offset the popover along its target. |
-| `for` |  | `string \| null` | `null` | The ID of the popover's anchor element. This must be an interactive/focusable element such as a button. |
-| `without-arrow` | `withoutArrow` | `boolean` | `false` | Removes the arrow from the popover. |
-| `dir` |  | `string` |  |  |
-| `lang` |  | `string` |  |  |
-| `did-ssr` | `didSSR` |  |  |  |
-
-## Methods
-
-| Method | Description | Arguments |
-| --- | --- | --- |
-| `show` | Shows the popover. |  |
-| `hide` | Hides the popover. |  |
-
-## Events
-
-| Event | Description |
-| --- | --- |
-| `wa-show` | Emitted when the popover begins to show. Canceling this event will stop the popover from showing. |
-| `wa-after-show` | Emitted after the popover has shown and all animations are complete. |
-| `wa-hide` | Emitted when the popover begins to hide. Canceling this event will stop the popover from hiding. |
-| `wa-after-hide` | Emitted after the popover has hidden and all animations are complete. |
-
-## Custom States
-
-| State | Description |
-| --- | --- |
-| `open` | Applied when the popover is open. |
-
-## CSS Parts
-
-| Part | Description |
-| --- | --- |
-| `dialog` | The native dialog element that contains the popover content. |
-| `body` | The popover's body where its content is rendered. |
-| `popup` | The internal `<wa-popup>` element that positions the popover. |
-| `popup__popup` | The popup's exported `popup` part. Use this to target the popover's popup container. |
-| `popup__arrow` | The popup's exported `arrow` part. Use this to target the popover's arrow. |
-
-## CSS Custom Properties
-
-| Property | Default | Description |
-| --- | --- | --- |
-| `--arrow-size` | `0.375rem` | The size of the tiny arrow that points to the popover (set to zero to remove). |
-| `--max-width` | `25rem` | The maximum width of the popover's body content. |
-| `--show-duration` | `var(--wa-transition-fast)` | The speed of the show animation. |
-| `--hide-duration` | `var(--wa-transition-fast)` | The speed of the hide animation. |

@@ -1,30 +1,122 @@
 # Tooltip
 
-**Full documentation:** https://webawesome.com/docs/components/tooltip
-
-
 `<wa-tooltip>`
 
 Stable [Feedback](https://webawesome.com/docs/components/?category=feedback) [Since 2.0](https://webawesome.com/docs/resources/changelog#wa_200)
 
 Tooltips display brief contextual information when the user hovers, focuses, or taps a target element.
 
-A tooltip's target is based on the `for` attribute which points to an element id.
-
 ```html
 <wa-tooltip for="my-button">This is a tooltip</wa-tooltip>
 <wa-button appearance="filled" id="my-button">Hover Me</wa-button>
 ```
 
-## Examples
+Point the `for` attribute at the `id` of the element the tooltip describes, and Web Awesome wires up positioning and accessibility for you.
 
-Link to This Section
+**Keep tooltips to text and presentational content.**  
+Tooltips can't be reliably focused or operated with a keyboard, so avoid buttons, links, and form controls inside one. Reach for a [popover](https://webawesome.com/docs/components/popover) or [dropdown](https://webawesome.com/docs/components/dropdown) when you need interactive content.
+
+## API
+
+### Importing
+
+If you're using the autoloader or a hosted project, components load on demand — no manual import needed. To cherry-pick a component manually, use one of the following snippets.
+
+\*\*CDN\*\*
+
+Import this component directly from the CDN:
+
+```js
+import 'https://ka-f.webawesome.com/webawesome@3.12.0/components/tooltip/tooltip.js';
+```
+
+\*\*npm\*\*
+
+After installing Web Awesome via npm, import this component:
+
+```js
+import '@awesome.me/webawesome/dist/components/tooltip/tooltip.js';
+```
+
+\*\*Self-Hosted\*\*
+
+If you're self-hosting Web Awesome, import this component from your server:
+
+```js
+import './webawesome/dist/components/tooltip/tooltip.js';
+```
+
+\*\*React\*\*
+
+To import this component for React 18 or below, use the following code:
+
+```js
+import WaTooltip from '@awesome.me/webawesome/dist/react/tooltip/index.js';
+```
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| (default) | The tooltip's default slot where any content should live. Interactive content should be avoided. |
+
+### Attributes & Properties
+
+| Name | Description | Reflects |
+| --- | --- | --- |
+| \`disabled\` disabled | \`boolean\` Disables the tooltip so it won't show when triggered. Type Default false | |
+| \`distance\` distance | \`number\` The distance in pixels from which to offset the tooltip away from its target. Type Default 8 | |
+| \`hideDelay\` hide-delay | \`number\` The amount of time to wait before hiding the tooltip when the user mouses out. Type Default 0 | |
+| \`open\` open | \`boolean\` Indicates whether or not the tooltip is open. You can use this in lieu of the show/hide methods. Type Default false | |
+| \`placement\` placement | \`'top' \\| 'top-start' \\| 'top-end' \\| 'right' \\| 'right-start' \\| 'right-end' \\| 'bottom' \\| 'bottom-start' \\| 'bottom-end' \\| 'left' \\| 'left-start' \\| 'left-end'\` The preferred placement of the tooltip. Note that the actual placement may vary as needed to keep the tooltip inside of the viewport. Type Default 'top' | |
+| \`showDelay\` show-delay | \`number\` The amount of time to wait before showing the tooltip when the user mouses in. Type Default 150 | |
+| \`skidding\` skidding | \`number\` The distance in pixels from which to offset the tooltip along its target. Type Default 0 | |
+| \`trigger\` trigger | \`click\` Controls how the tooltip is activated. Possible options include , hover, focus, and manual. Multiple options can be passed by separating them with a space. When manual is used, the tooltip must be activated programmatically. Type string Default 'hover focus' | |
+| \`withoutArrow\` without-arrow | \`boolean\` Removes the arrow from the tooltip. Type Default false | |
+
+### Methods
+
+| Name | Description | Arguments |
+| --- | --- | --- |
+| \`hide()\` | Hides the tooltip | |
+| \`show()\` | Shows the tooltip. | |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| \`wa-after-hide\` | Emitted after the tooltip has hidden and all animations are complete. |
+| \`wa-after-show\` | Emitted after the tooltip has shown and all animations are complete. |
+| \`wa-hide\` | Emitted when the tooltip begins to hide. |
+| \`wa-show\` | Emitted when the tooltip begins to show. |
+
+### CSS Custom Properties
+
+| Name | Description |
+| --- | --- |
+| \`--max-width\` | The maximum width of the tooltip before its content will wrap. |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| \`base\_\_arrow\` | \`arrow\` The popup's exported part. Use this to target the tooltip's arrow. | \`::part(base\_\_arrow)\` |
+| \`base\_\_popup\` | \`popup\` The 's exported popup part. Use this to target the tooltip's popup container. | \`::part(base\_\_popup)\` |
+| \`body\` | The tooltip's body where its content is rendered. | \`::part(body)\` |
+| \`tooltip\` | The component's outer wrapper. | \`::part(tooltip)\` |
+| \`base\` | \`tooltip\` Deprecated. Use the part instead. | \`::part(base)\` |
+
+### Dependencies
+
+This component automatically imports the following elements. Sub-dependencies, if any exist, will also be included in this list.
+
+-   [`<wa-popup>`](https://webawesome.com/docs/components/popup)
+
+## Examples
 
 ### Placement
 
-Link to This Section
-
-Use the `placement` attribute to set the preferred placement of the tooltip.
+Use the `placement` attribute to set the tooltip's preferred position. The actual placement may shift to keep the tooltip inside the viewport.
 
 ```html
 <div class="tooltip-placement-example">
@@ -93,74 +185,38 @@ Use the `placement` attribute to set the preferred placement of the tooltip.
 </style>
 ```
 
-### Click Trigger
+### Triggers
 
-Link to This Section
+The `trigger` attribute controls how a tooltip is activated. Pass multiple values separated by a space to combine them — the default is `hover focus`, which shows the tooltip on pointer hover and keyboard focus.
 
-Set the `trigger` attribute to `click` to toggle the tooltip on click instead of hover.
+| Value | Shows the tooltip when |
+| --- | --- |
+| \`hover\` | The pointer moves over the target |
+| \`focus\` | The target receives keyboard focus |
+| \`click\` | The target is clicked; clicking again dismisses it |
+| \`manual\` | \`open\` Only when you set yourself — no built-in activation |
+
+Open tooltips light dismiss, which means pressing the target, clicking the tooltip, or clicking anywhere else on the page hides them. Pressing Escape will also hide them. Tooltips with `trigger="manual"` never light dismiss, and calling `preventDefault()` on the `wa-hide` event will keep the tooltip open.
 
 ```html
 <wa-button appearance="filled" id="toggle-button">Click to Toggle</wa-button>
 <wa-tooltip for="toggle-button" trigger="click">Click again to dismiss</wa-tooltip>
 ```
 
-### Manual Trigger
-
-Link to This Section
-
-Tooltips can be controller programmatically by setting the `trigger` attribute to `manual`. Use the `open` attribute to control when the tooltip is shown.
-
-```html
-<wa-button appearance="filled" style="margin-right: 4rem;">Toggle Manually</wa-button>
-
-<wa-tooltip for="manual-trigger-tooltip" trigger="manual" class="manual-tooltip">This is an avatar!</wa-tooltip>
-<wa-avatar id="manual-trigger-tooltip" label="User"></wa-avatar>
-
-<script>
-  const tooltip = document.querySelector('.manual-tooltip');
-  const toggle = tooltip.previousElementSibling;
-
-  toggle.addEventListener('click', () => (tooltip.open = !tooltip.open));
-</script>
-```
-
-### Removing Arrows
-
-Link to This Section
-
-You can control the size of tooltip arrows by overriding the `--wa-tooltip-arrow-size` design token. To remove the arrow, use the `without-arrow` attribute.
-
-```html
-<wa-button appearance="filled" id="no-arrow">No Arrow</wa-button>
-<wa-tooltip for="no-arrow" without-arrow>This is a tooltip with no arrow</wa-tooltip>
-```
-
-To override it globally, set it in a root block in your stylesheet after the Web Awesome stylesheet is loaded.
-
-```css
-:root {
-  --wa-tooltip-arrow-size: 0;
-}
-```
-
 ### HTML in Tooltips
 
-Link to This Section
-
-Use the default slot to create tooltips with HTML content. Tooltips are designed only for text and presentational elements. Avoid placing interactive content, such as buttons, links, and form controls, in a tooltip.
+Use the default slot to add presentational HTML, such as emphasis or line breaks.
 
 ```html
 <wa-button appearance="filled" id="rich-tooltip">Hover me</wa-button>
 <wa-tooltip for="rich-tooltip">
-  <div>I'm not <strong>just</strong> a tooltip, I'm a <em>tooltip</em> with HTML!</div>
+  <div>This tooltip includes <strong>formatted</strong> content, such as <em>emphasis</em> and line breaks.</div>
 </wa-tooltip>
 ```
 
-### Setting a Maximum Width
+### Customizing
 
-Link to This Section
-
-Use the `--max-width` custom property to change the width the tooltip can grow to before wrapping occurs.
+Use the `--max-width` custom property to set the width at which the tooltip's content wraps.
 
 ```html
 <wa-tooltip for="wrapping-tooltip" style="--max-width: 80px;">
@@ -169,58 +225,39 @@ Use the `--max-width` custom property to change the width the tooltip can grow t
 <wa-button appearance="filled" id="wrapping-tooltip">Hover me</wa-button>
 ```
 
-## Slots
+Remove the arrow on a single tooltip with the `without-arrow` attribute.
 
-Valid slot names for this component (use exactly these — any other `slot` value
-is silently ignored and the element falls back to the default slot):
+```html
+<wa-button appearance="filled" id="no-arrow">No Arrow</wa-button>
+<wa-tooltip for="no-arrow" without-arrow>This is a tooltip with no arrow</wa-tooltip>
+```
 
-- `(default)` — The tooltip's default slot where any content should live. Interactive content should be avoided.
+Resize the arrow on every tooltip with the `--wa-tooltip-arrow-size` design token. Set it in a `:root` block after the Web Awesome stylesheet loads — `0` removes arrows globally.
 
-## Attributes & Properties
+```css
+:root {
+  --wa-tooltip-arrow-size: 0;
+}
+```
 
-| Attribute | Property | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `placement` |  | `\| 'top' \| 'top-start' \| 'top-end' \| 'right' \| 'right-start' \| 'right-end' \| 'bottom' \| 'bottom-start' \| 'bottom-end' \| 'left' \| 'left-start' \| 'left-end'` | `'top'` | The preferred placement of the tooltip. Note that the actual placement may vary as needed to keep the tooltip inside of the viewport. |
-| `disabled` |  | `boolean` | `false` | Disables the tooltip so it won't show when triggered. |
-| `distance` |  | `number` | `8` | The distance in pixels from which to offset the tooltip away from its target. |
-| `open` |  | `boolean` | `false` | Indicates whether or not the tooltip is open. You can use this in lieu of the show/hide methods. |
-| `skidding` |  | `number` | `0` | The distance in pixels from which to offset the tooltip along its target. |
-| `show-delay` | `showDelay` | `number` | `150` | The amount of time to wait before showing the tooltip when the user mouses in. |
-| `hide-delay` | `hideDelay` | `number` | `0` | The amount of time to wait before hiding the tooltip when the user mouses out. |
-| `trigger` |  | `string` | `'hover focus'` | Controls how the tooltip is activated. Possible options include `click`, `hover`, `focus`, and `manual`. Multiple options can be passed by separating them with a space. When manual is used, the tooltip must be activated programmatically. |
-| `without-arrow` | `withoutArrow` | `boolean` | `false` | Removes the arrow from the tooltip. |
-| `for` |  | `string \| null` | `null` |  |
-| `dir` |  | `string` |  |  |
-| `lang` |  | `string` |  |  |
-| `did-ssr` | `didSSR` |  |  |  |
+### Showing & Hiding Manually
 
-## Methods
+Set `trigger="manual"` and toggle the `open` attribute to control the tooltip yourself — handy for onboarding hints or surfacing a tooltip in response to your own logic.
 
-| Method | Description | Arguments |
-| --- | --- | --- |
-| `show` | Shows the tooltip. |  |
-| `hide` | Hides the tooltip |  |
+```html
+<div class="manual-trigger-example">
+  <wa-tooltip for="manual-trigger-tooltip" trigger="manual" class="manual-tooltip">This is an avatar!</wa-tooltip>
+  <wa-avatar id="manual-trigger-tooltip" label="User"></wa-avatar>
 
-## Events
+  <wa-divider></wa-divider>
 
-| Event | Description |
-| --- | --- |
-| `wa-show` | Emitted when the tooltip begins to show. |
-| `wa-after-show` | Emitted after the tooltip has shown and all animations are complete. |
-| `wa-hide` | Emitted when the tooltip begins to hide. |
-| `wa-after-hide` | Emitted after the tooltip has hidden and all animations are complete. |
+  <wa-button appearance="filled" class="manual-toggle">Toggle Manually</wa-button>
+</div>
 
-## CSS Parts
+<script>
+  const tooltip = document.querySelector('.manual-tooltip');
+  const toggle = document.querySelector('.manual-toggle');
 
-| Part | Description |
-| --- | --- |
-| `base` | The component's base wrapper, an `<wa-popup>` element. |
-| `base__popup` | The popup's exported `popup` part. Use this to target the tooltip's popup container. |
-| `base__arrow` | The popup's exported `arrow` part. Use this to target the tooltip's arrow. |
-| `body` | The tooltip's body where its content is rendered. |
-
-## CSS Custom Properties
-
-| Property | Default | Description |
-| --- | --- | --- |
-| `--max-width` |  | The maximum width of the tooltip before its content will wrap. |
+  toggle.addEventListener('click', () => (tooltip.open = !tooltip.open));
+</script>
+```

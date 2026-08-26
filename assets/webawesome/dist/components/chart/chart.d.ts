@@ -1,4 +1,4 @@
-import WebAwesomeElement from '$webawesome/internal/webawesome-element.js';
+import WebAwesomeElement from '../../internal/webawesome-element.js';
 import { type PropertyValues } from 'lit';
 import { Chart as ChartJS } from 'chart.js';
 import type { ChartType, LayoutPosition } from 'chart.js';
@@ -30,7 +30,7 @@ import type { ChartType, LayoutPosition } from 'chart.js';
  * @cssproperty [--line-border-width=var(--wa-border-width-m)] - Border width for line and radar charts.
  * @cssproperty [--point-radius=var(--wa-border-width-m)] - Radius of data point dots.
  *
- * @ssr - Charts will not render in SSR because they require a canvas element to render, and there is no server side equivalent when using chart.js. The chart will take up the expected space to prevent layout shifting, but will not render anything meant to be rendered by chart.js in the canvas.
+ * @ssr - `<wa-chart>` uses chart.js to render into a `<canvas>` element, which has no server-side equivalent. The component reserves the expected space to prevent layout shift during SSR, but its contents won't draw until it hydrates on the client.
  */
 export default class WaChart extends WebAwesomeElement {
     static css: import("lit").CSSResult[];

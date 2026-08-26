@@ -1,4 +1,4 @@
-import type { Validator } from '$webawesome/internal/webawesome-form-associated-element.js';
+import type { Validator } from '../../../internal/webawesome-form-associated-element.js';
 import type WaDateInput from '../date-input.js';
 /**
  * Validates a `<wa-date-input>`'s committed value against its `min`/`max` properties, producing

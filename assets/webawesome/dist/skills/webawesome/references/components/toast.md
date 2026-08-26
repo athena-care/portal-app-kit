@@ -1,32 +1,10 @@
-# Toast [Pro]
+# Toast
 
-**Full documentation:** https://webawesome.com/docs/components/toast
-
-> This component requires [Web Awesome Pro](https://webawesome.com/purchase).
 `<wa-toast>`
 
-ProIncluded with Web Awesome Pro Stable [Feedback](https://webawesome.com/docs/components/?category=feedback) [Since 3.3](https://webawesome.com/docs/resources/changelog#wa_330)
+Stable [Feedback](https://webawesome.com/docs/components/?category=feedback) [Since 3.3](https://webawesome.com/docs/resources/changelog#wa_330)
 
 Toasts display brief, non-blocking notifications that appear temporarily above the page content.
-
-**[Get Toast with Web Awesome Pro!](https://webawesome.com/purchase?from=pro-docs&component=toast)** Subscribing to Web Awesome Pro gives you every Pro component, plus premium themes, color tools, team collaboration, and more.
-
--   Pro [Components](https://webawesome.com/docs/components)
--   Responsive [Layout Tools](https://webawesome.com/docs/utilities)
--   Ever-Growing [Pattern Library](https://webawesome.com/docs/patterns)
--   Unlimited Hosted Projects
--   Pre-Built [Pro Themes](https://webawesome.com/docs/themes)
--   Pro Theme Builder
--   Pro Color Tools
--   Official [Figma Design Kit](https://webawesome.com/docs/resources/figma)
--   [WA Pro Perpetual License](https://webawesome.com/license/pro)
--   Actual Human™ Support
-
-Get Web Awesome Pro + Toast!
-
-Adding a single `<wa-toast>` element to the page gives you the ability to dispatch notifications at any time. Toast notifications appear in a stack that renders in the [top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer), showing above everything else on the page.
-
-You can put the `<wa-toast>` element anywhere in the DOM, as long as it's somewhere inside the `<body>`. In most apps, a single toast element is optimal.
 
 ```html
 <div id="toast-basic">
@@ -45,17 +23,121 @@ You can put the `<wa-toast>` element anywhere in the DOM, as long as it's somewh
 </script>
 ```
 
-Toasts have unique accessibility challenges, but these can be mitigated with thoughtful implementation. Read our [Accessibility Considerations](#accessibility-considerations) before using toasts.
+**Now Available in Web Awesome Core**  
+Toast moved over from Pro in [**3.11.0**](https://webawesome.com/docs/resources/changelog#unreleased). On an earlier Core version? Upgrade to use it.
 
-This documentation page features numerous toast elements for demonstrative purposes. As a result, it's possible to trigger overlapping toast items. This isn't a bug! Most apps should only have a single `<wa-toast>` element on the page. We're just showing off the many features of this component.
+Adding a single `<wa-toast>` element to the page gives you the ability to dispatch notifications at any time. Toast notifications appear in a stack that renders in the [top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer), showing above everything else on the page.
+
+You can put the `<wa-toast>` element anywhere in the DOM, as long as it's somewhere inside the `<body>`. In most apps, a single toast element is optimal.
+
+**Toasts carry unique accessibility challenges.**  
+[Read the accessibility considerations](#accessibility-considerations) before using them — thoughtful implementation can mitigate the issues.
+
+**Overlapping toasts on this page are intentional, not a bug.**  
+This page has many `<wa-toast>` elements to show off the component — most apps need only one.
+
+## Accessibility Considerations
+
+Toasts have a number of accessibility limitations. For example:
+
+-   Due to their transient nature, toasts can be missed entirely by screen magnifier users and difficult to perceive for others depending on their visual and cognitive abilities.
+-   Due to their DOM placement and vague position in a page's reading order, toasts can be difficult for keyboard users to navigate to.
+-   Due to their positioning on the page, toasts can obscure other essential elements, especially for users who use browser or OS zooming features.
+
+Rarely will toasts offer the best usability for all of your users, so consider if other UX patterns, like dialogs or inline messages, offer a better experience. If toasts are the right fit for your use case, consider these tips:
+
+-   Keep toasts short and sweet.
+-   Set the `duration` to `5000` ms (5 seconds) or longer to give users enough time to locate and understand the toast item.
+-   Consider allowing users to adjust the timing. While the duration of a toast item resets on hover (see [Hover & Focus Behavior](#hover-and-focus-behavior)), a setting in your application can allow users to control the timing of toasts to best suit their needs and abilities.
+-   Choose a consistent placement for toasts in your application and stick with it. Otherwise, users need to guess where transient notifications will appear and risk missing them entirely.
+-   If a transient toast item contains an action, ensure that action is available elsewhere on the page. This ensures that users can still execute the action even if they miss the toast.
+
+## API
+
+### Importing
+
+If you're using the autoloader or a hosted project, components load on demand — no manual import needed. To cherry-pick a component manually, use one of the following snippets.
+
+\*\*CDN\*\*
+
+Import this component directly from the CDN:
+
+```js
+import 'https://ka-f.webawesome.com/webawesome@3.12.0/components/toast/toast.js';
+```
+
+\*\*npm\*\*
+
+After installing Web Awesome via npm, import this component:
+
+```js
+import '@awesome.me/webawesome/dist/components/toast/toast.js';
+```
+
+\*\*Self-Hosted\*\*
+
+If you're self-hosting Web Awesome, import this component from your server:
+
+```js
+import './webawesome/dist/components/toast/toast.js';
+```
+
+\*\*React\*\*
+
+To import this component for React 18 or below, use the following code:
+
+```js
+import WaToast from '@awesome.me/webawesome/dist/react/toast/index.js';
+```
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| (default) | \`\` Place elements here to show them as notifications. |
+
+### Attributes & Properties
+
+| Name | Description | Reflects |
+| --- | --- | --- |
+| \`placement\` placement | \`'top-start' \\| 'top-center' \\| 'top-end' \\| 'bottom-start' \\| 'bottom-center' \\| 'bottom-end'\` The placement of the toast stack on the screen. Type Default 'top-end' | |
+
+### Methods
+
+| Name | Description | Arguments |
+| --- | --- | --- |
+| \`create()\` | Creates a toast notification programmatically and adds it to the stack. Returns a reference to the created toast item element. | \`message: string, options: ToastCreateOptions\` |
+
+### CSS Custom Properties
+
+| Name | Description |
+| --- | --- |
+| \`--gap\` | \`var(--wa-space-s)\` The gap between stacked toast items. Default |
+| \`--width\` | \`28rem\` The width of the toast stack. Default |
+
+### Custom States
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| \`visible\` | Applied when the toast stack has one or more visible toast items. | \`:state(visible)\` |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| \`stack\` | The container that holds the toast items. | \`::part(stack)\` |
+
+### Dependencies
+
+This component automatically imports the following elements. Sub-dependencies, if any exist, will also be included in this list.
+
+-   [`<wa-icon>`](https://webawesome.com/docs/components/icon)
+-   [`<wa-progress-ring>`](https://webawesome.com/docs/components/progress-ring)
+-   [`<wa-toast-item>`](https://webawesome.com/docs/components/toast-item)
 
 ## Examples
 
-Link to This Section
-
-### Variants
-
-Link to This Section
+### Variant
 
 Set the `variant` option to `brand`, `success`, `warning`, `danger`, or `neutral` to change the type of notification.
 
@@ -90,9 +172,7 @@ Set the `variant` option to `brand`, `success`, `warning`, `danger`, or `neutral
 </script>
 ```
 
-### Sizes
-
-Link to This Section
+### Size
 
 Set the `size` option to `xs`, `s`, `m`, `l`, or `xl` to change the size of the toast item.
 
@@ -127,9 +207,7 @@ Set the `size` option to `xs`, `s`, `m`, `l`, or `xl` to change the size of the 
 </script>
 ```
 
-### With Icons
-
-Link to This Section
+### Icons
 
 Pass an `icon` option to display an icon at the start of the toast item. You can pass a simple string for the icon name, or an object with additional options like `library`, `family`, and `variant`.
 
@@ -194,8 +272,6 @@ For more control over the icon, pass an object with `name` and optional `library
 
 ### Duration
 
-Link to This Section
-
 Set the `duration` option to control how long notifications show before disappearing. The value is in milliseconds and defaults to `5000` (5 seconds). A value of `0` will keep the notification open until the user dismisses it.
 
 ```html
@@ -227,8 +303,6 @@ Set the `duration` option to control how long notifications show before disappea
 ```
 
 ### Placement
-
-Link to This Section
 
 Use the `placement` attribute to set the position of the toast stack on the screen.
 
@@ -266,9 +340,7 @@ Use the `placement` attribute to set the position of the toast stack on the scre
 </script>
 ```
 
-### Hover and Focus Behavior
-
-Link to This Section
+### Hover & Focus Behavior
 
 Toast items automatically pause their countdown timer when you hover over them or when the close button receives focus. This gives users more time to read the content before it disappears. When the mouse leaves or focus moves away, the timer resets and starts counting down again.
 
@@ -294,8 +366,6 @@ Toast items automatically pause their countdown timer when you hover over them o
 ```
 
 ### Using HTML Content
-
-Link to This Section
 
 Set `allowHtml` to `true` to render HTML content in notifications. Make sure you trust the content to avoid XSS vulnerabilities.
 
@@ -328,8 +398,6 @@ Set `allowHtml` to `true` to render HTML content in notifications. Make sure you
 ```
 
 ### Responding to Custom Buttons
-
-Link to This Section
 
 You can add custom buttons or other interactive elements to a toast item using `allowHtml`. Use the returned toast item reference to query for your elements and attach event listeners.
 
@@ -382,8 +450,6 @@ You can add custom buttons or other interactive elements to a toast item using `
 
 ### Responding to Events
 
-Link to This Section
-
 The `create()` method returns a promise that resolves to the generated toast item. You can use this reference to add event listeners.
 
 ```html
@@ -416,8 +482,6 @@ The `create()` method returns a promise that resolves to the generated toast ite
 
 ### Creating Toast Items Manually
 
-Link to This Section
-
 While `toast.create()` is the easiest way to show notifications, you can also create [`<wa-toast-item>`](https://webawesome.com/docs/components/toast-item) elements manually. This approach gives you full control over the toast item's content and is useful when you need to add custom elements or complex layouts.
 
 ```html
@@ -443,62 +507,3 @@ While `toast.create()` is the easiest way to show notifications, you can also cr
   });
 </script>
 ```
-
-## Accessibility Considerations
-
-Link to This Section
-
-Toasts have a number of accessibility limitations. For example:
-
--   Due to their transient nature, toasts can be missed entirely by screen magnifier users and difficult to perceive for others depending on their visual and cognitive abilities.
--   Due to their DOM placement and vague position in a page's reading order, toasts can be difficult for keyboard users to navigate to.
--   Due to their positioning on the page, toasts can obscure other essential elements, especially for users who use browser or OS zooming features.
-
-Rarely will toasts offer the best usability for all of your users, so consider if other UX patterns, like dialogs or inline messages, offer a better experience. If toasts are the right fit for your use case, consider these tips:
-
--   Keep toasts short and sweet.
--   Set the `duration` to `5000` ms (5 seconds) or longer to give users enough time to locate and understand the toast item.
--   Consider allowing users to adjust the timing. While the duration of a toast item resets on hover (see [Hover Behavior](#hover-behavior)), a setting in your application can allow users to control the timing of toasts to best suit their needs and abilities.
--   Choose a consistent placement for toasts in your application and stick with it. Otherwise, users need to guess where transient notifications will appear and risk missing them entirely.
--   If a transient toast item contains an action, ensure that action is available elsewhere on the page. This ensures that users can still execute the action even if they miss the toast.
-
-## Slots
-
-Valid slot names for this component (use exactly these — any other `slot` value
-is silently ignored and the element falls back to the default slot):
-
-- `(default)` — Place `<wa-toast-item>` elements here to show them as notifications.
-
-## Attributes & Properties
-
-| Attribute | Property | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `placement` |  | `\| 'top-start' \| 'top-center' \| 'top-end' \| 'bottom-start' \| 'bottom-center' \| 'bottom-end'` | `'top-end'` | The placement of the toast stack on the screen. |
-| `dir` |  | `string` |  |  |
-| `lang` |  | `string` |  |  |
-| `did-ssr` | `didSSR` |  |  |  |
-
-## Methods
-
-| Method | Description | Arguments |
-| --- | --- | --- |
-| `create` | Creates a toast notification programmatically and adds it to the stack. Returns a reference to the created toast item element. | `message: string, options: ToastCreateOptions` |
-
-## Custom States
-
-| State | Description |
-| --- | --- |
-| `visible` | Applied when the toast stack has one or more visible toast items. |
-
-## CSS Parts
-
-| Part | Description |
-| --- | --- |
-| `stack` | The container that holds the toast items. |
-
-## CSS Custom Properties
-
-| Property | Default | Description |
-| --- | --- | --- |
-| `--gap` | `var(--wa-space-s)` | The gap between stacked toast items. |
-| `--width` | `28rem` | The width of the toast stack. |
