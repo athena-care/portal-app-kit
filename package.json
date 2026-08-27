@@ -4,7 +4,8 @@
   "description": "Athena Care static app kit — CDN assets for back-office HTML apps (Claude sandbox compatible via jsDelivr)",
   "license": "UNLICENSED",
   "files": [
-    "assets"
+    "assets",
+    "packages/kit-cdn"
   ],
   "repository": {
     "type": "git",
