@@ -47,6 +47,7 @@ export const BACKOFFICE_WEBAWESOME = {
   details: `${BACKOFFICE_WA}/components/details/details.js`,
   tag: `${BACKOFFICE_WA}/components/tag/tag.js`,
   fileInput: `${BACKOFFICE_WA}/components/file-input/file-input.js`,
+  copyButton: `${BACKOFFICE_WA}/components/copy-button/copy-button.js`,
 } as const;
 
 export const BACKOFFICE_FONTAWESOME = {
