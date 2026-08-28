@@ -38,6 +38,7 @@ export const KIT_FONTAWESOME = {
 
 /** Back Office — same-origin Web Awesome (portal-app-kit on the internal host). */
 export const BACKOFFICE_WEBAWESOME = {
+  base: BACKOFFICE_WA,
   theme: `${BACKOFFICE_WA}/styles/themes/default.css`,
   native: `${BACKOFFICE_WA}/styles/native.css`,
   utilities: `${BACKOFFICE_WA}/styles/utilities.css`,
