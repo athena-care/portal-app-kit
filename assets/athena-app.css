@@ -262,7 +262,8 @@ wa-page.shell {
   font-family: var(--shell-font-sans);
 }
 
-wa-page.shell h1 {
+/* Shell chrome headlines — not public page body (.page-main in CMS editor). */
+wa-page.shell .shell-page-hero h1 {
   font-family: "Playfair Display", var(--shell-font-serif), serif;
   font-size: clamp(2rem, 2rem + 0.75vw, 4rem);
   font-weight: 700;
@@ -272,7 +273,7 @@ wa-page.shell h1 {
   color: var(--headline-color);
 }
 
-wa-page.shell h2 {
+wa-page.shell .shell-page-hero h2 {
   font-family: var(--shell-font-heading);
   font-size: 1.25rem;
   font-weight: 600;
@@ -283,7 +284,7 @@ wa-page.shell h2 {
   color: var(--text);
 }
 
-wa-page.shell h3 {
+wa-page.shell .shell-page-hero h3 {
   font-family: var(--shell-font-heading);
   font-size: 1.0625rem;
   font-weight: 600;
@@ -293,7 +294,7 @@ wa-page.shell h3 {
   color: var(--text);
 }
 
-wa-page.shell h4 {
+wa-page.shell .shell-page-hero h4 {
   font-family: var(--shell-font-condensed);
   font-size: 0.8125rem;
   font-weight: 600;
