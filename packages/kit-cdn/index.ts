@@ -32,6 +32,8 @@ export const KIT_FONTAWESOME = {
   fontawesomeJs: `${FA}/js/fontawesome.min.js`,
   sharpSolidJs: `${FA}/js/sharp-solid.min.js`,
   customIconsJs: `${FA}/js/custom-icons.min.js`,
+  svgCustomIcon: (icon: string) =>
+    `${FA}/svgs/custom-icons/${encodeURIComponent(icon.trim() || "link")}.svg`,
   svgSharpSolid: (icon: string) =>
     `${FA}/svgs/sharp-solid/${encodeURIComponent(icon.trim() || "link")}.svg`,
 } as const;
@@ -56,6 +58,7 @@ export const BACKOFFICE_FONTAWESOME = {
   fontawesomeJs: KIT_FONTAWESOME.fontawesomeJs,
   sharpSolidJs: KIT_FONTAWESOME.sharpSolidJs,
   customIconsJs: KIT_FONTAWESOME.customIconsJs,
+  svgCustomIcon: KIT_FONTAWESOME.svgCustomIcon,
   /** @deprecated use svgSharpSolid — alias for shell nav icons */
   svgSolid: KIT_FONTAWESOME.svgSharpSolid,
   svgSharpSolid: KIT_FONTAWESOME.svgSharpSolid,
