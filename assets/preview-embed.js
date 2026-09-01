@@ -8,6 +8,7 @@
 
   var DEFAULT_KIT = "https://cdn.jsdelivr.net/npm/athena-portal-app-kit@1";
   var ROLES = [
+    "guest",
     "staff",
     "providers",
     "managers",
@@ -22,6 +23,7 @@
     managers: 2,
     providers: 1,
     staff: 0,
+    guest: -1,
   };
 
   var activeKit = DEFAULT_KIT;

@@ -13,6 +13,7 @@
     managers: 2,
     providers: 1,
     staff: 0,
+    guest: -1,
   };
 
   var cached = null;
