@@ -38,6 +38,12 @@ export const KIT_FONTAWESOME = {
     `${FA}/svgs/sharp-solid/${encodeURIComponent(icon.trim() || "link")}.svg`,
 } as const;
 
+/** The one global brand/token/WA-remap stylesheet. Every consumer (backoffice apps,
+ * the public site, anything else) loads this exact URL directly -- no per-app or
+ * per-environment copies, no deploy-time syncing. Lives on media.athenacare.health
+ * specifically because that domain is stable across any future site/host change. */
+export const ATHENA_GLOBAL_STYLESHEET = "https://media.athenacare.health/styles.css";
+
 /** Back Office — same-origin Web Awesome (portal-app-kit on the internal host). */
 export const BACKOFFICE_WEBAWESOME = {
   base: BACKOFFICE_WA,
